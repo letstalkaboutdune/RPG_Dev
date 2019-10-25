@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // includes Unity UI library
 using UnityEngine.SceneManagement; // includes Unity SceneManagement library
+using SpriteGlow; // includes SpriteGlow function
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance; // creates static instance of BattleManager
 
     public bool battleActive; // creates bool to handle if battle is active
-
+    
     public GameObject battleScene; // creates game object to manage state of battleScene and camera position
 
     public Transform[] playerPositions, enemyPositions; // creates Transform array to manage player, enemy positions in battle
@@ -29,8 +30,7 @@ public class BattleManager : MonoBehaviour
     public BattleMove[] movesList; // creates BattleMove object to handle complete moves list
 
     public GameObject enemyAttackEffect; // creates game object to handle attack effect particles
-    public GameObject indicatorGreen, indicatorRed; // creates game object oto handle target indicators
-
+    
     public DamageNumber theDamageNumber; // creates DamageNumber object to handle manipulating damage number
 
     public Text[] playerName, playerHP, playerMP; // creates Text arrays to handle player stats in battle UI
@@ -54,7 +54,7 @@ public class BattleManager : MonoBehaviour
     public ItemButton[] battleItemButtons;
     public string battleSelectedItem;
     public Item battleActiveItem, battleLastItem;
-    private int battleActiveItemQuantity;
+    
     public Text battleItemName, battleItemDescription, battleUseButtonText;
     public GameObject battleItemCharChoiceMenu;
     public Text[] battleItemCharChoiceNames;
@@ -70,9 +70,11 @@ public class BattleManager : MonoBehaviour
     public AttackEffect effectCheck; // creates AttackEffect to check name of spell effects
     public float waitCounter; // creates float to handle wait counter for attack animations
 
-    private float targetDiv = 2.5f; // creates float to handle divide by factor of target indicator yOffset
-
     public bool playerActing = false; // creates bool to handle if player is taking a turn
+
+    // creates variables to manage sprite fades
+    public int selectedSprite;
+    public bool spriteFadeOut;
     
     // Start is called before the first frame update
     void Start()
@@ -97,25 +99,14 @@ public class BattleManager : MonoBehaviour
         {
             if (turnWaiting) // checks if we are waiting on a turn
             {
-                if (!indicatorGreen.activeInHierarchy) // executes if green indicator is not active in hierarchy
-                {
-                    indicatorGreen.SetActive(true); // shows green indicator
-                }
+                GreenSpriteGlow(currentTurn); // shows green sprite glow on current turn active battler
 
-                // sets green indicator position on top of active battler, with some y offset to compensate for sprite height
-                float yOffset = activeBattlers[currentTurn].transform.position.y - (activeBattlers[currentTurn].theSprite.sprite.bounds.size.y / targetDiv);
-                indicatorGreen.transform.position = new Vector3(activeBattlers[currentTurn].transform.position.x, yOffset, activeBattlers[currentTurn].transform.position.z);
-                
                 if (activeBattlers[currentTurn].isPlayer) // checks if active battler is a player
                 {
-                    // WIP
                     if (!playerActing) // checks if player is not in the middle of a move
                     {
                         uiButtonsHolder.SetActive(true); // enables UI buttons since a player has yet to move
                     }
-                    // END WIP
-                    
-                    //uiButtonsHolder.SetActive(true); // enables UI buttons since a player is active
                 }
                 else
                 {
@@ -130,7 +121,26 @@ public class BattleManager : MonoBehaviour
             {
                NextTurn(); // calls next turn function
             } 
-            */                        
+            */    
+            
+            // WIP
+            /*
+            if (spriteFadeOut) // checks if spriteFadeOut is true, meaning a sprite needs to fade out
+            {
+                //fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b, Mathf.MoveTowards(fadeScreen.color.a, 1f, fadeSpeed * Time.deltaTime));
+                //activeBattlers[battlerToHide].theSprite.GetComponent<SpriteGlowEffect>().enabled = false; // hides sprite glow
+                
+                Color fadeOutColor = activeBattlers[selectedSprite].theSprite.GetComponent<SpriteGlowEffect>().GlowColor; // copies current sprite glow color to new color variable
+
+                activeBattlers[selectedSprite].theSprite.GetComponent<SpriteGlowEffect>().GlowColor = new Color(fadeOutColor.r, fadeOutColor.g, fadeOutColor.b, Mathf.MoveTowards(fadeOutColor.a, 0f, 5f * Time.deltaTime)); // fades sprite out over <> seconds
+
+                if (activeBattlers[selectedSprite].theSprite.GetComponent<SpriteGlowEffect>().GlowColor.a == 0f) // checks if sprite glow alpha is 0f (fully transparent), meaning sprite fade is complete
+                {
+                    spriteFadeOut = false; // resets spriteFade boolean to false
+                }
+            }
+            */
+            // END WIP
         }
     }
 
@@ -194,10 +204,11 @@ public class BattleManager : MonoBehaviour
                             newEnemy.transform.parent = enemyPositions[i]; // sets new enemy instance as a child of enemy positions array
                             activeBattlers.Add(newEnemy); // adds new player element to active battlers list
                         }
-
                     }
                 }
             }
+
+            AddSpriteGlow(); // calls function to add sprite glow to all active battlers
 
             // initializes basic variables controlling combat turns
             turnWaiting = true;
@@ -212,6 +223,8 @@ public class BattleManager : MonoBehaviour
 
     public void NextTurn() // creates function to handle next turn in combat
     {
+        HideSpriteGlow(currentTurn); // hides sprite glow on active battler ending turn
+        
         currentTurn++; // increments current turn
         
         if(currentTurn >= activeBattlers.Count) // checks if current turn is greater than active battlers count
@@ -221,8 +234,6 @@ public class BattleManager : MonoBehaviour
 
         turnWaiting = true; // sets turn waiting to true
 
-        indicatorRed.SetActive(false); // hides red indicator since turn is done
-        
         UpdateBattle(); // updates information in battle whenever a turn completes
         UpdateUIStats(); // calls function to update UI battle stats
     }
@@ -336,11 +347,7 @@ public class BattleManager : MonoBehaviour
 
         int selectedTarget = players[Random.Range(0, players.Count)]; // selects a player as a target, use RNG to pick from the active player list
 
-        indicatorRed.SetActive(true); // shows red indicator
-
-        // sets red indicator position on top of selected target, with some y offset to compensate for sprite height
-        float yOffset = activeBattlers[selectedTarget].transform.position.y - (activeBattlers[selectedTarget].theSprite.sprite.bounds.size.y / targetDiv);
-        indicatorRed.transform.position = new Vector3(activeBattlers[selectedTarget].transform.position.x, yOffset, activeBattlers[selectedTarget].transform.position.z);
+        RedSpriteGlow(selectedTarget); // shows red sprite glow on current selected target
 
         int selectAttack = Random.Range(0, activeBattlers[currentTurn].movesAvailable.Length); // picks a random move from this battler's move list
         int movePower = 0; // creates int to store power of a move, initializes to 0 by default
@@ -364,6 +371,8 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f); // forces a one-second wait
 
+        HideSpriteGlow(selectedTarget); // hides sprite glow on current selected target
+        
         NextTurn(); // calls next turn function
     }    
 
@@ -387,11 +396,7 @@ public class BattleManager : MonoBehaviour
             {
                 moveIndex = i; // assign i value to moveIndex when move is found
                 
-                indicatorRed.SetActive(true); // shows red indicator
-
-                // sets red indicator position on top of selected target, with some y offset to compensate for sprite height
-                float yOffset = activeBattlers[selectedTarget].transform.position.y - (activeBattlers[selectedTarget].theSprite.sprite.bounds.size.y / targetDiv);                
-                indicatorRed.transform.position = new Vector3(activeBattlers[selectedTarget].transform.position.x, yOffset, activeBattlers[selectedTarget].transform.position.z);
+                RedSpriteGlow(selectedTarget); // shows red sprite glow on current selected target
                 
                 Instantiate(movesList[i].theEffect, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation); // instantiates attack effect on selected target
 
@@ -414,6 +419,7 @@ public class BattleManager : MonoBehaviour
         targetMenu.SetActive(false); // hides target button UI to prevent multi-clicks, will get re-enabled on next update if player turn
         targetMenu.transform.localScale = new Vector3(1, 1, 1); // adjusts scale of targetMenu to 0
 
+        HideSpriteGlow(selectedTarget); // hides sprite glow on current selected target
         NextTurn(); // calls next turn function
     }
 
@@ -550,7 +556,10 @@ public class BattleManager : MonoBehaviour
                                             // flee is successful when fleeSuccess < chanceToFlee
             {
                 fleeing = true; // sets fleeing booleran to true
-                StartCoroutine(EndBattleCo());
+
+                HideSpriteGlow(currentTurn); // hides sprite glow from current turn active battler
+
+                StartCoroutine(EndBattleCo()); // calls end battle coroutine
             }
             else
             {
@@ -605,7 +614,7 @@ public class BattleManager : MonoBehaviour
         }
    }
 
-    public void SelectBattleItem(Item newItem, int newItemQuantity) // creates function to update item name, item description, and use button name in inventory when item is selected
+    public void SelectBattleItem(Item newItem/*, int newItemQuantity*/) // creates function to update item name, item description, and use button name in inventory when item is selected
                                                                     // must pass Item object and int to function
     {
         if (newItem != null) // checks for null item selection to prevent out-of-range errors
@@ -617,7 +626,7 @@ public class BattleManager : MonoBehaviour
 
             battleLastItem = newItem; // updates last battle item check
             battleActiveItem = newItem; // sets passed Item object to activeItem
-            battleActiveItemQuantity = newItemQuantity;
+            // battleActiveItemQuantity = newItemQuantity;
 
             OpenActionButtons(); // shows item action panel
 
@@ -684,10 +693,9 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log(battleActiveItem.itemName + " was used."); // prints debug text to notify on item use
 
-            battleActiveItemQuantity--; // decrements active item quantity
-
             /*
             // WIP
+            battleActiveItemQuantity--; // decrements active item quantity
             if (battleActiveItemQuantity <= 0) // checks if active 
             {
                 battleActiveItem = null; // resets active item to null
@@ -718,13 +726,9 @@ public class BattleManager : MonoBehaviour
     public IEnumerator EndBattleCo() // creates IEnumerator coroutine to end battle in victory
     {
         battleActive = false; // sets battle active to false to prevent more turns
-        
-        // *NOT SURE IF NEEDED*
         turnWaiting = false; // sets turn waiting to false to prevent issues loading battle
 
         // hides all battle UI
-        indicatorGreen.SetActive(false);
-        indicatorRed.SetActive(false);
         uiButtonsHolder.SetActive(false);
         statsHolder.SetActive(false);
         targetMenu.SetActive(false);
@@ -784,14 +788,6 @@ public class BattleManager : MonoBehaviour
 
         battleScene.SetActive(false); // hides battle scene
 
-        // *NOT SURE IF NEEDED - NOT IN JAMES' CODE*
-        /*
-        for (int i = 0; i < activeBattlers.Count; i++) // iterates through all active battlers
-        {
-            Destroy(activeBattlers[i].gameObject); // destroys each active battler object
-        }
-        */
-
         SceneManager.LoadScene(gameOverScene); // loads game over scene
     }
 
@@ -808,5 +804,39 @@ public class BattleManager : MonoBehaviour
     public void PlayButtonSound(int soundToPlay) // creates function to play UI beeps, requires int of sound to play
     {
         AudioManager.instance.PlaySFX(soundToPlay); //; plays UI beep sound from audio manager
+    }
+
+    public void AddSpriteGlow() // creates function to add sprite glow script to all active battlers
+    {
+        for(int i = 0; i < activeBattlers.Count; i++) // iterates through all active battlers in list
+        {
+            activeBattlers[i].theSprite.gameObject.AddComponent<SpriteGlowEffect>(); // adds sprite glow component
+            activeBattlers[i].theSprite.GetComponent<SpriteGlowEffect>().enabled = false; // hides sprite glow component           
+            activeBattlers[i].theSprite.GetComponent<SpriteGlowEffect>().DrawOutside = true; // sets sprite glow to render outside the sprite
+        }
+    }
+
+    public void GreenSpriteGlow(int battlerToGreen) // creates function to show green sprite glow on active battler
+    {
+        activeBattlers[battlerToGreen].theSprite.GetComponent<SpriteGlowEffect>().enabled = true; // shows sprite glow
+        activeBattlers[battlerToGreen].theSprite.GetComponent<SpriteGlowEffect>().GlowColor = Color.green; // sets sprite glow color to green
+    }
+
+    public void RedSpriteGlow(int battlerToRed) // creates function to show red sprite glow on selected target
+    {
+        activeBattlers[battlerToRed].theSprite.GetComponent<SpriteGlowEffect>().enabled = true; // shows sprite glow
+        activeBattlers[battlerToRed].theSprite.GetComponent<SpriteGlowEffect>().GlowColor = Color.red; // sets sprite glow color to red
+    }
+
+    public void HideSpriteGlow(int battlerToHide) // creates function to hide sprite glow on battler
+    {
+        // WIP
+        /*
+        selectedSprite = battlerToHide; // passes battler to hide to selected sprite
+        spriteFadeOut = true; // sets sprite fade tag to true
+        */
+        // END WIP
+
+        activeBattlers[battlerToHide].theSprite.GetComponent<SpriteGlowEffect>().enabled = false; // hides sprite glow        
     }
 }

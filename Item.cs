@@ -288,16 +288,6 @@ public class Item : MonoBehaviour
 
     public void ShowWarning() // creates function to show warning text
     {
-        // OLD VERSION - FOR BUG VERIFICATION ONLY
-        /*
-        BattleManager.instance.battleNotice.theText.text = warningText; // sets warning text in battle menu
-        BattleManager.instance.battleNoticeActive = true; // shows warning text in battle menu
-
-        GameMenu.instance.itemNotificationText.text = warningText; // sets warning text in item menu
-        GameMenu.instance.itemNoticeActive = true; // shows warning text in item menu
-        */
-        // END BUG VERIFICATION
-
         if (BattleManager.instance.battleActive) // checks if battle is active
         {
             BattleManager.instance.battleNotice.theText.text = warningText; // sets warning text in battle menu

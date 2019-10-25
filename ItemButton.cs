@@ -56,11 +56,13 @@ public class ItemButton : MonoBehaviour
         {
             if (GameManager.instance.itemsHeld[buttonValue] != "") // checks if itemsHeld array contains an item when an item button is pressed
             {
-                BattleManager.instance.SelectBattleItem(GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[buttonValue]), GameManager.instance.numberOfItems[buttonValue]); // calls SelectBattleItem function in BattleManager to pull item details when a particular item button is clicked
+                // WIP
+                BattleManager.instance.SelectBattleItem(GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[buttonValue])/*, GameManager.instance.numberOfItems[buttonValue]*/); // calls SelectBattleItem function in BattleManager to pull item details when a particular item button is clicked
             }
             else  // executes if selected item is null
             {
-                BattleManager.instance.SelectBattleItem(null, 0); // returns null value
+                BattleManager.instance.SelectBattleItem(null/*, 0*/); // returns null value
+                // END WIP
             }
         }
     }
