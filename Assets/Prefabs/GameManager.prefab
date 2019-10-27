@@ -54,15 +54,15 @@ MonoBehaviour:
   agility: 5
   luck: 5
   speed: 5
-  dmgWeapon: 0
-  multiStr: 0
-  multiAgi: 0
-  hitChance: 0
+  dmgWeapon: 5
+  multiStr: 5
+  multiAgi: 5
+  hitChance: 75
   critChance: 0
   evadeChance: 0
   statusChance: 0
-  defWeapon: 0
-  defTech: 0
+  defWeapon: 5
+  defTech: 5
   resHeat: 1
   resFreeze: 1
   resShock: 1
@@ -140,15 +140,15 @@ MonoBehaviour:
   agility: 10
   luck: 10
   speed: 10
-  dmgWeapon: 0
-  multiStr: 0
-  multiAgi: 0
-  hitChance: 0
+  dmgWeapon: 10
+  multiStr: 10
+  multiAgi: 10
+  hitChance: 80
   critChance: 0
   evadeChance: 0
   statusChance: 0
-  defWeapon: 0
-  defTech: 0
+  defWeapon: 10
+  defTech: 10
   resHeat: 1
   resFreeze: 1
   resShock: 1
@@ -356,15 +356,15 @@ MonoBehaviour:
   agility: 15
   luck: 15
   speed: 15
-  dmgWeapon: 0
-  multiStr: 0
-  multiAgi: 0
-  hitChance: 0
+  dmgWeapon: 15
+  multiStr: 15
+  multiAgi: 15
+  hitChance: 85
   critChance: 0
   evadeChance: 0
   statusChance: 0
-  defWeapon: 0
-  defTech: 0
+  defWeapon: 15
+  defTech: 15
   resHeat: 1
   resFreeze: 1
   resShock: 1

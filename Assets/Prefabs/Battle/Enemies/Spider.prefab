@@ -110,7 +110,7 @@ MonoBehaviour:
   inFrontRow: 0
   dmgWeapon: 2
   multiStr: 2
-  multiAgi: 0
+  multiAgi: 2
   hitChance: 50
   critChance: 0
   evadeChance: 0

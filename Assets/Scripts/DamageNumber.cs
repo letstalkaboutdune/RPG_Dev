@@ -34,4 +34,14 @@ public class DamageNumber : MonoBehaviour
         // sets some amount of jitter on damage text position
         transform.position += new Vector3(Random.Range(-placementJitter, placementJitter), Random.Range(-placementJitter, placementJitter), 0);
     }
+    
+    // WIP
+    public void SetText(string textToSet) // creates function to set string of damage text, for miss/evade/block
+    {
+        damageText.text = textToSet; // assigns damage text based on passed string
+
+        // sets some amount of jitter on damage text position
+        transform.position += new Vector3(Random.Range(-placementJitter, placementJitter), Random.Range(-placementJitter, placementJitter), 0);
+    }
+    // END WIP
 }

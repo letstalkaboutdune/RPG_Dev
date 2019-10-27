@@ -438,11 +438,16 @@ public class BattleManager : MonoBehaviour
                 {
                     movePower = movesList[i].movePower; // pulls move power from moves list and stores to movePower variable
                     RollDamage(movePower, selectedTarget); // rolls damage on selected target
+                    DealDamage(selectedTarget, damageRoll); // calls function to deal damage to player based on selected target and previous damage roll
+                }
+                else // executes if attack missed
+                {
+                    Instantiate(theDamageNumber, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation).SetText("MISS"); // instantiates MISS on target
                 }
             }
         }
 
-        DealDamage(selectedTarget, damageRoll); // calls function to deal damage to player based on selected target and previous damage roll
+        //DealDamage(selectedTarget, damageRoll); // calls function to deal damage to player based on selected target and previous damage roll
         // END WIP
 
         yield return new WaitForSeconds(1f); // forces a one-second wait
