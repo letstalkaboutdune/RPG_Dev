@@ -55,14 +55,12 @@ MonoBehaviour:
   luck: 5
   speed: 5
   dmgWeapon: 5
-  multiStr: 5
-  multiAgi: 5
-  hitChance: 75
-  critChance: 0
+  hitChance: 80
+  critChance: 15
   evadeChance: 0
   statusChance: 0
-  defWeapon: 5
-  defTech: 5
+  defWeapon: 10
+  defTech: 10
   resHeat: 1
   resFreeze: 1
   resShock: 1
@@ -141,10 +139,8 @@ MonoBehaviour:
   luck: 10
   speed: 10
   dmgWeapon: 10
-  multiStr: 10
-  multiAgi: 10
-  hitChance: 80
-  critChance: 0
+  hitChance: 85
+  critChance: 25
   evadeChance: 0
   statusChance: 0
   defWeapon: 10
@@ -357,14 +353,12 @@ MonoBehaviour:
   luck: 15
   speed: 15
   dmgWeapon: 15
-  multiStr: 15
-  multiAgi: 15
-  hitChance: 85
-  critChance: 0
+  hitChance: 90
+  critChance: 35
   evadeChance: 0
   statusChance: 0
-  defWeapon: 15
-  defTech: 15
+  defWeapon: 10
+  defTech: 10
   resHeat: 1
   resFreeze: 1
   resShock: 1

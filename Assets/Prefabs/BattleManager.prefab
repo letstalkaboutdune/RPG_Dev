@@ -6862,40 +6862,44 @@ MonoBehaviour:
   actionButtonsHolder: {fileID: 5057424614681195501}
   movesList:
   - moveName: Slash
-    movePower: 40
+    movePower: 10
     moveCost: 0
     theEffect: {fileID: 5443424553989747901, guid: bfc1985962a6986499555b15d8096f8f,
       type: 3}
     isWeapon: 1
     isTech: 0
     isStatus: 0
+    isMelee: 1
     element: 
   - moveName: Heat
-    movePower: 50
+    movePower: 10
     moveCost: 5
     theEffect: {fileID: 4987815889332692341, guid: 1d1143ad6e9cf594aa96a92e269b5047,
       type: 3}
     isWeapon: 0
     isTech: 1
     isStatus: 0
+    isMelee: 0
     element: Heat
   - moveName: Freeze
-    movePower: 65
+    movePower: 10
     moveCost: 5
     theEffect: {fileID: 6357308049703714338, guid: 07898d3bf75a901499a62ee024059b7c,
       type: 3}
     isWeapon: 0
     isTech: 1
     isStatus: 0
+    isMelee: 0
     element: Freeze
   - moveName: Virus
-    movePower: 85
-    moveCost: 10
+    movePower: 10
+    moveCost: 5
     theEffect: {fileID: 7641006353339823828, guid: fce3396b32aad3f4cb0221049b153e9f,
       type: 3}
     isWeapon: 0
     isTech: 1
     isStatus: 0
+    isMelee: 0
     element: Virus
   enemyAttackEffect: {fileID: 1361751456815257180, guid: df7538116be861a4d9a53929dccee365,
     type: 3}
@@ -7006,6 +7010,17 @@ MonoBehaviour:
   playerActing: 0
   selectedSprite: 0
   spriteFadeOut: 0
+  attackHit: 0
+  attackCrit: 0
+  attackEvaded: 0
+  attackBlocked: 0
+  statusResisted: 0
+  critMulti: 1
+  resMulti: 1
+  moveIndex: 0
+  movePower: 0
+  selectedTarget: 0
+  damageRoll: 0
 --- !u!1 &1262981341737921150
 GameObject:
   m_ObjectHideFlags: 0

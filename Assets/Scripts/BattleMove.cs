@@ -13,9 +13,7 @@ public class BattleMove
     public AttackEffect theEffect; // creates attack effect object to handle attack effects
 
     // WIP - added more variables to capture more move details
-    public bool isWeapon, isTech, isStatus;
+    public bool isWeapon, isTech, isStatus, isRanged;
     public string element = "";
-    // END WIP
-
     // END WIP
 }

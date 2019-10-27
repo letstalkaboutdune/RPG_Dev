@@ -1,0 +1,153 @@
+10/27/19
+********
+Feature: Implemented melee, ranged and Tech attack damage calculations incorporating associated new stats
+
+10/26/19
+********
+Feature: Implemented expanded stats system, started to implement updated damage calculations based on stats
+
+10/25/19
+********
+Feature: Replaced circular battle indicators with glowing sprite outlines
+	Credit: https://github.com/Elringus/SpriteGlow
+
+10/23/19
+********
+Feature: Added persistent treasure chest functionality
+Bug: Fixed player being able to multi-click targets, while also not breaking player move coroutines
+	Fix 1: Don't disable game objects attached to coroutines (BattleTargetButton), or the coroutine won't return after a yield
+	Fix 2: Use GameObject.transform.localScale = new Vector3(0,0,0) to hide game object without deactivating it
+
+10/22/19
+********
+Feature: Added basic green/red target indicators in battle
+Polish: Added check to not award XP to dead players
+Polish: Added brief wait after player attack animation to prevent visual glitches
+Bug: Fixed enemy turns not waiting for animations to fully complete
+	Fix: Moved both enemy attack coroutines into one, to better control execution
+Bug: Fixed ability to trigger random battle instead of Dragon and get Dragon reward
+	Fix: Chaged Dragon to use polygon collider, removed overlapping random battle zones
+
+10/21/19
+********
+Feature: Added check to prevent HP potion from working on dead player
+Feature: Added Revive Potion which revives dead player and restores 50 HP
+Feature: Added Dwarven Sword reward for dragon quest which does high damage
+Polish: Added save confirmation notification
+Polish: Added character level display on status screen
+Polish: Added code to wait for ability animations to finish before dealing damage and moving to next turn
+	Fix 1: Changed enemy and player attacks from functions to coroutines
+	Fix 2: Inside attack coroutines, used yield waitforseconds function based on attackeffect effectlength
+Bug: Corrected bogus warning messages when trying to use items
+	Fix 1: Reset itemNoticeActive and battleNoticeActive flags when first calling Item.Use function
+	Fix 2: Adjusted Item.Use function to work as if/else if rather than if only to prevent duplicate checks
+	Fix 3: Only set itemNoticeActive or battleNoticeActive as appropriate, rather than both
+Bug: Corrected unintended ability to click menu buttons while game notice is up
+Bug: Corrected unintended ability to start dialog while menu is open
+Bug: Corrected dragon unintentionally re-spawning after re-entering cave
+
+10/20/19
+********
+. Feature: Added introduction message/mini-tutorial to first area
+. Feature: Added ending dialog after completing main quest
+. Feature: Added ability for dialog activator to trigger automatically in an area
+. Feature: Added ability to pass different music for different battles
+. Feature: Added ability to reward gold/items after completing quest
+. Feature: Added gold reward after battle
+. Feature: Added not enough gold notification when trying to buy items in shops
+. Feature: Added quit confirmation dialog box
+. Polish: Added scale/fade effects to some spell animations, and adjusted length to prevent animation restart glitches
+. Polish: Now wait to load player attack buttons in battle until player's turn
+. Polish: Added more enemy encounters to cave scene
+. Polish: Updated shop UI to select null item when changing menu screens
+. Polish: Added a "Welcome to the shop!" default message
+. Polish: Increase the area exit collider size to get into the shop
+. Bug: Fixed ability to open game menu during fade to black before battle
+	Fix 1: Set battle starter script to set Game Manager battle active = true before calling fade to black function
+	Fix 2: Changed game menu to check for Game Manager instance of battle active, not Battle Manager instance
+. Bug: Fixed ability to open game menu during dialog
+	Fix: Changed game menu to check for Game Manager instance of dialog active
+. Bug: Fixed need for two clicks to advance initial welcome dialog
+	Fix: Needed extra bool to handle isAuto property to prevent justStarted bool from being set in DialogManager
+. Balance: Increased cave random battle timer from 1 to 1.5 seconds
+
+10/18/19
+********
+. Feature: Added basic gameplay loop for simple quest to move the cave rock and fight the dragon
+. Feature: Added sound effects to all UI buttons
+. Feature: Added checks to de-select items if empty slot is clicked
+. Bug: Added check for any saved game and hide "Load Last Save" button on Game Over accordingly
+. Bug: Added check to resolve issues when hitting max level
+. Bug: Corrected typo that caused max MP to be set to current MP after any battle
+
+10/17/19
+********
+. Feature: Added check to not waste consumables if player has full HP/MP or waste turns by equipping duplicate items in battle or item menu
+. Feature: Added cancel buttons in attack, magic, and item menus in battle
+. Feature: Item, shop, and battle menu UI now only shows action buttons once valid item is selected
+. Feature: Redesigned item menu UI to show player names, HP, MP
+. Balance: Adjusted base player move speed to 7.5
+
+10/16/19
+********
+. Bug: Can still open game menu while in shop menu
+	Fix: check for GameManager.instance.shopActive before opening game menu
+. Bug: Can use infinite items in battle
+	Fix: same fix as game menu, applied to battle manager
+. Bug: Can use/discard infinite items in inventory
+	Fix: same fix as shopkeeper, applied to game menu
+. Bug: Can sell infinite items in Shopkeeper
+	Fix: create a new int in Shop.cs to track item quantity, set selectedItem to null once it's sold
+. Bug: First item is auto-selected after every time using, buying, or selling an item
+	Fix: disabled call to Press() first button in every menu UI
+. Bug: Player position not set to area entrance when changing scenes
+	Fix: updated script execution order: AreaExit > AreaEntrance > PlayerController
+			- AreaExit sets areaTransitionName. AreaEntrance needs areaTransitionName to control PlayerController position
+. Bug: Object reference not set to instance of an object in AreaEntrance script
+	Fix: changed Awake() to Start() in AreaEntrance script
+. Bug: Shopkeeper sprite is on top of desk
+	Fix: adjust sorting layer
+. Bug: First item in item menu in game menu or battle menu is not selected by default
+	Fix: add itemButton[0].Press() call whenever item menu is shown
+
+10/15/19
+********
+. Bug: Can't load correct player stats after load in game over screen
+	Fix: needed to destroy BattleManager object when clicking "load last save" button in GameOver script
+. Bug: Armor/weapon can't be equipped in battle
+	Fix: add armor/weapon effects in Item.Use to appropriate battlechar stats if battle active
+. Bug: Armor/weapon names show up on all players when equipped on one player
+	Fix: corrected logic errors in GameMenu.StatusChar checks when updating armor/weapon text
+. Bug: Can't use or equip items
+	Fix: add if statements to fix calls to battle manager in Item.use function
+. Bug: Can't test a battle after game over
+	Fix 1: game over script should not de-activate battle manager
+	Fix 2: battle end functions should hide battle scene
+. Bug: Game over buttons don't work - buttons are not clicking
+	Fix 1: don't test game over from its own screen
+	Fix 2: do not deactivate game menu in game over script to preserve event system
+. Bug: Players not checked for dead state at start of battle
+	Fix: call update battle function at end of battle start function once all battlers are instatiated
+. Bug: Enemy battlechars are not being faded out/deactivated when dead
+	Fix 1: did not set default value of fade speed in script
+	Fix 2: had alpha moving toward 1 (fully opaque) instead of 0 (fully transparent)
+. Bug: Right-click menu can still be opened in battle
+	Fix: changed BattleManager.battleActive to public, checked state before opening menu
+
+10/14/19
+********
+. Bug: HP/MP not updated correctly in battle
+	Fix: typo in UpdateUIStats function - had HP updated twice
+. Bug: Charstats does not load in UI
+	Fix 1: typos in player active portion of save/load scripts
+	Fix 2: can't have duplicate player names in GameManager
+. Bug: ItemButton values not updating when Items button was clicked
+	Fix: check loaded GameManager in scene from Essentials Loader, not in prefab definition
+
+10/13/19
+********
+. Bug: Transform issues when transitioning
+	Fix: delete Player element from Countryside hierarchy, was duplicated by EssentialsLoader
+. Bug: Hide dialog box from UI upon first load - done
+	Fix 1: de-activate DialogBox by default in UI Canvas prefab
+	Fix 2: make sure NPC had correct number of lines of text

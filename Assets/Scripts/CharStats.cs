@@ -11,9 +11,7 @@ public class CharStats : MonoBehaviour
     // creates various variables to handle character stats and attributes
     public string charName, equippedWpn, equippedArmr;
     public int currentHP, currentMP, strength, tech, endurance, agility, luck, speed;
-    public int dmgWeapon, multiStr, multiAgi;
-    public int hitChance, critChance, evadeChance, statusChance;
-    public int defWeapon, defTech;
+    public int dmgWeapon, hitChance, evadeChance, statusChance, defWeapon, defTech;
     public float resHeat = 1f, resFreeze = 1f, resShock = 1f, resVirus = 1f, resChem = 1f, resKinetic = 1f, resWater = 1f, resQuantum = 1f;
     public int maxHP = 100, maxMP = 30;
     public int[] mpLvlBonus;

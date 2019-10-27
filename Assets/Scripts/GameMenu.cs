@@ -26,9 +26,13 @@ public class GameMenu : MonoBehaviour
 
     public GameObject[] statusButtons; // creates GameObject array to handle state of status window buttons
 
+    // WIP - ADDED NEW STATS
     // creates various Text variables to handle values of character stats in stats menu
-    public Text statusName, statusHP, statusMP, statusStr, statusDef;
-    public Text statusWpnEqpd, statusWpnPwr, statusArmrEqpd, statusArmrPwr, statusLvl, statusExp;
+    public Text statusName, statusHP, statusMP, statusLvl, statusExp, statusAbility, statusAP;
+    public Text statusStr, statusTech, statusEnd, statusAgi, statusLuck, statusSpeed;
+    // public Text statusName, statusHP, statusMP, statusStr, statusDef;
+    // public Text statusWpnEqpd, statusWpnPwr, statusArmrEqpd, statusArmrPwr, statusLvl, statusExp;
+    // END WIP
 
     public Image statusImage; // creates Image variable to handle character image in stats menu
 
@@ -224,6 +228,7 @@ public class GameMenu : MonoBehaviour
             //statusWpnPwr.text = playerStats[selected].wpnPwr.ToString();
             //statusArmrPwr.text = playerStats[selected].armrPwr.ToString();
 
+            /*
             if (playerStats[selected].equippedWpn != "") // checks if equipped weapon is not empty
             {
                 statusWpnEqpd.text = playerStats[selected].equippedWpn; // updates value of equipped weapon            
@@ -241,6 +246,7 @@ public class GameMenu : MonoBehaviour
             {
                 statusArmrEqpd.text = "None"; // sets armor name to None
             }
+            */
 
             statusExp.text = (playerStats[selected].expToNextLevel[playerStats[selected].playerLevel] - playerStats[selected].currentEXP).ToString(); // updates exp to next level calculating based on current EXP and level
             statusLvl.text = playerStats[selected].playerLevel.ToString(); // sets player level

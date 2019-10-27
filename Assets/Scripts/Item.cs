@@ -13,6 +13,7 @@ public class Item : MonoBehaviour
     public bool isItem;
     public bool isWeapon;
     public bool isArmor;
+    public bool isRanged;
 
     [Header("Item Details")] // creates Item Details header in Unity
 

@@ -1,24 +1,29 @@
-MINOR
+Bugs
+****
+Minor
 ******
 Gamebreaking
 ************
-
 Annoying
 ************
 
-Polish
-******
-Battle: update weapon damage calculations to incorporate stats
-Battle: update tech damage calculations to incorporate stats
-UI: show new stats in stats menu, change name to Stats
-Battle: implement row checking and update melee calculations to incorporate row
+Features
+********
+***IN PROGRESS***UI: show new stats in status menu, change name to Status
+Game/Battle: implement items affecting new dmgWeapon / defWeapon / defTech parameters
+Battle: implement Evade/Block, remove evade chance from base stats and add evadeArmor and blockShield instead
+Battle: test and clean up new damage implementation
+****************************************************
+Game: implement bow or other ranged item, modify player attack to switch between melee/ranged based on equipped item
+Battle: implement row checking and update attack calculations to incorporate row and melee vs. ranged
 Game: rework HP/MP level reward based on desired equations
 Game: rework XP to next level based on desired equation
 Game: implement AP leveling
-Game/Battle: implement rest of stats/resistances
 Game/Battle: implement more spells and abilities
 Battle: implement speed-based turn system
 *****************************************************
+Menu: implement menu clock tracking play time
+Menu: add tooltips showing more information on various things
 Map: prevent direction lock when changing scenes
 Battle: add ability to see targeted enemy before attacking in battle
 Game: add quest item audio stinger

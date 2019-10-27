@@ -103,7 +103,7 @@ MonoBehaviour:
   maxHP: 1000
   currentMP: 0
   maxMP: 0
-  strength: 25
+  strength: 15
   tech: 10
   endurance: 10
   agility: 10
@@ -111,10 +111,8 @@ MonoBehaviour:
   speed: 10
   inFrontRow: 0
   dmgWeapon: 10
-  multiStr: 10
-  multiAgi: 10
   hitChance: 90
-  critChance: 0
+  critChance: 25
   evadeChance: 0
   statusChance: 0
   defWeapon: 10

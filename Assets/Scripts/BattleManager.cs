@@ -78,8 +78,9 @@ public class BattleManager : MonoBehaviour
 
     // WIP
     // creates variables to manage results of attack rolls
-    public bool attackHit = false, attackCrit = false, attackEvade = false, attackBlock = false, statusResisted = false;
-    public int damageRoll;
+    public bool attackHit = false, attackCrit = false, attackEvaded = false, attackBlocked = false, statusResisted = false;
+    public float critMulti = 1f, resMulti = 1f;
+    public int moveIndex, movePower, selectedTarget, damageRoll;
     // END WIP
     
     // Start is called before the first frame update
@@ -121,13 +122,13 @@ public class BattleManager : MonoBehaviour
                     StartCoroutine(EnemyMoveCo()); // calls EnemyMoveCo coroutine to handle enemy turn
                 }
             }                            
-            /* 
-            // *DEBUG ONLY - DISABLED*- checks for N input to test turn order
+             
+            // *DEBUG ONLY* - checks for N input to test turn order
             if (Input.GetKeyDown(KeyCode.N))
             {
                NextTurn(); // calls next turn function
             } 
-            */    
+            // END DEBUG    
             
             // WIP
             /*
@@ -197,10 +198,7 @@ public class BattleManager : MonoBehaviour
                             activeBattlers[i].luck = thePlayer.luck;
                             activeBattlers[i].speed = thePlayer.speed;
                             activeBattlers[i].dmgWeapon = thePlayer.dmgWeapon;
-                            activeBattlers[i].multiStr = thePlayer.multiStr;
-                            activeBattlers[i].multiAgi = thePlayer.multiAgi;
                             activeBattlers[i].hitChance = thePlayer.hitChance;
-                            activeBattlers[i].critChance = thePlayer.critChance;
                             activeBattlers[i].evadeChance = thePlayer.evadeChance;
                             activeBattlers[i].statusChance = thePlayer.statusChance;
                             activeBattlers[i].defWeapon = thePlayer.defWeapon;
@@ -213,6 +211,7 @@ public class BattleManager : MonoBehaviour
                             activeBattlers[i].resKinetic = thePlayer.resKinetic;
                             activeBattlers[i].resWater = thePlayer.resWater;
                             activeBattlers[i].resQuantum = thePlayer.resQuantum;
+                            //activeBattlers[i].critChance = thePlayer.critChance;
                             //activeBattlers[i].defense = thePlayer.defense;
                             //activeBattlers[i].wpnPower = thePlayer.wpnPwr;
                             //activeBattlers[i].armrPower = thePlayer.armrPwr;
@@ -253,6 +252,8 @@ public class BattleManager : MonoBehaviour
 
     public void NextTurn() // creates function to handle next turn in combat
     {
+        Debug.Log("**** NEXT TURN ****"); // prints next turn notification to debug log
+
         HideSpriteGlow(currentTurn); // hides sprite glow on active battler ending turn
         
         currentTurn++; // increments current turn
@@ -291,10 +292,7 @@ public class BattleManager : MonoBehaviour
                         GameManager.instance.playerStats[i].luck = activeBattlers[i].luck;
                         GameManager.instance.playerStats[i].speed = activeBattlers[i].speed;
                         GameManager.instance.playerStats[i].dmgWeapon = activeBattlers[i].dmgWeapon;
-                        GameManager.instance.playerStats[i].multiStr = activeBattlers[i].multiStr;
-                        GameManager.instance.playerStats[i].multiAgi = activeBattlers[i].multiAgi;
                         GameManager.instance.playerStats[i].hitChance = activeBattlers[i].hitChance;
-                        GameManager.instance.playerStats[i].critChance = activeBattlers[i].critChance;
                         GameManager.instance.playerStats[i].evadeChance = activeBattlers[i].evadeChance;
                         GameManager.instance.playerStats[i].statusChance = activeBattlers[i].statusChance;
                         GameManager.instance.playerStats[i].defWeapon = activeBattlers[i].defWeapon;
@@ -307,6 +305,7 @@ public class BattleManager : MonoBehaviour
                         GameManager.instance.playerStats[i].resKinetic = activeBattlers[i].resKinetic;
                         GameManager.instance.playerStats[i].resWater = activeBattlers[i].resWater;
                         GameManager.instance.playerStats[i].resQuantum = activeBattlers[i].resQuantum;
+                        //GameManager.instance.playerStats[i].critChance = activeBattlers[i].critChance;
                         //GameManager.instance.playerStats[i].defense = activeBattlers[i].defense;
                         //GameManager.instance.playerStats[i].wpnPwr = activeBattlers[i].wpnPower;
                         //GameManager.instance.playerStats[i].armrPwr = activeBattlers[i].armrPower;
@@ -399,51 +398,26 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        int selectedTarget = players[Random.Range(0, players.Count)]; // selects a player as a target, use RNG to pick from the active player list
+        selectedTarget = players[Random.Range(0, players.Count)]; // selects a player as a target, use RNG to pick from the active player list
 
         RedSpriteGlow(selectedTarget); // shows red sprite glow on current selected target
 
         int selectAttack = Random.Range(0, activeBattlers[currentTurn].movesAvailable.Length); // picks a random move from this battler's move list
-        int movePower = 0; // creates int to store power of a move, initializes to 0 by default
+        //movePower = 0; // creates int to store power of a move, initializes to 0 by default
 
-        // WIP
-        // IF WEAPON:
-        // 1. ROLL HIT
-        // 2. IF HIT, ROLL EVA/BLOCK
-        // 3. IF !EVA/BLOCK, ROLL CRIT
-        // 4. ROLL DAMAGE
-
-        // IF TECH ATTACK:
-        // 1. ROLL CRIT
-        // 2. ROLL DAMAGE
-
-        // IF TECH STATUS:
-        // ROLL STATUS RESIST
-
-        Instantiate(enemyAttackEffect, activeBattlers[currentTurn].transform.position, activeBattlers[currentTurn].transform.rotation);
-
+        Instantiate(enemyAttackEffect, activeBattlers[currentTurn].transform.position, activeBattlers[currentTurn].transform.rotation); // instantiates attacker white particle effect
+        
         for (int i = 0; i < movesList.Length; i++) // iterates through all moves in moves list
         {
             if (movesList[i].moveName == activeBattlers[currentTurn].movesAvailable[selectAttack]) // checks if selected move is contained in move list
             {
-                Instantiate(movesList[i].theEffect, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation); // instantiates attack effect on selected target
-                
-                
-                RollHit(); // rolls to see if attack hits
+                moveIndex = i; // assigns current value of i to moveIndex for use in damage rolls
 
-                //Debug.Log("Wait time = " + movesList[i].theEffect.effectLength); // print wait time to debug log
+                Instantiate(movesList[i].theEffect, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation); // instantiates attack effect on selected target
+
                 yield return new WaitForSeconds(movesList[i].theEffect.effectLength); // wait for length of time so that attack animation can finish
 
-                if (attackHit) // checks if attack hit
-                {
-                    movePower = movesList[i].movePower; // pulls move power from moves list and stores to movePower variable
-                    RollDamage(movePower, selectedTarget); // rolls damage on selected target
-                    DealDamage(selectedTarget, damageRoll); // calls function to deal damage to player based on selected target and previous damage roll
-                }
-                else // executes if attack missed
-                {
-                    Instantiate(theDamageNumber, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation).SetText("MISS"); // instantiates MISS on target
-                }
+                AttackRolls(); // calls function to manage various attack rolls
             }
         }
 
@@ -457,15 +431,16 @@ public class BattleManager : MonoBehaviour
         NextTurn(); // calls next turn function
     }    
 
-    public IEnumerator PlayerMoveCo(string moveName, int selectedTarget) // creates function to handle players attacking
+    public IEnumerator PlayerMoveCo(string moveName, int playerTarget) // creates function to handle players attacking
     {
+        selectedTarget = playerTarget;
         playerActing = true; // sets playerActing true to stop update loop from acting on UI
-        int moveIndex = 0; // create local int variable to store found move index in moveList
+        //moveIndex = 0; // create local int variable to store found move index in moveList
         
         uiButtonsHolder.SetActive(false); // hides action buttons once player action starts
         targetMenu.transform.localScale = new Vector3(0, 0, 0); // adjusts scale of targetMenu to 0 to prevent multiple clicks
 
-        int movePower = 0; // creates int to store power of a move, initializes to 0 by default
+        //movePower = 0; // creates int to store power of a move, initializes to 0 by default
 
         Instantiate(enemyAttackEffect, activeBattlers[currentTurn].transform.position, activeBattlers[currentTurn].transform.rotation);
 
@@ -487,9 +462,11 @@ public class BattleManager : MonoBehaviour
 
         //Debug.Log("Starting wait = " + movesList[moveIndex].theEffect.effectLength); // print wait time to debug log        
         yield return new WaitForSeconds(movesList[moveIndex].theEffect.effectLength); // wait for length of time so that attack animation can finish
-        
+
+        AttackRolls(); // calls function to manage various attack rolls
+
         //Debug.Log("Dealing damage."); // print status to debug log        
-        DealDamage(selectedTarget, movePower); // calls function to deal damage to enemy based on selected target and move power
+        //DealDamage(); // calls function to deal damage to enemy
 
         yield return new WaitForSeconds(1f); // forces short wait to prevent visual glitches
 
@@ -504,27 +481,18 @@ public class BattleManager : MonoBehaviour
         NextTurn(); // calls next turn function
     }
 
-    public void DealDamage(int target, int damageToGive) // creates function to handle calculating and dealing damage
+    public void DealDamage() // creates function to handle calculating and dealing damage
     {
-        // *****************************
-        // NEED TO UPDATE WITH NEW STATS
-        // *****************************
-        // WIP
-        // calculates attack and defense power based on respective battler's strength, defense, weapon power, and armor power
-        //float atkPwr = activeBattlers[currentTurn].strength + activeBattlers[currentTurn].wpnPower;
-        //float defPwr = activeBattlers[target].defense + activeBattlers[target].armrPower;
-        //float damageCalc = ((atkPwr / defPwr) * movePower * Random.Range(0.9f, 1.1f)); // calculates damage dealt based on attack/defense power and power of specific move
-                                                                                         // adds 10% tolerance to damage dealt based on RNG
-        //int damageToGive = Mathf.RoundToInt(damageCalc); // rounds damage to int so it can be applied to HP, which is of type int
+        // WIP - UPDATED WITH NEW STATS, DAMAGE CALCULATION DONE IN OTHER FUNCTIONS
 
         // prints damage calculation in debug log
-        Debug.Log(activeBattlers[currentTurn].charName + " is dealing " + damageToGive + " damage to " + activeBattlers[target].charName);
+        Debug.Log(activeBattlers[currentTurn].charName + " is dealing " + damageRoll + " damage to " + activeBattlers[selectedTarget].charName);
 
         // subtracts target's current HP by calculated damage
-        activeBattlers[target].currentHP -= damageToGive;
+        activeBattlers[selectedTarget].currentHP -= damageRoll;
 
         // instantiates damage number in the battle scene on top of the target
-        Instantiate(theDamageNumber, activeBattlers[target].transform.position, activeBattlers[target].transform.rotation).SetDamage(damageToGive);
+        Instantiate(theDamageNumber, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation).SetDamage(damageRoll);
 
         UpdateUIStats(); // calls function to update UI battle stats
     }
@@ -925,43 +893,213 @@ public class BattleManager : MonoBehaviour
     }
 
     // WIP
+    public void AttackRolls() // creates function to manage common attack rolls algorithm
+    {
+        if (movesList[moveIndex].isWeapon) // executes if move is of type weapon
+        {
+            RollHit(); // rolls to see if attack hits
+
+            if (attackHit) // executes if attack hit
+            {
+                RollEvadeBlock(); // calls function to check if attack was evaded or blocked by defender
+
+                if (attackEvaded) // executes if attack was evaded by defender
+                {
+                    Instantiate(theDamageNumber, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation).SetText("Evade!"); // instantiates Evade on target
+                }
+                else if (attackBlocked) // executes if attack was blocked by defender
+                {
+                    Instantiate(theDamageNumber, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation).SetText("Block!"); // instantiates Block on target
+                }
+                else // executes if attack hit but was not evaded or blocked
+                {
+                    RollCrit(); // calls roll crit function to determine if attack crit
+
+                    movePower = movesList[moveIndex].movePower; // pulls move power from moves list and stores to movePower variable
+                    RollWeaponDamage(); // rolls weapon damage on selected target
+                    DealDamage(); // calls function to deal damage to player based on selected target and previous damage roll
+                }
+            }
+
+            else // executes if attack missed
+            {
+                Instantiate(theDamageNumber, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation).SetText("Miss"); // instantiates Miss on target
+            }
+        }
+
+        else if (movesList[moveIndex].isTech) // executes if move is of type Tech
+        {
+            RollCrit(); // rolls to see if tech ability crits
+            movePower = movesList[moveIndex].movePower; // pulls move power from moves list and stores to movePower variable
+            RollTechDamage(); // rolls Tech damage on selected target
+            DealDamage(); // calls function to deal damage to player
+        }
+
+        else // executes if move is of type status
+        {
+            RollStatusResist(); // call function to check if defender resisted status effect
+
+            if (statusResisted) // executes if status effect was resisted
+            {
+                Instantiate(theDamageNumber, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation).SetText("Resisted"); // instantiates Resisted on target
+
+            }
+            else // executes if status effect was not resisted
+            {
+                // *** NEED TO ADD FUNCTION TO APPLY STATUS EFFECT ***
+            }
+        }
+    }
+
     public void RollHit() // creates function to roll if a weapon attack hits
     {       
         int hitRoll = Mathf.RoundToInt(Random.Range(0f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
-        Debug.Log("Attacker hit chance = " + activeBattlers[currentTurn].hitChance);
-        Debug.Log("Hit roll = " + hitRoll);
+        Debug.Log("Attacker hit chance = " + activeBattlers[currentTurn].hitChance); // prints attacker hit chance to debug log
+        Debug.Log("Hit roll = " + hitRoll); // prints result of hit roll to debug log
 
-        if (hitRoll <= activeBattlers[currentTurn].hitChance)
+        if (hitRoll <= activeBattlers[currentTurn].hitChance) // executes if attack hit
         {
             attackHit = true; // sets attackHit to true if attack hit
-            Debug.Log("Attack hits.");
+            Debug.Log("Attack hits."); // prints hit success to debug log
         }
-        else
+        else // executes if attack missed
         {
             attackHit = false; // sets attackHit to false if attack missed
             damageRoll = 0; // sets damage roll to 0
-            Debug.Log("Attack misses.");
+            Debug.Log("Attack misses."); // prints hit failure to debug log
         }        
     }
 
     public void RollCrit() // creates function to roll if a weapon/Tech attack crits
     {
+        int critChance = Mathf.RoundToInt((activeBattlers[currentTurn].agility + activeBattlers[currentTurn].luck) / 2f); // calculates crit chance based on attacker agility and luck
+        int critRoll = Mathf.RoundToInt(Random.Range(0f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
+        Debug.Log("Attacker crit chance = " + critChance); // prints attacker crit chance to debug log
+        Debug.Log("Crit roll = " + critRoll); // prints result of crit roll
 
+        if (critRoll <= critChance) // executes if attack crits
+        {
+            attackCrit = true; // sets attackCrit to true if attack crit
+            critMulti = 2f; // sets crit multiplier to 2x
+            Debug.Log("Attack crits."); // prints crit success notifier to debug log
+        }
+        else // executes if attack does not crit
+        {
+            attackCrit = false; // sets attackCrit to false if attack did not crit
+            critMulti = 1f; // sets crit multiplier to 1x
+            Debug.Log("Attack does not crit."); // print crit failure notifier to debug log
+        }
     }
 
     public void RollEvadeBlock() // creates function to roll if a defender evades/blocks
     {
-
+        // *** NEED TO ADD CODE TO ROLL EVADE/BLOCK ***
+        // *** NEED TO HANDLE SEPARATE CASES FOR EVADE OR BLOCK, OR BOTH? ***
     }
-    public void RollDamage(int movePower, int selectedTarget) // creates function to roll attack damage
+
+    public void RollWeaponDamage() // creates function to roll weapon attack damage
     {
-        damageRoll = Mathf.RoundToInt((movePower + activeBattlers[currentTurn].strength) * activeBattlers[currentTurn].multiStr * (100 / 100 + activeBattlers[selectedTarget].defWeapon) * Random.Range(0.9f, 1.1f)); // calculates damage based on move power, attacker strength, target weapon defense, and 10% RNG
+        float multiMelee = 1f, multiRanged = 1f, damageFloat = 0f; // creates float variables to handle melee and ranged damage multipliers
+
+        // prints universal weapon damage and defense parameters to debug log
+        Debug.Log("Attacker move damage = " + movePower);
+        Debug.Log("Attacker weapon damage = " + activeBattlers[currentTurn].dmgWeapon);
+        Debug.Log("Attacker crit multiplier = " + critMulti);
+        Debug.Log("Defender weapon defense = " + activeBattlers[selectedTarget].defWeapon);
+
+
+        if (!movesList[moveIndex].isRanged) // executes if weapon attack is not ranged (i.e. melee)
+        {
+            Debug.Log("Attack is melee."); // prints melee attack type to debug log
+            multiMelee = (activeBattlers[currentTurn].strength / 2f); // calculates attacker melee multiplier  = (strength / 2)
+            Debug.Log("Attacker melee multiplier = " + multiMelee); // prints melee multiplier to debug log
+            damageFloat = (movePower + activeBattlers[currentTurn].dmgWeapon) * multiMelee * (100f / (100f + activeBattlers[selectedTarget].defWeapon)) * critMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker weapon and strength, crit multiplier, target weapon defense, and 10% RNG
+
+        }
+        else // executes if weapon attack is ranged
+        {
+            Debug.Log("Attack is ranged."); // prints ranged attack type to debug log
+            multiRanged = (activeBattlers[currentTurn].agility / 2f); // calculates attacker ranged multiplier = (agility / 2)
+            Debug.Log("Attacker ranged multiplier = " + multiRanged); // prints ranged multiplier to debug log
+            damageFloat = (movePower + activeBattlers[currentTurn].dmgWeapon) * multiRanged * (100f / (100f + activeBattlers[selectedTarget].defWeapon)) * critMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker weapon and strength, crit multiplier, target weapon defense, and 10% RNG
+        }
+
+        // calculates rounded attack damage
+        damageRoll = Mathf.RoundToInt(damageFloat); // rounds damage calc float to damage roll int
+
+        // prints damage results to debug log
+        Debug.Log("Damage float = " + damageFloat); // prints damage float calc to debug log
+        Debug.Log("Damage roll = " + damageRoll); // prints damage roll to debug log
+    }
+
+    public void RollTechDamage() // creates function to roll tech attack damage
+    {
+        string elementType = ""; // creates local string variable to manage element type of attack
+
+        // prints move and weapon base damage parameters to debug log
+        Debug.Log("Attacker move damage = " + movePower);
+        Debug.Log("Tech multiplier = " + activeBattlers[currentTurn].tech);
+        Debug.Log("Attacker crit multiplier = " + critMulti);
+        Debug.Log("Defender Tech defense = " + activeBattlers[selectedTarget].defTech);
+
+        // checks for attack Tech element type, applies target's associated elemental resistance to resMulti, saves type in elementType string
+        if(movesList[moveIndex].element == "Heat")
+        {
+            resMulti = activeBattlers[selectedTarget].resHeat;
+            elementType = "Heat";
+        }
+        else if (movesList[moveIndex].element == "Freeze")
+        { 
+            resMulti = activeBattlers[selectedTarget].resFreeze;
+            elementType = "Freeze";
+        }
+        else if (movesList[moveIndex].element == "Shock")
+        {
+            resMulti = activeBattlers[selectedTarget].resShock;
+            elementType = "Shock";
+        }
+        else if (movesList[moveIndex].element == "Virus")
+        {
+            resMulti = activeBattlers[selectedTarget].resVirus;
+            elementType = "Virus";
+        }
+        else if (movesList[moveIndex].element == "Chem")
+        {
+            resMulti = activeBattlers[selectedTarget].resChem;
+            elementType = "Chem";
+        }
+        else if (movesList[moveIndex].element == "Kinetic")
+        {
+            resMulti = activeBattlers[selectedTarget].resKinetic;
+            elementType = "Kinetic";
+        }
+        else if (movesList[moveIndex].element == "Water")
+        {
+            resMulti = activeBattlers[selectedTarget].resWater;
+            elementType = "Water";
+        }
+        else if (movesList[moveIndex].element == "Quantum")
+        {
+            resMulti = activeBattlers[selectedTarget].resQuantum;
+            elementType = "Water";
+        }
+
+        Debug.Log("Elemental type = " + elementType); // prints element type to debug log
+        Debug.Log("Defender elemental resistance = " + resMulti + "x"); // prints defender elemental resistance multiplier
+
+        // calculates Tech attack damage
+        float damageFloat = movePower * activeBattlers[currentTurn].tech * (100f / (100f + activeBattlers[selectedTarget].defTech)) * critMulti * resMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker Tech, target Tech defense, affected elemental resistance, and 10% RNG
+
+        // calculates rounded attack damage
+        damageRoll = Mathf.RoundToInt(damageFloat); // rounds damage calc float to damage roll int
+
+        // prints damage results to debug log
+        Debug.Log("Damage float = " + damageFloat); // prints damage float calc to debug log
         Debug.Log("Damage roll = " + damageRoll); // prints damage roll to debug log
     }
 
     public void RollStatusResist() // creates function to roll if a defender resists a status effect
     {
-
+        // *** NEED TO ADD CODE TO ROLL STATUS RESIST CHECK ***
     }
-    // END WIP
 }

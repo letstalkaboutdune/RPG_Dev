@@ -109,14 +109,12 @@ MonoBehaviour:
   speed: 2
   inFrontRow: 0
   dmgWeapon: 2
-  multiStr: 2
-  multiAgi: 2
-  hitChance: 50
-  critChance: 0
+  hitChance: 75
+  critChance: 10
   evadeChance: 0
   statusChance: 0
   defWeapon: 2
-  defTech: 0
+  defTech: 2
   resHeat: 2
   resFreeze: 2
   resShock: 1
