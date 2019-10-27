@@ -1,0 +1,71 @@
+MINOR
+******
+Gamebreaking
+************
+
+Annoying
+************
+
+Polish
+******
+Battle: update weapon damage calculations to incorporate stats
+Battle: update tech damage calculations to incorporate stats
+UI: show new stats in stats menu, change name to Stats
+Battle: implement row checking and update melee calculations to incorporate row
+Game: rework HP/MP level reward based on desired equations
+Game: rework XP to next level based on desired equation
+Game: implement AP leveling
+Game/Battle: implement rest of stats/resistances
+Game/Battle: implement more spells and abilities
+Battle: implement speed-based turn system
+*****************************************************
+Map: prevent direction lock when changing scenes
+Battle: add ability to see targeted enemy before attacking in battle
+Game: add quest item audio stinger
+Battle: show level up notification in end-of-battle screen
+Game: add dash button
+Game: add an inn, item shop, magic shop, and better weapon shop to the town
+Sound: add checks to play item unsuccessful sound
+Sound: prevent re-starting same music when entering main menu from game over (replace game over music?)
+Game: error when trying to control PlayerController transform.position in scenes without a player
+Game: Add randomness to battle rewards
+Menu: add item highlights in menu
+Battle: have battlechars move forward to attack
+Menu: consider changing dialog function to just have speaker name in text, not in separate box
+Map: add zoom function with mouse wheel
+
+
+Pretty
+******
+UI: add retro overlays
+UI: add appropriate mouse cursor
+Game: show equipped armor/weapon on char sprites
+Levels: add more detail to the tilemaps
+Levels: add animations to the background
+Battle: add encounter transition effect
+Battle: add attack animations
+Battle: add cleaner sprite glow fade
+
+MAJOR
+*****
+Menu: re-design menu to look like FFVII
+Menu: re-design menu to use same item system in/out of battle
+Game: add slot for 4th character, update battle menu UI
+Menu: magic screen in menu
+Menu: add equips to player stats screen
+Menu: add options menu from main menu
+Game: multiple save slots
+Game: add controller functionality
+Game: add SMB3-style overworld
+
+HUGE
+****
+Game Design: create all new spells and effects
+Game Design: create all new enemies and stats
+Game Design: create all new items
+Game Design: create all new items
+Game Design: create all new boss encounters
+Story: write story scenario and major character plot points
+Art: create all new pixel art for cyberpunk style
+Music: create all new background music
+SFX: create all new sound FX
