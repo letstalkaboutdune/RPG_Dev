@@ -199,8 +199,9 @@ public class BattleManager : MonoBehaviour
                             activeBattlers[i].speed = thePlayer.speed;
                             activeBattlers[i].dmgWeapon = thePlayer.dmgWeapon;
                             activeBattlers[i].hitChance = thePlayer.hitChance;
+                            activeBattlers[i].critChance = thePlayer.critChance;
                             activeBattlers[i].evadeChance = thePlayer.evadeChance;
-                            activeBattlers[i].statusChance = thePlayer.statusChance;
+                            activeBattlers[i].blockChance = thePlayer.blockChance;
                             activeBattlers[i].defWeapon = thePlayer.defWeapon;
                             activeBattlers[i].defTech = thePlayer.defTech;
                             activeBattlers[i].resHeat = thePlayer.resHeat;
@@ -211,7 +212,6 @@ public class BattleManager : MonoBehaviour
                             activeBattlers[i].resKinetic = thePlayer.resKinetic;
                             activeBattlers[i].resWater = thePlayer.resWater;
                             activeBattlers[i].resQuantum = thePlayer.resQuantum;
-                            //activeBattlers[i].critChance = thePlayer.critChance;
                             //activeBattlers[i].defense = thePlayer.defense;
                             //activeBattlers[i].wpnPower = thePlayer.wpnPwr;
                             //activeBattlers[i].armrPower = thePlayer.armrPwr;
@@ -293,8 +293,9 @@ public class BattleManager : MonoBehaviour
                         GameManager.instance.playerStats[i].speed = activeBattlers[i].speed;
                         GameManager.instance.playerStats[i].dmgWeapon = activeBattlers[i].dmgWeapon;
                         GameManager.instance.playerStats[i].hitChance = activeBattlers[i].hitChance;
+                        GameManager.instance.playerStats[i].critChance = activeBattlers[i].critChance;
                         GameManager.instance.playerStats[i].evadeChance = activeBattlers[i].evadeChance;
-                        GameManager.instance.playerStats[i].statusChance = activeBattlers[i].statusChance;
+                        GameManager.instance.playerStats[i].blockChance = activeBattlers[i].blockChance;
                         GameManager.instance.playerStats[i].defWeapon = activeBattlers[i].defWeapon;
                         GameManager.instance.playerStats[i].defTech = activeBattlers[i].defTech;
                         GameManager.instance.playerStats[i].resHeat = activeBattlers[i].resHeat;
@@ -305,7 +306,6 @@ public class BattleManager : MonoBehaviour
                         GameManager.instance.playerStats[i].resKinetic = activeBattlers[i].resKinetic;
                         GameManager.instance.playerStats[i].resWater = activeBattlers[i].resWater;
                         GameManager.instance.playerStats[i].resQuantum = activeBattlers[i].resQuantum;
-                        //GameManager.instance.playerStats[i].critChance = activeBattlers[i].critChance;
                         //GameManager.instance.playerStats[i].defense = activeBattlers[i].defense;
                         //GameManager.instance.playerStats[i].wpnPwr = activeBattlers[i].wpnPower;
                         //GameManager.instance.playerStats[i].armrPwr = activeBattlers[i].armrPower;
@@ -422,7 +422,6 @@ public class BattleManager : MonoBehaviour
         }
 
         //DealDamage(selectedTarget, damageRoll); // calls function to deal damage to player based on selected target and previous damage roll
-        // END WIP
 
         yield return new WaitForSeconds(1f); // forces a one-second wait
 
@@ -481,10 +480,8 @@ public class BattleManager : MonoBehaviour
         NextTurn(); // calls next turn function
     }
 
-    public void DealDamage() // creates function to handle calculating and dealing damage
+    public void DealDamage() // creates function to handle applying damage to HP
     {
-        // WIP - UPDATED WITH NEW STATS, DAMAGE CALCULATION DONE IN OTHER FUNCTIONS
-
         // prints damage calculation in debug log
         Debug.Log(activeBattlers[currentTurn].charName + " is dealing " + damageRoll + " damage to " + activeBattlers[selectedTarget].charName);
 
@@ -892,8 +889,7 @@ public class BattleManager : MonoBehaviour
         activeBattlers[battlerToHide].theSprite.GetComponent<SpriteGlowEffect>().enabled = false; // hides sprite glow        
     }
 
-    // WIP
-    public void AttackRolls() // creates function to manage common attack rolls algorithm
+     public void AttackRolls() // creates function to manage common attack rolls algorithm
     {
         if (movesList[moveIndex].isWeapon) // executes if move is of type weapon
         {
@@ -972,7 +968,7 @@ public class BattleManager : MonoBehaviour
 
     public void RollCrit() // creates function to roll if a weapon/Tech attack crits
     {
-        int critChance = Mathf.RoundToInt((activeBattlers[currentTurn].agility + activeBattlers[currentTurn].luck) / 2f); // calculates crit chance based on attacker agility and luck
+        int critChance = activeBattlers[currentTurn].critChance; // assigns local variable critChance to attacker's crit chance
         int critRoll = Mathf.RoundToInt(Random.Range(0f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
         Debug.Log("Attacker crit chance = " + critChance); // prints attacker crit chance to debug log
         Debug.Log("Crit roll = " + critRoll); // prints result of crit roll
@@ -1028,8 +1024,8 @@ public class BattleManager : MonoBehaviour
         damageRoll = Mathf.RoundToInt(damageFloat); // rounds damage calc float to damage roll int
 
         // prints damage results to debug log
-        Debug.Log("Damage float = " + damageFloat); // prints damage float calc to debug log
-        Debug.Log("Damage roll = " + damageRoll); // prints damage roll to debug log
+        Debug.Log("Weapon damage float = " + damageFloat); // prints damage float calc to debug log
+        Debug.Log("Weapon damage roll = " + damageRoll); // prints damage roll to debug log
     }
 
     public void RollTechDamage() // creates function to roll tech attack damage
@@ -1094,12 +1090,25 @@ public class BattleManager : MonoBehaviour
         damageRoll = Mathf.RoundToInt(damageFloat); // rounds damage calc float to damage roll int
 
         // prints damage results to debug log
-        Debug.Log("Damage float = " + damageFloat); // prints damage float calc to debug log
-        Debug.Log("Damage roll = " + damageRoll); // prints damage roll to debug log
+        Debug.Log("Tech damage float = " + damageFloat); // prints damage float calc to debug log
+        Debug.Log("Tech damage roll = " + damageRoll); // prints damage roll to debug log
     }
 
     public void RollStatusResist() // creates function to roll if a defender resists a status effect
     {
-        // *** NEED TO ADD CODE TO ROLL STATUS RESIST CHECK ***
+        int statusRoll = Mathf.RoundToInt(Random.Range(0f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
+        Debug.Log("Defender status resist chance = " + activeBattlers[selectedTarget].endurance); // prints defender's status resist to debug log
+        Debug.Log("Status roll = " + statusRoll); // prints result of status roll to debug log
+
+        if (statusRoll <= activeBattlers[currentTurn].endurance) // executes if status was resisted
+        {
+            statusResisted = true; // sets statusResisted to true if status was resisted
+            Debug.Log("Status effect resisted."); // prints resist success to debug log
+        }
+        else // executes if status was not resisted
+        {
+            statusResisted = false; // sets statusResisted to false if status was not resisted
+            Debug.Log("Status effect applied."); // prints resist failure to debug log
+        }
     }
 }

@@ -111,7 +111,7 @@ MonoBehaviour:
   inFrontRow: 0
   dmgWeapon: 5
   hitChance: 75
-  critChance: 10
+  critChance: 15
   evadeChance: 0
   statusChance: 0
   defWeapon: 5

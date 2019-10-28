@@ -17,7 +17,7 @@ public class BattleChar : MonoBehaviour
     // creates various variables to handle all battle stats
     public int currentHP, maxHP, currentMP, maxMP, strength, tech, endurance, agility, luck, speed;
     public bool inFrontRow;
-    public int dmgWeapon, hitChance, evadeChance, statusChance, defWeapon, defTech;
+    public int dmgWeapon, hitChance, critChance, evadeChance, blockChance, defWeapon, defTech;
     public float resHeat = 1f, resFreeze = 1f, resShock = 1f, resVirus = 1f, resChem = 1f, resKinetic = 1f, resWater = 1f, resQuantum = 1f;
     //public int defense, wpnPwr, armrPwr;
     // END WIP

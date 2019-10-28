@@ -9,11 +9,12 @@ Annoying
 
 Features
 ********
-***IN PROGRESS***UI: show new stats in status menu, change name to Status
+***IN PROGRESS***UI: show new stats in status menu
 Game/Battle: implement items affecting new dmgWeapon / defWeapon / defTech parameters
 Battle: implement Evade/Block, remove evade chance from base stats and add evadeArmor and blockShield instead
 Battle: test and clean up new damage implementation
 ****************************************************
+Game: decide how to handle crit chance (currently have discrete stat, should be based on stats/items for players and direct for enemies)
 Game: implement bow or other ranged item, modify player attack to switch between melee/ranged based on equipped item
 Battle: implement row checking and update attack calculations to incorporate row and melee vs. ranged
 Game: rework HP/MP level reward based on desired equations
@@ -22,6 +23,7 @@ Game: implement AP leveling
 Game/Battle: implement more spells and abilities
 Battle: implement speed-based turn system
 *****************************************************
+Menu: implement small sliders on HP/MP in main menu and battle menu
 Menu: implement menu clock tracking play time
 Menu: add tooltips showing more information on various things
 Map: prevent direction lock when changing scenes

@@ -1,3 +1,7 @@
+10/28/19
+********
+Feature: Completed basic design of new Status menu
+
 10/27/19
 ********
 Feature: Implemented melee, ranged and Tech attack damage calculations incorporating associated new stats

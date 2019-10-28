@@ -228,8 +228,9 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Speed", playerStats[i].speed);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DmgWeapon", playerStats[i].dmgWeapon);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_HitChance", playerStats[i].hitChance);
+            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CritChance", playerStats[i].critChance);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_EvadeChance", playerStats[i].evadeChance);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_StatusChance", playerStats[i].statusChance);
+            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_BlockChance", playerStats[i].blockChance);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DefWeapon", playerStats[i].defWeapon);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DefTech", playerStats[i].defTech);
             PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResHeat", playerStats[i].resHeat);
@@ -241,8 +242,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResWater", playerStats[i].resWater);
             PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResQuantum", playerStats[i].resQuantum);
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedWpn", playerStats[i].equippedWpn);
-            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedArmr", playerStats[i].equippedArmr);
-            //PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CritChance", playerStats[i].critChance)
+            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedArmr", playerStats[i].equippedArmr);            
             //PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_MultiStr", playerStats[i].multiStr);
             //PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_MultiAgi", playerStats[i].multiAgi);
             //PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Defense", playerStats[i].defense);
@@ -293,8 +293,9 @@ public class GameManager : MonoBehaviour
             playerStats[i].speed = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Speed");
             playerStats[i].dmgWeapon = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DmgWeapon");
             playerStats[i].hitChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_HitChance");
+            playerStats[i].critChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CritChance");
             playerStats[i].evadeChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_EvadeChance");
-            playerStats[i].statusChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_StatusChance");
+            playerStats[i].blockChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_BlockChance");
             playerStats[i].defWeapon = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DefWeapon");
             playerStats[i].defTech = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DefTech");
             playerStats[i].resHeat = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResHeat");
@@ -307,7 +308,6 @@ public class GameManager : MonoBehaviour
             playerStats[i].resQuantum = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResQuantum");
             playerStats[i].equippedWpn = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedWpn");
             playerStats[i].equippedArmr = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedArmr");
-            //playerStats[i].critChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CritChance");
             //playerStats[i].multiStr = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_MultiStr");
             //playerStats[i].multiAgi = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_MultiAgi");
             //playerStats[i].defense = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Defense");

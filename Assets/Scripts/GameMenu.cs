@@ -217,18 +217,19 @@ public class GameMenu : MonoBehaviour
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
         {
-            // NEED TO UPDATE WITH NEW STATS
+            // *** NEED TO UPDATE WITH NEW STATS ***
             // WIP
             // updates basic values of selected character in status window
+            /*
             statusName.text = playerStats[selected].charName;
             statusHP.text = "" + playerStats[selected].currentHP + "/" + playerStats[selected].maxHP;
             statusMP.text = "" + playerStats[selected].currentMP + "/" + playerStats[selected].maxMP;
             statusStr.text = playerStats[selected].strength.ToString();
-            //statusDef.text = playerStats[selected].defense.ToString();
-            //statusWpnPwr.text = playerStats[selected].wpnPwr.ToString();
-            //statusArmrPwr.text = playerStats[selected].armrPwr.ToString();
+            statusDef.text = playerStats[selected].defense.ToString();
+            statusWpnPwr.text = playerStats[selected].wpnPwr.ToString();
+            statusArmrPwr.text = playerStats[selected].armrPwr.ToString();
 
-            /*
+            
             if (playerStats[selected].equippedWpn != "") // checks if equipped weapon is not empty
             {
                 statusWpnEqpd.text = playerStats[selected].equippedWpn; // updates value of equipped weapon            
@@ -246,10 +247,10 @@ public class GameMenu : MonoBehaviour
             {
                 statusArmrEqpd.text = "None"; // sets armor name to None
             }
-            */
 
             statusExp.text = (playerStats[selected].expToNextLevel[playerStats[selected].playerLevel] - playerStats[selected].currentEXP).ToString(); // updates exp to next level calculating based on current EXP and level
             statusLvl.text = playerStats[selected].playerLevel.ToString(); // sets player level
+            */
 
             statusImage.sprite = playerStats[selected].charImage; // updates character image in status window
         }
