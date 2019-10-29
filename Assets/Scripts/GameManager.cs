@@ -210,8 +210,8 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_active", 0); // saves player inactive tag to player prefs
             }
 
-            // WIP - added new stats
             // saves all player stats to player prefs based on char name
+            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_Status", playerStats[i].statusEffect);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Level", playerStats[i].playerLevel);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CurrentExp", playerStats[i].currentEXP);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_APLevel", playerStats[i].playerAPLevel);
@@ -242,13 +242,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResWater", playerStats[i].resWater);
             PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResQuantum", playerStats[i].resQuantum);
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedWpn", playerStats[i].equippedWpn);
-            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedArmr", playerStats[i].equippedArmr);            
-            //PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_MultiStr", playerStats[i].multiStr);
-            //PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_MultiAgi", playerStats[i].multiAgi);
-            //PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Defense", playerStats[i].defense);
-            //PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_WpnPwr", playerStats[i].wpnPwr);
-            //PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_ArmrPwr", playerStats[i].armrPwr);
-            // END WIP
+            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedArmr", playerStats[i].equippedArmr);
+            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedAccy", playerStats[i].equippedAccy);
         }
 
         // saves inventory data to player prefs based on array location
@@ -275,8 +270,8 @@ public class GameManager : MonoBehaviour
                 playerStats[i].gameObject.SetActive(true); // activates player character object 
             }
 
-            // WIP - added new stats
             // loads all player stats from player prefs based on char name
+            playerStats[i].statusEffect = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_Status");
             playerStats[i].playerLevel = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Level");
             playerStats[i].currentEXP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CurrentExp");
             playerStats[i].playerAPLevel = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_APLevel");
@@ -308,12 +303,7 @@ public class GameManager : MonoBehaviour
             playerStats[i].resQuantum = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResQuantum");
             playerStats[i].equippedWpn = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedWpn");
             playerStats[i].equippedArmr = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedArmr");
-            //playerStats[i].multiStr = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_MultiStr");
-            //playerStats[i].multiAgi = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_MultiAgi");
-            //playerStats[i].defense = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Defense");
-            //playerStats[i].wpnPwr = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_WpnPwr");
-            //playerStats[i].armrPwr = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_ArmrPwr");
-            // END WIP
+            playerStats[i].equippedAccy = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedAccy");
         }
 
         // loads inventory data to player prefs based on array location

@@ -9,7 +9,7 @@ public class CharStats : MonoBehaviour
 {
     // WIP - added new stats
     // creates various variables to handle character stats and attributes
-    public string charName, equippedWpn, equippedArmr;
+    public string charName, statusEffect, equippedWpn, equippedArmr, equippedAccy;
     public int currentHP, currentMP, strength, tech, endurance, agility, luck, speed;
     public int dmgWeapon, hitChance, critChance, evadeChance, blockChance, defWeapon, defTech;
     public float resHeat = 1f, resFreeze = 1f, resShock = 1f, resVirus = 1f, resChem = 1f, resKinetic = 1f, resWater = 1f, resQuantum = 1f;

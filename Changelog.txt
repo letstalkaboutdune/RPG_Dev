@@ -1,6 +1,6 @@
 10/28/19
 ********
-Feature: Completed basic design of new Status menu
+Feature: Completed initial design of new Status menu and updated to show all stats
 
 10/27/19
 ********

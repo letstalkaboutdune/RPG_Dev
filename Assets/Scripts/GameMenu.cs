@@ -28,10 +28,15 @@ public class GameMenu : MonoBehaviour
 
     // WIP - ADDED NEW STATS
     // creates various Text variables to handle values of character stats in stats menu
-    public Text statusName, statusHP, statusMP, statusLvl, statusExp, statusAbility, statusAP;
+    public Text statusName, statusStatus, statusLV, statusHP, statusMP, statusNextLV, statusAbilityLV, statusNextAbility;
     public Text statusStr, statusTech, statusEnd, statusAgi, statusLuck, statusSpeed;
-    // public Text statusName, statusHP, statusMP, statusStr, statusDef;
-    // public Text statusWpnEqpd, statusWpnPwr, statusArmrEqpd, statusArmrPwr, statusLvl, statusExp;
+    public Text statusWeaponDmg, statusHitChance, statusCritChance, statusWeaponDef, statusEvadeChance, statusBlockChance, statusTechDef;
+    public Text statusWeaponEquip, statusArmorEquip, statusAccyEquip;
+    /*
+    public Text statusName, statusHP, statusMP, statusLvl, statusExp, statusAbility, statusAP;
+    public Text statusName, statusHP, statusMP, statusStr, statusDef;
+    public Text statusWpnEqpd, statusWpnPwr, statusArmrEqpd, statusArmrPwr, statusLvl, statusExp;
+    */
     // END WIP
 
     public Image statusImage; // creates Image variable to handle character image in stats menu
@@ -106,7 +111,7 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-    public void UpdateMainStats() // creates function to update stats in menu
+    public void UpdateMainStats() // creates function to update basic stats in main menu
     {
         playerStats = GameManager.instance.playerStats; // sets playerStats in game menu equal to player stats in game manager
 
@@ -149,7 +154,6 @@ public class GameMenu : MonoBehaviour
 
         goldText.text = GameManager.instance.currentGold.ToString() + "g"; // updates current gold on game menu
     }
-
 
     public void ToggleWindow(int windowNumber) // creates function to toggle menu windows on and off
                                                // requires an int reference to windowNumber to run
@@ -217,42 +221,72 @@ public class GameMenu : MonoBehaviour
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
         {
-            // *** NEED TO UPDATE WITH NEW STATS ***
-            // WIP
-            // updates basic values of selected character in status window
-            /*
+            // updates status effect of selected char in status window
+            if (playerStats[selected].statusEffect != "") // checks if status effect is not empty
+            {
+                statusStatus.text = playerStats[selected].statusEffect; // updates value of status effect
+            }
+            else // executes if status effect is empty
+            {
+                statusStatus.text = ""; // sets status effect to None
+            }
+
+            // updates basic stats of selected char in status window
+            statusImage.sprite = playerStats[selected].charImage;
             statusName.text = playerStats[selected].charName;
+            statusLV.text = playerStats[selected].playerLevel.ToString();
             statusHP.text = "" + playerStats[selected].currentHP + "/" + playerStats[selected].maxHP;
             statusMP.text = "" + playerStats[selected].currentMP + "/" + playerStats[selected].maxMP;
-            statusStr.text = playerStats[selected].strength.ToString();
-            statusDef.text = playerStats[selected].defense.ToString();
-            statusWpnPwr.text = playerStats[selected].wpnPwr.ToString();
-            statusArmrPwr.text = playerStats[selected].armrPwr.ToString();
+            statusNextLV.text = (playerStats[selected].expToNextLevel[playerStats[selected].playerLevel] - playerStats[selected].currentEXP).ToString();
+            statusAbilityLV.text = playerStats[selected].playerAPLevel.ToString();
 
-            
+            // ** NEED TO UPDATE TO INCLUDE NEXT ABILITY LEVEL **
+            //statusNextAbility.text = (playerStats[selected].apToNextLevel[playerStats[selected].playerAPLevel] - playerStats[selected].currentAP).ToString();
+
+            // updates main stats of selected character in status window
+            statusStr.text = playerStats[selected].strength.ToString();
+            statusTech.text = playerStats[selected].tech.ToString();
+            statusEnd.text = playerStats[selected].endurance.ToString();
+            statusAgi.text = playerStats[selected].agility.ToString();
+            statusLuck.text = playerStats[selected].luck.ToString();
+            statusSpeed.text = playerStats[selected].speed.ToString();
+
+            // updates derived status of selected char in status window
+            statusWeaponDmg.text = playerStats[selected].dmgWeapon.ToString();
+            statusHitChance.text = playerStats[selected].hitChance.ToString();
+            statusCritChance.text = playerStats[selected].critChance.ToString();
+            statusWeaponDef.text = playerStats[selected].defWeapon.ToString();
+            statusEvadeChance.text = playerStats[selected].evadeChance.ToString();
+            statusBlockChance.text = playerStats[selected].blockChance.ToString();
+            statusTechDef.text = playerStats[selected].defTech.ToString();
+
+            // updates equip info of selected char in status window
             if (playerStats[selected].equippedWpn != "") // checks if equipped weapon is not empty
             {
-                statusWpnEqpd.text = playerStats[selected].equippedWpn; // updates value of equipped weapon            
+                statusWeaponEquip.text = playerStats[selected].equippedWpn; // updates value of equipped weapon            
             }
             else // executes if weapon value is empty
             {
-                statusWpnEqpd.text = "None"; // sets weapon name to None
+                statusWeaponEquip.text = "None"; // sets weapon name to None
             }
 
             if (playerStats[selected].equippedArmr != "") // checks if equipped armor is not empty
             {
-                statusArmrEqpd.text = playerStats[selected].equippedArmr; // updates value of equipped armor
+                statusArmorEquip.text = playerStats[selected].equippedArmr; // updates value of equipped armor
             }
             else // executes if armor value is empty
             {
-                statusArmrEqpd.text = "None"; // sets armor name to None
+                statusArmorEquip.text = "None"; // sets armor name to None
             }
 
-            statusExp.text = (playerStats[selected].expToNextLevel[playerStats[selected].playerLevel] - playerStats[selected].currentEXP).ToString(); // updates exp to next level calculating based on current EXP and level
-            statusLvl.text = playerStats[selected].playerLevel.ToString(); // sets player level
-            */
-
-            statusImage.sprite = playerStats[selected].charImage; // updates character image in status window
+            if (playerStats[selected].equippedAccy != "") // checks if equipped accessory is not empty
+            {
+                statusAccyEquip.text = playerStats[selected].equippedAccy; // updates value of equipped accessory
+            }
+            else // executes if accessory value is empty
+            {
+                statusAccyEquip.text = "None"; // sets accessory name to None
+            }
         }
     }
 
@@ -372,7 +406,6 @@ public class GameMenu : MonoBehaviour
             }
         }
     }
-
 
     public void CloseItemCharChoice() // creates function to close item character choice menu
     {
