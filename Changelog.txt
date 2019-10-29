@@ -1,3 +1,7 @@
+10/29/19
+********
+Feature: Implemented basic AP (ability points) and ability leveling
+
 10/28/19
 ********
 Feature: Completed initial design of new Status menu and updated to show all stats

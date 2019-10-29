@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: Sleepy
+  statusEffect: 
   equippedWpn: 
   equippedArmr: 
+  equippedAccy: 
   currentHP: 125
   currentMP: 35
   strength: 5
@@ -58,7 +60,7 @@ MonoBehaviour:
   hitChance: 80
   critChance: 15
   evadeChance: 0
-  statusChance: 0
+  blockChance: 0
   defWeapon: 10
   defTech: 10
   resHeat: 1
@@ -128,8 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: Tim
+  statusEffect: 
   equippedWpn: 
   equippedArmr: 
+  equippedAccy: 
   currentHP: 100
   currentMP: 25
   strength: 10
@@ -142,7 +146,7 @@ MonoBehaviour:
   hitChance: 85
   critChance: 25
   evadeChance: 0
-  statusChance: 0
+  blockChance: 0
   defWeapon: 10
   defTech: 10
   resHeat: 1
@@ -342,8 +346,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charName: Woody
+  statusEffect: 
   equippedWpn: 
   equippedArmr: 
+  equippedAccy: 
   currentHP: 125
   currentMP: 35
   strength: 15
@@ -356,7 +362,7 @@ MonoBehaviour:
   hitChance: 90
   critChance: 35
   evadeChance: 0
-  statusChance: 0
+  blockChance: 0
   defWeapon: 10
   defTech: 10
   resHeat: 1

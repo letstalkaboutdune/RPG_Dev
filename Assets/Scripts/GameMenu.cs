@@ -237,11 +237,25 @@ public class GameMenu : MonoBehaviour
             statusLV.text = playerStats[selected].playerLevel.ToString();
             statusHP.text = "" + playerStats[selected].currentHP + "/" + playerStats[selected].maxHP;
             statusMP.text = "" + playerStats[selected].currentMP + "/" + playerStats[selected].maxMP;
-            statusNextLV.text = (playerStats[selected].expToNextLevel[playerStats[selected].playerLevel] - playerStats[selected].currentEXP).ToString();
             statusAbilityLV.text = playerStats[selected].playerAPLevel.ToString();
 
-            // ** NEED TO UPDATE TO INCLUDE NEXT ABILITY LEVEL **
-            //statusNextAbility.text = (playerStats[selected].apToNextLevel[playerStats[selected].playerAPLevel] - playerStats[selected].currentAP).ToString();
+            if (playerStats[selected].isMaxLevel) // checks if player is max level
+            {
+                statusNextLV.text = "MAX"; // sets "MAX" text on exp to next level
+            }
+            else // executes if player is not max level
+            {
+                statusNextLV.text = (playerStats[selected].expToNextLevel[playerStats[selected].playerLevel] - playerStats[selected].currentEXP).ToString(); // sets exp to next level text
+            }
+
+            if (playerStats[selected].isMaxAPLevel) // checks if player is max AP level
+            {
+                statusNextAbility.text = "MAX"; // sets "MAX" test on ap to next level
+            }
+            else // executes if player is not max AP level
+            {
+                statusNextAbility.text = (playerStats[selected].apToNextLevel[playerStats[selected].playerAPLevel] - playerStats[selected].currentAP).ToString(); // sets AP to next level text
+            }
 
             // updates main stats of selected character in status window
             statusStr.text = playerStats[selected].strength.ToString();

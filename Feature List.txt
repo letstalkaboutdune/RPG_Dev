@@ -9,7 +9,7 @@ Annoying
 
 Features
 ********
-*** NEXT: Game: implement AP leveling
+Game: implement unlocking battle moves/abilities based on AP level
 Game/Battle: implement items affecting new dmgWeapon / defWeapon / defTech parameters
 Battle: implement Evade/Block, remove evade chance from base stats and add evadeArmor and blockShield instead
 Battle: test and clean up new damage implementation
