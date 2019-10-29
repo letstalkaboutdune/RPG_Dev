@@ -11,6 +11,7 @@ public class BattleType
     // creates various variables to handle elements of battle configuration
     public string[] enemies;
     public int rewardXP;
+    public int rewardAP;
     public string[] rewardItems;
     public int rewardGold;
 }

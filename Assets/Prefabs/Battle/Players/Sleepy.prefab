@@ -94,9 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 1
   hasDied: 0
-  movesAvailable:
-  - Freeze
-  - Virus
+  movesAvailable: []
   charName: Sleepy
   currentHP: 0
   maxHP: 0
@@ -110,12 +108,10 @@ MonoBehaviour:
   speed: 0
   inFrontRow: 0
   dmgWeapon: 0
-  multiStr: 0
-  multiAgi: 0
   hitChance: 0
   critChance: 0
   evadeChance: 0
-  statusChance: 0
+  blockChance: 0
   defWeapon: 0
   defTech: 0
   resHeat: 0

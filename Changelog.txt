@@ -1,6 +1,8 @@
 10/29/19
 ********
 Feature: Implemented basic AP (ability points) and ability leveling
+Feature: Implemented AP display and application in post-battle rewards
+Feature: Implement abilities unlocking based on ability level
 
 10/28/19
 ********

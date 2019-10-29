@@ -10,12 +10,13 @@ public class BattleReward : MonoBehaviour
 {
     public static BattleReward instance; // creates static instance of BattleReward
 
-    public Text xpText, itemText, goldText; // creates Text objects to handle display of EXP and item text
+    public Text xpText, apText, itemText, goldText; // creates Text objects to handle display of EXP and item text
 
     public GameObject rewardScreen; // creates GameObject to handle display of reward screen
 
     public string[] rewardItems; // creates string array to handle found items
     public int xpEarned; // creates int to handle EXP earned
+    public int apEarned; // creates int to handle AP earned
     public int rewardGold; // creates int to handle gold earned    
 
     // creates variables to handle marking quests complete after battle completion
@@ -41,14 +42,16 @@ public class BattleReward : MonoBehaviour
         */
     }
 
-    public void OpenRewardScreen(int xp, string[] rewards, int gold) // creates function to handle display of reward screen
+    public void OpenRewardScreen(int xp, int ap, string[] rewards, int gold) // creates function to handle display of reward screen
     {
         // assigns values in script to passed function values
         xpEarned = xp;
+        apEarned = ap;
         rewardItems = rewards;
         rewardGold = gold;
 
         xpText.text = "Earned " + xpEarned + " EXP!"; // displays EXP earned text
+        apText.text = "Earned " + apEarned + " AP!"; // displays AP earned text
         goldText.text = "Earned " + rewardGold + " gold!"; // displays gold earned text
 
         itemText.text = ""; // resets any previous item text
@@ -70,6 +73,7 @@ public class BattleReward : MonoBehaviour
                 if (GameManager.instance.playerStats[i].currentHP > 0) // checks if player is alive after battle
                 {
                     GameManager.instance.playerStats[i].AddExp(xpEarned); // adds EXP to current player
+                    GameManager.instance.playerStats[i].AddAP(apEarned); // adds AP to current player
                 }
             }
         }

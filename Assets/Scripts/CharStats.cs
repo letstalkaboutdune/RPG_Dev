@@ -22,6 +22,8 @@ public class CharStats : MonoBehaviour
     public int[] expToNextLevel, apToNextLevel;
     public int maxLevel = 100;
     public int maxAPLevel = 10;
+
+    public string[] abilities; // creates string array to handle abilities available to character
     
     public Sprite charImage; // creates Sprite to handle character image
 
@@ -47,12 +49,14 @@ public class CharStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // *DEBUG ONLY - adds EXP, AP if "K" key is pressed
+        // *DEBUG ONLY - DISABLED* - adds EXP, AP if "K" key is pressed
+        /*
         if (Input.GetKeyDown(KeyCode.K))  
         {
             AddExp(100000); // calls AddExp function to increase EXP by 100000
             AddAP(1000); // calls AddAP function to increase AP by 1000
-        }        
+        }
+        */
     }
 
     public void AddExp(int expToAdd) // creates function to add experience to currentExp and check for level-up
@@ -64,7 +68,7 @@ public class CharStats : MonoBehaviour
             if (playerLevel < maxLevel) // checks if playerLevel is less than maxLevel to prevent index-out-of-range errors
             {
                 // manages EXP and levels up player
-                while (currentEXP >= expToNextLevel[playerLevel]) // continuously checks if currentEXP is larger than next level requirement
+                while (currentEXP >= expToNextLevel[playerLevel] && playerLevel < maxLevel) // continuously checks if currentEXP is larger than next level requirement and player is not max level
                 {
                     currentEXP -= expToNextLevel[playerLevel]; // removes expToNextLevel from current experience
                                                                // this makes the expToNextLevel array act as EXP gain requirement rather than overall EXP requirement
@@ -89,7 +93,7 @@ public class CharStats : MonoBehaviour
                     }
                     currentHP = maxHP; // restores HP to max on level up
 
-                    maxMP = Mathf.FloorToInt(maxMP * 1.05f); ; // increases maxMP based on previous value * 1.05
+                    maxMP = Mathf.FloorToInt(maxMP * 1.05f); // increases maxMP based on previous value * 1.05
 
                     if (maxMP > 999) // checks if maxMP > 999
                     {
@@ -117,7 +121,7 @@ public class CharStats : MonoBehaviour
             if (playerAPLevel < maxAPLevel) // checks if playerAPLevel is less than maxAPLevel to prevent index-out-of-range errors
             {
                 // manages AP and levels up player
-                while (currentAP >= apToNextLevel[playerAPLevel]) // continuously checks if currentAP is larger than next AP level requirement
+                while (currentAP >= apToNextLevel[playerAPLevel] && playerAPLevel < maxAPLevel) // continuously checks if currentAP is larger than next AP level requirement and player is not max AP level
                 {
                     currentAP -= apToNextLevel[playerAPLevel]; // removes apToNextLevel from current AP
                                                                // this makes the apToNextLevel array act as AP gain requirement rather than overall AP requirement
@@ -135,6 +139,4 @@ public class CharStats : MonoBehaviour
             }
         }
     }
-    // NEED FUNCTION TO ADD AP AND CHECK LEVEL
-    // VERY SIMILAR TO EXP
 }

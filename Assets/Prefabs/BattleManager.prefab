@@ -3425,7 +3425,7 @@ GameObject:
   - component: {fileID: 1262981340886648430}
   - component: {fileID: 1262981340886648431}
   m_Layer: 0
-  m_Name: Magic Button
+  m_Name: Ability Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6869,7 +6869,7 @@ MonoBehaviour:
     isWeapon: 1
     isTech: 0
     isStatus: 0
-    isMelee: 1
+    isRanged: 0
     element: 
   - moveName: Heat
     movePower: 10
@@ -6879,7 +6879,7 @@ MonoBehaviour:
     isWeapon: 0
     isTech: 1
     isStatus: 0
-    isMelee: 0
+    isRanged: 0
     element: Heat
   - moveName: Freeze
     movePower: 10
@@ -6889,7 +6889,7 @@ MonoBehaviour:
     isWeapon: 0
     isTech: 1
     isStatus: 0
-    isMelee: 0
+    isRanged: 0
     element: Freeze
   - moveName: Virus
     movePower: 10
@@ -6899,7 +6899,7 @@ MonoBehaviour:
     isWeapon: 0
     isTech: 1
     isStatus: 0
-    isMelee: 0
+    isRanged: 0
     element: Virus
   enemyAttackEffect: {fileID: 1361751456815257180, guid: df7538116be861a4d9a53929dccee365,
     type: 3}
@@ -7000,6 +7000,7 @@ MonoBehaviour:
   - {fileID: 1262981342370149869}
   gameOverScene: GameOver
   rewardXP: 500
+  rewardAP: 0
   rewardGold: 0
   rewardItems:
   - Health Potion
@@ -8961,7 +8962,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Magic
+  m_Text: Ability
 --- !u!1 &1262981342556888388
 GameObject:
   m_ObjectHideFlags: 0

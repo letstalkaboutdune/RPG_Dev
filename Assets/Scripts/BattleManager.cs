@@ -62,7 +62,7 @@ public class BattleManager : MonoBehaviour
     public string gameOverScene; // creates string to handle transition to game over screen
 
     // creates variables to handle providing battle rewards
-    public int rewardXP, rewardGold;
+    public int rewardXP, rewardAP, rewardGold;
     public string[] rewardItems;
 
     public bool cannotFlee; // creates bool to handle whether party can flee from battle
@@ -215,6 +215,16 @@ public class BattleManager : MonoBehaviour
                             //activeBattlers[i].defense = thePlayer.defense;
                             //activeBattlers[i].wpnPower = thePlayer.wpnPwr;
                             //activeBattlers[i].armrPower = thePlayer.armrPwr;
+                            // END WIP
+
+                            // WIP
+                            // ** NEED TO ADD FOR LOOP TO ADD ALL MOVES AVAILABLE BASED ON ABILITIES LIST AND ABILITY LEVEL **
+                            activeBattlers[i].movesAvailable = new string[thePlayer.playerAPLevel]; // initializes active battler moves list array to size equal to player AP level
+
+                            for (int k = 0; k < thePlayer.playerAPLevel; k++) // iterates as many times as the player ability level
+                            {
+                                activeBattlers[i].movesAvailable[k] = thePlayer.abilities[k]; // builds the player's move list based on the abilities unlocked for that ability level
+                            }
                             // END WIP
                         }
                     }
@@ -813,7 +823,7 @@ public class BattleManager : MonoBehaviour
         }
         else // calls reward screen if party is not fleeing
         {
-            BattleReward.instance.OpenRewardScreen(rewardXP, rewardItems, rewardGold); // calls battle reward function based on passed XP and items
+            BattleReward.instance.OpenRewardScreen(rewardXP, rewardAP, rewardItems, rewardGold); // calls battle reward function based on passed XP, AP, items, and gold
         }
 
         AudioManager.instance.PlayBGM(FindObjectOfType<CameraController>().musicToPlay); // changes BGM back to current scene

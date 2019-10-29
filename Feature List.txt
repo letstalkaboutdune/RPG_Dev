@@ -9,7 +9,7 @@ Annoying
 
 Features
 ********
-Game: implement unlocking battle moves/abilities based on AP level
+*** NEXT *** Menu: implement display of unlocked abilities in "Abilities" panel on status menu
 Game/Battle: implement items affecting new dmgWeapon / defWeapon / defTech parameters
 Battle: implement Evade/Block, remove evade chance from base stats and add evadeArmor and blockShield instead
 Battle: test and clean up new damage implementation

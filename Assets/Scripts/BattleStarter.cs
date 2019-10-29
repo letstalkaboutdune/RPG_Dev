@@ -86,6 +86,7 @@ public class BattleStarter : MonoBehaviour
 
         BattleManager.instance.rewardItems = potentialBattles[selectedBattle].rewardItems; // passes selected battle reward items to battle manager
         BattleManager.instance.rewardXP = potentialBattles[selectedBattle].rewardXP; // passes selected battle reward EXP to battle manager
+        BattleManager.instance.rewardAP = potentialBattles[selectedBattle].rewardAP; // passes selected battle reward AP to battle manager
         BattleManager.instance.rewardGold = potentialBattles[selectedBattle].rewardGold; // passes selected battle gold to battle manager
 
         yield return new WaitForSeconds(1.5f); // forces 1.5-second wait to allow for fade to black

@@ -938,6 +938,7 @@ MonoBehaviour:
     - Skeleton
     - Spider
     rewardXP: 500
+    rewardAP: 5
     rewardItems:
     - Wooden Sword
     rewardGold: 10
@@ -946,6 +947,7 @@ MonoBehaviour:
     - Eyeball
     - Eyeball
     rewardXP: 750
+    rewardAP: 5
     rewardItems:
     - Health Potion
     - Health Potion
@@ -953,6 +955,7 @@ MonoBehaviour:
   - enemies:
     - Spider
     rewardXP: 250
+    rewardAP: 5
     rewardItems:
     - Leather Armor
     rewardGold: 5
@@ -960,6 +963,7 @@ MonoBehaviour:
     - Skeleton
     - Skeleton
     rewardXP: 500
+    rewardAP: 5
     rewardItems:
     - Wooden Sword
     rewardGold: 15
@@ -968,6 +972,7 @@ MonoBehaviour:
     - Spider
     - Spider
     rewardXP: 750
+    rewardAP: 5
     rewardItems:
     - Leather Armor
     - Health Potion
@@ -977,6 +982,7 @@ MonoBehaviour:
     - Skeleton
     - Spider
     rewardXP: 750
+    rewardAP: 5
     rewardItems:
     - Leather Armor
     - Wooden Sword
@@ -1257,6 +1263,7 @@ MonoBehaviour:
   - enemies:
     - Dragon
     rewardXP: 2000
+    rewardAP: 10
     rewardItems:
     - Revive Potion
     - Mana Potion
@@ -1472,6 +1479,7 @@ MonoBehaviour:
     - Skeleton
     - Spider
     rewardXP: 500
+    rewardAP: 5
     rewardItems:
     - Wooden Sword
     rewardGold: 10
@@ -1480,6 +1488,7 @@ MonoBehaviour:
     - Eyeball
     - Eyeball
     rewardXP: 750
+    rewardAP: 5
     rewardItems:
     - Health Potion
     - Health Potion
@@ -1487,6 +1496,7 @@ MonoBehaviour:
   - enemies:
     - Spider
     rewardXP: 250
+    rewardAP: 5
     rewardItems:
     - Leather Armor
     rewardGold: 5
@@ -1494,6 +1504,7 @@ MonoBehaviour:
     - Skeleton
     - Skeleton
     rewardXP: 500
+    rewardAP: 5
     rewardItems:
     - Wooden Sword
     rewardGold: 15
@@ -1502,6 +1513,7 @@ MonoBehaviour:
     - Spider
     - Spider
     rewardXP: 750
+    rewardAP: 5
     rewardItems:
     - Leather Armor
     - Health Potion
@@ -1511,6 +1523,7 @@ MonoBehaviour:
     - Skeleton
     - Spider
     rewardXP: 750
+    rewardAP: 5
     rewardItems:
     - Leather Armor
     - Wooden Sword
@@ -12561,6 +12574,7 @@ MonoBehaviour:
     - Skeleton
     - Spider
     rewardXP: 500
+    rewardAP: 5
     rewardItems:
     - Wooden Sword
     rewardGold: 10
@@ -12569,6 +12583,7 @@ MonoBehaviour:
     - Eyeball
     - Eyeball
     rewardXP: 750
+    rewardAP: 5
     rewardItems:
     - Health Potion
     - Health Potion
@@ -12576,6 +12591,7 @@ MonoBehaviour:
   - enemies:
     - Spider
     rewardXP: 250
+    rewardAP: 5
     rewardItems:
     - Leather Armor
     rewardGold: 5
@@ -12583,6 +12599,7 @@ MonoBehaviour:
     - Skeleton
     - Skeleton
     rewardXP: 500
+    rewardAP: 5
     rewardItems:
     - Wooden Sword
     rewardGold: 15
@@ -12591,6 +12608,7 @@ MonoBehaviour:
     - Spider
     - Spider
     rewardXP: 750
+    rewardAP: 5
     rewardItems:
     - Leather Armor
     - Health Potion
@@ -12600,6 +12618,7 @@ MonoBehaviour:
     - Skeleton
     - Spider
     rewardXP: 750
+    rewardAP: 5
     rewardItems:
     - Leather Armor
     - Wooden Sword
