@@ -3,6 +3,8 @@
 Feature: Implemented basic AP (ability points) and ability leveling
 Feature: Implemented AP display and application in post-battle rewards
 Feature: Implement abilities unlocking based on ability level
+Feature: Implemented display of unlocked abilities in abilities panel on status menu
+Bug: Fixed gold not being saved/loaded
 
 10/28/19
 ********

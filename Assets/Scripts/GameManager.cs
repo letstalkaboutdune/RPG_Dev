@@ -246,6 +246,9 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedAccy", playerStats[i].equippedAccy);
         }
 
+        // saves gold to player prefs
+        PlayerPrefs.SetInt("CurrentGold", currentGold);
+
         // saves inventory data to player prefs based on array location
         for (int i = 0; i < itemsHeld.Length; i++) // iterates through all items held locations
         {
@@ -305,6 +308,9 @@ public class GameManager : MonoBehaviour
             playerStats[i].equippedArmr = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedArmr");
             playerStats[i].equippedAccy = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedAccy");
         }
+
+        // loads gold from player prefs
+        currentGold = PlayerPrefs.GetInt("CurrentGold");
 
         // loads inventory data to player prefs based on array location
         for (int i = 0; i < itemsHeld.Length; i++) // iterates through all items held locations

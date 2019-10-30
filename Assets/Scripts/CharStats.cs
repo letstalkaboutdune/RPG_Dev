@@ -126,8 +126,6 @@ public class CharStats : MonoBehaviour
                     currentAP -= apToNextLevel[playerAPLevel]; // removes apToNextLevel from current AP
                                                                // this makes the apToNextLevel array act as AP gain requirement rather than overall AP requirement
                     playerAPLevel++; // increments player AP level
-
-                    // ** NEED TO UPDATE TO SUPPORT UNLOCKING ABILITIES FOR ALL CHARACTERS **
                 }
             }
 

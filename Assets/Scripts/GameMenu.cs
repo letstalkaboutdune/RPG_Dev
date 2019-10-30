@@ -26,19 +26,12 @@ public class GameMenu : MonoBehaviour
 
     public GameObject[] statusButtons; // creates GameObject array to handle state of status window buttons
 
-    // WIP - ADDED NEW STATS
     // creates various Text variables to handle values of character stats in stats menu
     public Text statusName, statusStatus, statusLV, statusHP, statusMP, statusNextLV, statusAbilityLV, statusNextAbility;
     public Text statusStr, statusTech, statusEnd, statusAgi, statusLuck, statusSpeed;
     public Text statusWeaponDmg, statusHitChance, statusCritChance, statusWeaponDef, statusEvadeChance, statusBlockChance, statusTechDef;
     public Text statusWeaponEquip, statusArmorEquip, statusAccyEquip;
-    /*
-    public Text statusName, statusHP, statusMP, statusLvl, statusExp, statusAbility, statusAP;
-    public Text statusName, statusHP, statusMP, statusStr, statusDef;
-    public Text statusWpnEqpd, statusWpnPwr, statusArmrEqpd, statusArmrPwr, statusLvl, statusExp;
-    */
-    // END WIP
-
+    
     public Image statusImage; // creates Image variable to handle character image in stats menu
 
     public ItemButton[] itemButtons; // creates ItemButtons array to manage item button details
@@ -76,6 +69,8 @@ public class GameMenu : MonoBehaviour
     // creates variables to handle game notification dialog box and text
     public GameObject gameNotification;
     public Text notificationText;
+
+    public Text[] abilityList; // creates Text array to handle list of abilities in status menu
 
     // Start is called before the first frame update
     void Start()
@@ -301,6 +296,19 @@ public class GameMenu : MonoBehaviour
             {
                 statusAccyEquip.text = "None"; // sets accessory name to None
             }
+
+            // *** NEED TO UPDATE UNLOCKED ABILITIES ***
+            // WIP
+            for(int i = 0; i < playerStats[selected].playerAPLevel; i++) // iterates equal to number of player AP level
+            {
+                abilityList[i].text = playerStats[selected].abilities[i]; // sets ability list text to currently unlocked abilities
+            }
+
+            for(int i = playerStats[selected].playerAPLevel; i < playerStats[selected].maxAPLevel; i++) // iterates through all remaining AP levels
+            {
+                abilityList[i].text = ""; // sets locked ability text to blank
+            }
+            // END WIP
         }
     }
 
