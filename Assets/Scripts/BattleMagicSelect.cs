@@ -28,18 +28,36 @@ public class BattleMagicSelect : MonoBehaviour
 
     public void Press()
     {
-        if (BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn].currentMP >= spellCost) // checks if player's MP is sufficient to cast the spell
-        {        
-            BattleManager.instance.magicMenu.SetActive(false); // hides magic menu
-            BattleManager.instance.OpenTargetMenu(spellName); // calls open target menu to get targets for spells
-            BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn].currentMP -= spellCost; // subtracts MP from player to pay for spell
-        }
-        else // executes if player doesn't have enough MP to cast the spell
+        bool spellFound = false; // creates int to store index of found spell, initializes to -1 by default
+        
+        for(int i = 0; i < BattleManager.instance.movesList.Length; i++) // iterates through entire move list
         {
-            BattleManager.instance.battleNotice.theText.text = "Not enough MP!"; // sets battle notification text to MP warning
+            if(spellName == BattleManager.instance.movesList[i].moveName) // executes once spell is found in move list
+            {
+                spellFound = true;
+            }
+        }
+
+        if (spellFound == true) // executes if spellFound is true, meaning the spell was found
+        {
+            if (BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn].currentMP >= spellCost) // checks if player's MP is sufficient to cast the spell
+            {
+                BattleManager.instance.magicMenu.SetActive(false); // hides magic menu
+                BattleManager.instance.OpenTargetMenu(spellName); // calls open target menu to get targets for spells
+                BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn].currentMP -= spellCost; // subtracts MP from player to pay for spell
+            }
+            else // executes if player doesn't have enough MP to cast the spell
+            {
+                BattleManager.instance.battleNotice.theText.text = "Not enough MP!"; // sets battle notification text to MP warning
+                BattleManager.instance.battleNotice.Activate(); // activates battle notification object
+                BattleManager.instance.magicMenu.SetActive(false); // backs out of magic menu
+            }
+        }
+        else // executes if the spell was not found
+        {
+            BattleManager.instance.battleNotice.theText.text = "Ability not valid!"; // sets battle notification text to MP warning
             BattleManager.instance.battleNotice.Activate(); // activates battle notification object
             BattleManager.instance.magicMenu.SetActive(false); // backs out of magic menu
         }
-
     }
 }

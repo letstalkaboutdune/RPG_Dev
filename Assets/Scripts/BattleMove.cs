@@ -11,9 +11,6 @@ public class BattleMove
     public string moveName; // creates string to handle move name
     public int movePower, moveCost; // creates ints to handle move power and move cost
     public AttackEffect theEffect; // creates attack effect object to handle attack effects
-
-    // WIP - added more variables to capture more move details
-    public bool isWeapon, isTech, isStatus, isRanged;
-    public string element = "";
-    // END WIP
-}
+    public bool isWeapon, isTech, isStatus, isRanged; // creates bool to store various move logic properties
+    public string element = ""; // creates string to store element of Tech attacks
+    }

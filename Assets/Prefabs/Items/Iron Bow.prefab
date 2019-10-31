@@ -97,7 +97,7 @@ MonoBehaviour:
   isArmor: 0
   isRanged: 1
   itemName: Iron Bow
-  description: Strong and fast. +10 weapon damage.
+  description: Strong and fast. +10 weapon damage (ranged).
   value: 25
   itemSprite: {fileID: 21300132, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0

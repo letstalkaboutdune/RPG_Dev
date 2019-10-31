@@ -76,12 +76,10 @@ public class BattleManager : MonoBehaviour
     public int selectedSprite;
     public bool spriteFadeOut;
 
-    // WIP
     // creates variables to manage results of attack rolls
     public bool attackHit = false, attackCrit = false, attackEvaded = false, attackBlocked = false, statusResisted = false;
     public float critMulti = 1f, resMulti = 1f;
     public int moveIndex, movePower, selectedTarget, damageRoll;
-    // END WIP
     
     // Start is called before the first frame update
     void Start()
@@ -185,7 +183,6 @@ public class BattleManager : MonoBehaviour
 
                             CharStats thePlayer = GameManager.instance.playerStats[i]; // stores information from player stats index for easy assignment
 
-                            // WIP - added new stats
                             // assigns all player stats for the player
                             activeBattlers[i].currentHP = thePlayer.currentHP;
                             activeBattlers[i].maxHP = thePlayer.maxHP;
@@ -212,20 +209,16 @@ public class BattleManager : MonoBehaviour
                             activeBattlers[i].resKinetic = thePlayer.resKinetic;
                             activeBattlers[i].resWater = thePlayer.resWater;
                             activeBattlers[i].resQuantum = thePlayer.resQuantum;
-                            //activeBattlers[i].defense = thePlayer.defense;
-                            //activeBattlers[i].wpnPower = thePlayer.wpnPwr;
-                            //activeBattlers[i].armrPower = thePlayer.armrPwr;
-                            // END WIP
+                            activeBattlers[i].equippedWpn = thePlayer.equippedWpn;
+                            activeBattlers[i].equippedArmr = thePlayer.equippedArmr;
+                            activeBattlers[i].equippedAccy = thePlayer.equippedAccy;
 
-                            // WIP
-                            // ** NEED TO ADD FOR LOOP TO ADD ALL MOVES AVAILABLE BASED ON ABILITIES LIST AND ABILITY LEVEL **
                             activeBattlers[i].movesAvailable = new string[thePlayer.playerAPLevel]; // initializes active battler moves list array to size equal to player AP level
 
                             for (int k = 0; k < thePlayer.playerAPLevel; k++) // iterates as many times as the player ability level
                             {
                                 activeBattlers[i].movesAvailable[k] = thePlayer.abilities[k]; // builds the player's move list based on the abilities unlocked for that ability level
                             }
-                            // END WIP
                         }
                     }
                 }
@@ -289,7 +282,6 @@ public class BattleManager : MonoBehaviour
                 {
                     if (activeBattlers[i].charName == GameManager.instance.playerStats[j].charName) // checks if active battler name matches char name in game manager
                     {
-                        // WIP - added new stats
                         // updates current player stats index in game manager with active battler
                         GameManager.instance.playerStats[i].currentHP = activeBattlers[i].currentHP;
                         GameManager.instance.playerStats[i].maxHP = activeBattlers[i].maxHP;
@@ -316,10 +308,6 @@ public class BattleManager : MonoBehaviour
                         GameManager.instance.playerStats[i].resKinetic = activeBattlers[i].resKinetic;
                         GameManager.instance.playerStats[i].resWater = activeBattlers[i].resWater;
                         GameManager.instance.playerStats[i].resQuantum = activeBattlers[i].resQuantum;
-                        //GameManager.instance.playerStats[i].defense = activeBattlers[i].defense;
-                        //GameManager.instance.playerStats[i].wpnPwr = activeBattlers[i].wpnPower;
-                        //GameManager.instance.playerStats[i].armrPwr = activeBattlers[i].armrPower;
-                        // END WIP
                     }
                 }
             }
@@ -413,8 +401,7 @@ public class BattleManager : MonoBehaviour
         RedSpriteGlow(selectedTarget); // shows red sprite glow on current selected target
 
         int selectAttack = Random.Range(0, activeBattlers[currentTurn].movesAvailable.Length); // picks a random move from this battler's move list
-        //movePower = 0; // creates int to store power of a move, initializes to 0 by default
-
+        
         Instantiate(enemyAttackEffect, activeBattlers[currentTurn].transform.position, activeBattlers[currentTurn].transform.rotation); // instantiates attacker white particle effect
         
         for (int i = 0; i < movesList.Length; i++) // iterates through all moves in moves list
@@ -431,8 +418,6 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        //DealDamage(selectedTarget, damageRoll); // calls function to deal damage to player based on selected target and previous damage roll
-
         yield return new WaitForSeconds(1f); // forces a one-second wait
 
         HideSpriteGlow(selectedTarget); // hides sprite glow on current selected target
@@ -444,17 +429,12 @@ public class BattleManager : MonoBehaviour
     {
         selectedTarget = playerTarget;
         playerActing = true; // sets playerActing true to stop update loop from acting on UI
-        //moveIndex = 0; // create local int variable to store found move index in moveList
         
         uiButtonsHolder.SetActive(false); // hides action buttons once player action starts
         targetMenu.transform.localScale = new Vector3(0, 0, 0); // adjusts scale of targetMenu to 0 to prevent multiple clicks
-
-        //movePower = 0; // creates int to store power of a move, initializes to 0 by default
-
-        Instantiate(enemyAttackEffect, activeBattlers[currentTurn].transform.position, activeBattlers[currentTurn].transform.rotation);
-
-        //Debug.Log("Entering for loop."); // print various debug logs
-
+        
+        Instantiate(enemyAttackEffect, activeBattlers[currentTurn].transform.position, activeBattlers[currentTurn].transform.rotation); // instantiates attacker white particle effect
+        
         for (int i = 0; i < movesList.Length; i++) // iterates through all moves in moves list
         {            
             if (movesList[i].moveName == moveName) // checks if selected move is contained in move list
@@ -475,8 +455,7 @@ public class BattleManager : MonoBehaviour
         AttackRolls(); // calls function to manage various attack rolls
 
         //Debug.Log("Dealing damage."); // print status to debug log        
-        //DealDamage(); // calls function to deal damage to enemy
-
+        
         yield return new WaitForSeconds(1f); // forces short wait to prevent visual glitches
 
         //Debug.Log("Finishing player turn."); // print status to debug log        
@@ -530,6 +509,33 @@ public class BattleManager : MonoBehaviour
                 playerName[i].gameObject.SetActive(false); // hides player name object if not a player
             }            
         }
+    }
+
+    public void MeleeOrRanged() // creates function to handle if player attack is melee or ranged
+    {
+        string weaponName = activeBattlers[currentTurn].equippedWpn; // pulls name of active player weapon
+        int weaponIndex = 0; // creates int to store index location of weapon in item array
+        
+        Debug.Log("Player weapon = " + weaponName); // prints player weapon name to debug log
+
+        for (int i = 0; i < GameManager.instance.referenceItems.Length; i++) // iterates through list of all items
+        {
+            if (weaponName == GameManager.instance.referenceItems[i].name) // executes when player equipped weapon matches a weapon in the item list
+            {
+                weaponIndex = i;
+            }
+        }
+        
+        if (GameManager.instance.referenceItems[weaponIndex].isRanged) // executes if weapon is ranged
+        {
+            Debug.Log("Rolling ranged attack."); // prints rangedattack roll to debug menu
+            OpenTargetMenu("Ranged Attack"); // calls open target menu with ranged attack
+        }
+        else // executes if weapon is not ranged (i.e. melee)
+        {
+            Debug.Log("Rolling melee attack."); // prints melee attack roll to debug menu
+            OpenTargetMenu("Melee Attack"); // calls open target menu with melee attack
+        }    
     }
 
     public void OpenTargetMenu(string moveName) // creates function to open player target menu in battle UI
@@ -778,8 +784,6 @@ public class BattleManager : MonoBehaviour
             UpdateBattle(); // calls extra battle stats update, since item acts on game manager
             NextTurn(); // moves to next turn in battle
         }
-
-
     }
 
     public IEnumerator EndBattleCo() // creates IEnumerator coroutine to end battle in victory
@@ -1005,16 +1009,13 @@ public class BattleManager : MonoBehaviour
 
     public void RollWeaponDamage() // creates function to roll weapon attack damage
     {
-        float multiMelee = 1f, multiRanged = 1f, damageFloat = 0f; // creates float variables to handle melee and ranged damage multipliers
+        float multiMelee, multiRanged, damageFloat; // creates float variables to handle melee and ranged damage multipliers
 
         // prints universal weapon damage and defense parameters to debug log
         Debug.Log("Attacker move damage = " + movePower);
         Debug.Log("Attacker weapon damage = " + activeBattlers[currentTurn].dmgWeapon);
         Debug.Log("Attacker crit multiplier = " + critMulti);
         Debug.Log("Defender weapon defense = " + activeBattlers[selectedTarget].defWeapon);
-
-        // *** FOR A BASIC ATTACK, CAN I CHECK HERE IF WEAPON IS RANGED? ***
-        // *** ... OR SHOULD THE AUTO-ATTACK HAVE A RANGED PROPERTY BASED ON EQUIPPED ITEM? ***
 
         if (!movesList[moveIndex].isRanged) // executes if weapon attack is not ranged (i.e. melee)
         {

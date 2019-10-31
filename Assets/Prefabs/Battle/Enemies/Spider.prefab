@@ -95,7 +95,7 @@ MonoBehaviour:
   isPlayer: 0
   hasDied: 0
   movesAvailable:
-  - Slash
+  - Melee Attack
   charName: Spider
   currentHP: 100
   maxHP: 100
@@ -112,7 +112,7 @@ MonoBehaviour:
   hitChance: 75
   critChance: 15
   evadeChance: 0
-  statusChance: 0
+  blockChance: 0
   defWeapon: 2
   defTech: 2
   resHeat: 2
@@ -123,6 +123,9 @@ MonoBehaviour:
   resKinetic: 1
   resWater: 1
   resQuantum: 1
+  equippedWpn: 
+  equippedArmr: 
+  equippedAccy: 
   theSprite: {fileID: 2046263050259084173}
   deadSprite: {fileID: 0}
   aliveSprite: {fileID: 0}

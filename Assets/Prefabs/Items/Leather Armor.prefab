@@ -97,7 +97,7 @@ MonoBehaviour:
   isArmor: 1
   isRanged: 0
   itemName: Leather Armor
-  description: Provides basic protection. +5 weapon defense.
+  description: Provides basic protection. +5 weapon defense, +2 Tech defense.
   value: 10
   itemSprite: {fileID: 21300010, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
@@ -107,5 +107,5 @@ MonoBehaviour:
   amountToChange: 0
   dmgWeapon: 0
   defWeapon: 5
-  defTech: 0
+  defTech: 2
   warningText: 

@@ -178,8 +178,8 @@ public class Shop : MonoBehaviour
             CloseBuyActionPanel(); // close buy item action panel
 
             // resets item text to default
-            buyItemName.text = "Welcome to the shop!\nPlease select an item.";
-            buyItemDescription.text = "";
+            buyItemName.text = "Welcome to the shop!";
+            buyItemDescription.text = "Please select an item.";
             buyItemValue.text = "Value: ";
         }
 
@@ -207,8 +207,8 @@ public class Shop : MonoBehaviour
             CloseSellActionPanel(); // close buy item action panel
             
             // resets item text to default
-            sellItemName.text = "Welcome to the shop!\nPlease select an item.";
-            sellItemDescription.text = "";
+            sellItemName.text = "Welcome to the shop!";
+            sellItemDescription.text = "Please select an item.";
             sellItemValue.text = "Value: ";
         }
 
@@ -249,8 +249,8 @@ public class Shop : MonoBehaviour
                 CloseSellActionPanel(); // close sell item action panel
 
                 // resets sell item details in menu to default values
-                sellItemName.text = "Welcome to the shop!\nPlease select an item.";
-                sellItemDescription.text = "";
+                sellItemName.text = "Welcome to the shop!";
+                sellItemDescription.text = "Please select an item.";
                 sellItemValue.text = "";
             }
         }

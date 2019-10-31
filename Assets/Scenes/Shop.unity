@@ -3447,11 +3447,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4777163509341955215, guid: cbd9599326fa7ea48a99cfbd314ac969,
-        type: 3}
-      propertyPath: m_Name
-      value: Ring of Heat
-      objectReference: {fileID: 0}
     - target: {fileID: 2428203636570480078, guid: cbd9599326fa7ea48a99cfbd314ac969,
         type: 3}
       propertyPath: isArmor
@@ -3476,6 +3471,11 @@ PrefabInstance:
         type: 3}
       propertyPath: defWeapon
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777163509341955215, guid: cbd9599326fa7ea48a99cfbd314ac969,
+        type: 3}
+      propertyPath: m_Name
+      value: '*WIP* Ring of Heat'
       objectReference: {fileID: 0}
     - target: {fileID: 5129022583354461435, guid: cbd9599326fa7ea48a99cfbd314ac969,
         type: 3}
@@ -3814,11 +3814,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4777163509341955215, guid: cbd9599326fa7ea48a99cfbd314ac969,
-        type: 3}
-      propertyPath: m_Name
-      value: Ring of Freeze
-      objectReference: {fileID: 0}
     - target: {fileID: 2428203636570480078, guid: cbd9599326fa7ea48a99cfbd314ac969,
         type: 3}
       propertyPath: isArmor
@@ -3843,6 +3838,11 @@ PrefabInstance:
         type: 3}
       propertyPath: defWeapon
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777163509341955215, guid: cbd9599326fa7ea48a99cfbd314ac969,
+        type: 3}
+      propertyPath: m_Name
+      value: '*WIP* Ring of Freeze'
       objectReference: {fileID: 0}
     - target: {fileID: 5129022583354461435, guid: cbd9599326fa7ea48a99cfbd314ac969,
         type: 3}

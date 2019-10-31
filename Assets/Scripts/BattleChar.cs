@@ -13,15 +13,13 @@ public class BattleChar : MonoBehaviour
 
     public string charName; // creates string to handle battle char name
 
-    // WIP - added new stats
     // creates various variables to handle all battle stats
     public int currentHP, maxHP, currentMP, maxMP, strength, tech, endurance, agility, luck, speed;
     public bool inFrontRow;
     public int dmgWeapon, hitChance, critChance, evadeChance, blockChance, defWeapon, defTech;
     public float resHeat = 1f, resFreeze = 1f, resShock = 1f, resVirus = 1f, resChem = 1f, resKinetic = 1f, resWater = 1f, resQuantum = 1f;
-    //public int defense, wpnPwr, armrPwr;
-    // END WIP
-
+    public string equippedWpn, equippedArmr, equippedAccy;
+    
     public SpriteRenderer theSprite; // creates SpriteRenderer object to handle different sprites based on player status
     public Sprite deadSprite, aliveSprite; // creates two sprites to handle player dead/alive status
 

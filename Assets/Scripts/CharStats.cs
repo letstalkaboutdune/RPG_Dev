@@ -13,11 +13,9 @@ public class CharStats : MonoBehaviour
     public int dmgWeapon, hitChance, critChance, evadeChance, blockChance, defWeapon, defTech;
     public float resHeat = 1f, resFreeze = 1f, resShock = 1f, resVirus = 1f, resChem = 1f, resKinetic = 1f, resWater = 1f, resQuantum = 1f;
     public int maxHP = 100, maxMP = 30;
-    public int[] mpLvlBonus;
 
     // creates various variables to handle player level and experience
     public int playerLevel = 1, playerAPLevel = 1;
-    public int baseEXP = 1000;
     public int currentEXP, currentAP;
     public int[] expToNextLevel, apToNextLevel;
     public int maxLevel = 100;
@@ -41,7 +39,7 @@ public class CharStats : MonoBehaviour
         }
         expToNextLevel[expToNextLevel.Length - 1] = 999999999; // sets last element of array (dummy element) to a huge number
 
-        apToNextLevel = new int[] {0, 10, 20, 40, 80, 160, 320, 640, 1280, 2560, 999999}; // initializes apToNextLevel array to default values
+        apToNextLevel = new int[] {10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 999999}; // initializes apToNextLevel array to default values
     }
 
     // Update is called once per frame

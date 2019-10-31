@@ -9,13 +9,11 @@ Annoying
 
 Features
 ********
-Menu: Update shop info text to allow 1 row for item name and 2 rows for item description.
-Game: Implement Ring of Heat, Ring of Freeze, and accessories that modify elemental resistances
-Game: Modify player attack to switch between melee/ranged based on equipped item
 Battle: implement row checking and update attack calculations to incorporate row and melee vs. ranged
+Game: Implement accessories, then Ring of Heat and Ring of Freeze that modify elemental resistances
 Battle: implement Evade/Block, remove evade chance from base stats and add evadeArmor and blockShield instead
-Game: decide how to handle crit chance (currently have discrete stat, should be based on stats/items for players and direct for enemies)
-Battle: test and clean up new damage implementation
+Game: implement Crit Chance should be based on stats/items for players and direct for enemies
+Battle: test, clean up, and balance new damage implementation
 ****************************************************
 Game/Battle: implement more spells and abilities
 Battle: implement speed-based turn system

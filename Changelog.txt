@@ -1,3 +1,9 @@
+10/31/19
+********
+Feature: Implemented player basic attack switching between melee/ranged based on equipped weapon
+Polish: Updated shop UI to allow longer item descriptions
+Polish: Updated AP to next ability level curve
+
 10/30/19
 ********
 Feature: Implemented equipment affecting new dmgWeapon / defWeapon / defTech parameters

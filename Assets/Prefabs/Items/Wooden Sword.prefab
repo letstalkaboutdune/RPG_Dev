@@ -97,7 +97,7 @@ MonoBehaviour:
   isArmor: 0
   isRanged: 0
   itemName: Wooden Sword
-  description: Not very strong. +5 weapon damage.
+  description: Not very strong. +5 weapon damage (melee).
   value: 10
   itemSprite: {fileID: 21300074, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0

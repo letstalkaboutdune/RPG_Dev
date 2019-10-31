@@ -97,7 +97,7 @@ MonoBehaviour:
   isArmor: 0
   isRanged: 1
   itemName: Wooden Bow
-  description: Hits with a nice "thwack." +5 weapon damage.
+  description: Hits with a dull thud. +5 weapon damage (ranged).
   value: 10
   itemSprite: {fileID: 21300136, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0

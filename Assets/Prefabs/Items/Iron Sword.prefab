@@ -97,7 +97,7 @@ MonoBehaviour:
   isArmor: 0
   isRanged: 0
   itemName: Iron Sword
-  description: Sharp and pointy. +10 weapon damage.
+  description: Sharp and pointy. +10 weapon damage (melee).
   value: 25
   itemSprite: {fileID: 21300078, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0

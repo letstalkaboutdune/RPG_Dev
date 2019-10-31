@@ -3897,8 +3897,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1262981341732043859}
-        m_MethodName: OpenTargetMenu
-        m_Mode: 5
+        m_MethodName: MeleeOrRanged
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5790,7 +5790,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 157.45001, y: -39.85}
+  m_AnchoredPosition: {x: 157.45, y: -39.85}
   m_SizeDelta: {x: 242.9, y: 67.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1262981341481532839
@@ -6861,7 +6861,7 @@ MonoBehaviour:
   statsHolder: {fileID: 1262981341392219834}
   actionButtonsHolder: {fileID: 5057424614681195501}
   movesList:
-  - moveName: Slash
+  - moveName: Melee Attack
     movePower: 10
     moveCost: 0
     theEffect: {fileID: 5443424553989747901, guid: bfc1985962a6986499555b15d8096f8f,
@@ -6870,6 +6870,16 @@ MonoBehaviour:
     isTech: 0
     isStatus: 0
     isRanged: 0
+    element: 
+  - moveName: Ranged Attack
+    movePower: 10
+    moveCost: 0
+    theEffect: {fileID: 5443424553989747901, guid: bfc1985962a6986499555b15d8096f8f,
+      type: 3}
+    isWeapon: 1
+    isTech: 0
+    isStatus: 0
+    isRanged: 1
     element: 
   - moveName: Heat
     movePower: 10
