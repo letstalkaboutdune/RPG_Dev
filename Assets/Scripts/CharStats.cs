@@ -34,14 +34,12 @@ public class CharStats : MonoBehaviour
     {
         expToNextLevel = new int[maxLevel +1]; // initializes expToNextLevel array to size equal to the max number of levels +1, needed to prevent max level array out-of-range errors
 
-        expToNextLevel[1] = baseEXP; // sets EXP requirement for level 2 based on baseEXP
-
-        for (int i = 2; i < expToNextLevel.Length; i++) // iterates from index 2 to end of expToNextLevel array
+        for (int i = 1; i < expToNextLevel.Length; i++) // iterates from index 1 to end of expToNextLevel array
         {
-            expToNextLevel[i] = Mathf.FloorToInt(expToNextLevel[i - 1] * 1.05f); // sets entire expToNextLevel array based on previous value * 1.05
-                                                                                 // Mathf.FloorToInt truncates anything after decimal point and preserves int
+            expToNextLevel[i] = Mathf.FloorToInt(Mathf.Pow(i+1, 3)); // sets EXP to next level equal to level^3
+                                                                     // Mathf.FloorToInt truncates anything after decimal point and preserves int
         }
-        expToNextLevel[expToNextLevel.Length - 1] = 999999; // sets last element of array (dummy element) to 0
+        expToNextLevel[expToNextLevel.Length - 1] = 999999999; // sets last element of array (dummy element) to a huge number
 
         apToNextLevel = new int[] {0, 10, 20, 40, 80, 160, 320, 640, 1280, 2560, 999999}; // initializes apToNextLevel array to default values
     }
@@ -50,13 +48,13 @@ public class CharStats : MonoBehaviour
     void Update()
     {
         // *DEBUG ONLY - DISABLED* - adds EXP, AP if "K" key is pressed
-        /*
+        ///*
         if (Input.GetKeyDown(KeyCode.K))  
         {
             AddExp(100000); // calls AddExp function to increase EXP by 100000
             AddAP(1000); // calls AddAP function to increase AP by 1000
         }
-        */
+        //*/
     }
 
     public void AddExp(int expToAdd) // creates function to add experience to currentExp and check for level-up
@@ -85,7 +83,7 @@ public class CharStats : MonoBehaviour
                         // defense++; // increments defense on odd levels
                     }
 
-                    maxHP = Mathf.FloorToInt(maxHP * 1.05f); // increases maxHP based on previous value * 1.05
+                    maxHP = Mathf.FloorToInt(Mathf.Pow((playerLevel + endurance), 2)); // increases maxHP based on endurance and level
                     
                     if(maxHP > 9999) // checks if maxHP > 9999
                     {
@@ -93,13 +91,14 @@ public class CharStats : MonoBehaviour
                     }
                     currentHP = maxHP; // restores HP to max on level up
 
-                    maxMP = Mathf.FloorToInt(maxMP * 1.05f); // increases maxMP based on previous value * 1.05
+                    maxMP = Mathf.FloorToInt(Mathf.Pow((playerLevel + tech), 2)/10); // increases maxMP based on tech and level
 
                     if (maxMP > 999) // checks if maxMP > 999
                     {
                         maxMP = 999; // clamps maxMP to 999
                     }
                     currentMP = maxMP; // restores MP to max on level up
+                    // END WIP
                 }
             }
 

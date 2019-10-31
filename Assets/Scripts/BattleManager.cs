@@ -1013,6 +1013,8 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Attacker crit multiplier = " + critMulti);
         Debug.Log("Defender weapon defense = " + activeBattlers[selectedTarget].defWeapon);
 
+        // *** FOR A BASIC ATTACK, CAN I CHECK HERE IF WEAPON IS RANGED? ***
+        // *** ... OR SHOULD THE AUTO-ATTACK HAVE A RANGED PROPERTY BASED ON EQUIPPED ITEM? ***
 
         if (!movesList[moveIndex].isRanged) // executes if weapon attack is not ranged (i.e. melee)
         {

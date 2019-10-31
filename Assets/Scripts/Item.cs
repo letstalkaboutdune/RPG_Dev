@@ -38,8 +38,9 @@ public class Item : MonoBehaviour
     [Header("Weapon/Armor Details")] // creates Weapon/Armor Details header in Unity
 
     // create int variables to handle weapon and armor strength
-    public int weaponStrength;
-    public int armorStrength;
+    public int dmgWeapon;
+    public int defWeapon;
+    public int defTech;
 
     public string warningText; // creates string to handle error/warning text
 
@@ -247,16 +248,11 @@ public class Item : MonoBehaviour
 
                 // enables equip effects of weapon on character
                 selectedChar.equippedWpn = itemName;
-                
-                // NEED TO UDPATE WITH NEW STATS
-                // WIP
-                //selectedChar.wpnPwr = weaponStrength;
+                selectedChar.dmgWeapon = dmgWeapon;
 
                 if (GameManager.instance.battleActive) // checks if battle is active
                 {
-                    // NEED TO UPDATE WITH NEW STATS
-                    // WIP
-                    //BattleManager.instance.activeBattlers[charToUseOn].wpnPower = weaponStrength; // enables equip effects of weapon on battle character
+                    BattleManager.instance.activeBattlers[charToUseOn].dmgWeapon = dmgWeapon; // enables equip effects of weapon on battle character
                 }
             
                 GameManager.instance.RemoveItem(itemName); // removes item from inventory
@@ -278,17 +274,16 @@ public class Item : MonoBehaviour
                     GameManager.instance.AddItem(selectedChar.equippedArmr); // adds previously equipped armor to inventory
                 }
                 
-                // NEED TO UPDATE WITH NEW STATS
-                // WIP
                 // enables equip effects of armor on character
-                //selectedChar.equippedArmr = itemName;
-                //selectedChar.armrPwr = armorStrength;
+                selectedChar.equippedArmr = itemName;
+                selectedChar.defWeapon = defWeapon;
+                selectedChar.defTech = defTech;
 
                 if (GameManager.instance.battleActive) // checks if battle is active
                 {
-                    // NEED TO UPDATE WITH NEW STATS
-                    // WIP
-                    //BattleManager.instance.activeBattlers[charToUseOn].armrPower = armorStrength; // enables equip effects of armor on battle character
+                    // enables equip effects of armor on battle character
+                    BattleManager.instance.activeBattlers[charToUseOn].defWeapon = defWeapon;
+                    BattleManager.instance.activeBattlers[charToUseOn].defTech = defTech;
                 }
 
                 GameManager.instance.RemoveItem(itemName); // removes item from inventory

@@ -1,3 +1,10 @@
+10/30/19
+********
+Feature: Implemented equipment affecting new dmgWeapon / defWeapon / defTech parameters
+Feature: Added Iron Bow and Wooden Bow ranged weapons
+Polish: Updated EXP to next level array based on desired EXP curve
+Polish: Updated HP and MP gain per level based on character Endurance and Tech stats
+
 10/29/19
 ********
 Feature: Implemented basic AP (ability points) and ability leveling

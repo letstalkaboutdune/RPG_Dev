@@ -95,8 +95,9 @@ MonoBehaviour:
   isItem: 0
   isWeapon: 1
   isArmor: 0
+  isRanged: 0
   itemName: Dwarven Sword
-  description: Hums with ancient energy. +25 weapon power.
+  description: Hums with ancient energy. +25 weapon damage.
   value: 100
   itemSprite: {fileID: 21300000, guid: ce281bc758d1406479c4f2d47b3d0bee, type: 3}
   affectHP: 0
@@ -104,6 +105,7 @@ MonoBehaviour:
   affectStr: 0
   affectLife: 0
   amountToChange: 0
-  weaponStrength: 25
-  armorStrength: 0
+  dmgWeapon: 25
+  defWeapon: 0
+  defTech: 0
   warningText: 
