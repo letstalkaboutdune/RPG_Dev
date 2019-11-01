@@ -15,6 +15,9 @@ public class Item : MonoBehaviour
     public bool isArmor;
     public bool isAccy;
     public bool isRanged;
+    public bool isTwoHanded;
+    public bool isOffHand;
+    public bool isShield;
 
     [Header("Item Details")] // creates Item Details header in Unity
 
@@ -42,6 +45,8 @@ public class Item : MonoBehaviour
     public int dmgWeapon;
     public int defWeapon;
     public int defTech;
+    public int evadeArmor;
+    public int blockShield;
     
     public float[] resistances = new float[] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f }; // creates array of floats to handle elemental resistances and initializes to default of 0
     // [0] = heat
@@ -289,12 +294,14 @@ public class Item : MonoBehaviour
                 selectedChar.equippedArmr = itemName;
                 selectedChar.defWeapon = defWeapon;
                 selectedChar.defTech = defTech;
+                selectedChar.evadeChance = ((evadeArmor + selectedChar.agility + selectedChar.speed) / 3);
 
                 if (GameManager.instance.battleActive) // checks if battle is active
                 {
                     // enables equip effects of armor on battle character
                     BattleManager.instance.activeBattlers[charToUseOn].defWeapon = defWeapon;
                     BattleManager.instance.activeBattlers[charToUseOn].defTech = defTech;
+                    BattleManager.instance.activeBattlers[charToUseOn].evadeChance = ((evadeArmor + selectedChar.agility + selectedChar.speed) / 3);
                 }
 
                 GameManager.instance.RemoveItem(itemName); // removes item from inventory

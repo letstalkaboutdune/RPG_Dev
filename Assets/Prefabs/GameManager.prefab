@@ -306,6 +306,8 @@ MonoBehaviour:
   - {fileID: 8242204463544825777, guid: 509fe4d1a1f584ec5b837da58dbc09c3, type: 3}
   - {fileID: 6430459205373973784, guid: e26fef75c0fbce94f86ef0ee6cef0c66, type: 3}
   - {fileID: 1825681416343629788, guid: b0688a64e4884e74b9dad22e8ac918aa, type: 3}
+  - {fileID: 916814282435851387, guid: 8fcdcfee9a849284e9d29728149dd101, type: 3}
+  - {fileID: 1629811263330596263, guid: 8a958ece484f5ab4e9007aae8e745391, type: 3}
   currentGold: 0
 --- !u!114 &458343848
 MonoBehaviour:

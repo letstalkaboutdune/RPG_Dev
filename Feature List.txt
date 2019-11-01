@@ -9,7 +9,10 @@ Annoying
 
 Features
 ********
-Game: implement Evade/Block, should be based on stats + items for players and directly for enemies
+Game: implement Block, should be based on stats + shield for players and directly for enemies
+	*** NEED TO ADD A SHIELD
+	*** NEED TO ADD AN OFFHAND SLOT
+	*** NEED TO ADD A 2-HANDED/1-HANDED/OFF-HANDED TAG FOR EQUIPS
 Game: implement Crit Chance, should be based on stats + items for players and directly for enemies
 Game: implement Hit chance, based on base hit + items for players and directly for enemies
 Battle: test, clean up, and balance new damage implementation

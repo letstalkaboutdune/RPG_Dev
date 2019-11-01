@@ -49,6 +49,8 @@ public class CharStats : MonoBehaviour
         expToNextLevel[expToNextLevel.Length - 1] = 999999999; // sets last element of array (dummy element) to a huge number
 
         apToNextLevel = new int[] {10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 999999}; // initializes apToNextLevel array to default values
+
+        CalculateDerivedStats(); // calls function to calculate derived stats upon start
     }
 
     // Update is called once per frame
@@ -90,6 +92,8 @@ public class CharStats : MonoBehaviour
                         // defense++; // increments defense on odd levels
                     }
 
+                    CalculateDerivedStats(); // calls function to calculate derived stats after level up
+
                     maxHP = Mathf.FloorToInt(Mathf.Pow((playerLevel + endurance), 2)); // increases maxHP based on endurance and level
                     
                     if(maxHP > 9999) // checks if maxHP > 9999
@@ -105,7 +109,6 @@ public class CharStats : MonoBehaviour
                         maxMP = 999; // clamps maxMP to 999
                     }
                     currentMP = maxMP; // restores MP to max on level up
-                    // END WIP
                 }
             }
 
@@ -142,5 +145,25 @@ public class CharStats : MonoBehaviour
                 isMaxAPLevel = true;
             }
         }
+    }
+
+    public void CalculateDerivedStats() // creates function to calculate player derived stats
+    {
+        // WIP
+        // CALCULATE INITIAL DERIVED STATS HERE
+        int evadeArmor = 0; // creates local int to store armor evade value, initializes to 0 by default
+
+        foreach(Item armor in GameManager.instance.referenceItems) // iterates through each item in the game manager reference items array
+        {
+            if(armor.name == equippedArmr) // executes when loop finds matching armor
+            {
+                evadeArmor = armor.evadeArmor; // sets local evadeArmor to armor's evadeArmor property
+                break;                         // exits loop
+            }
+        }
+        evadeChance = (agility + speed + evadeArmor) / 3; // calculates player evade chance
+        
+        // *** ONLY CALCULATE BLOCK CHANCE IF SHIELD IS EQUIPPED ***
+        // END WIP
     }
 }

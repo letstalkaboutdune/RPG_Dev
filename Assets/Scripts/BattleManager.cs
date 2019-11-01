@@ -295,6 +295,11 @@ public class BattleManager : MonoBehaviour
                         GameManager.instance.playerStats[i].maxHP = activeBattlers[i].maxHP;
                         GameManager.instance.playerStats[i].currentMP = activeBattlers[i].currentMP;
                         GameManager.instance.playerStats[i].maxMP = activeBattlers[i].maxMP;
+                        
+
+                        /*
+                        // DISABLED - THESE SHOULD NOT CARRY OVER AFTER BATTLE
+                        // DERIVED STATS SHOULD BE KEPT UP-TO-DATE BY GAME MANAGER / CHAR STATS SCRIPTS
                         GameManager.instance.playerStats[i].strength = activeBattlers[i].strength;
                         GameManager.instance.playerStats[i].tech = activeBattlers[i].tech;
                         GameManager.instance.playerStats[i].endurance = activeBattlers[i].endurance;
@@ -314,6 +319,7 @@ public class BattleManager : MonoBehaviour
                         {
                             GameManager.instance.playerStats[i].resistances[k] = activeBattlers[i].resistances[k]; // assigns resistances from active battler to player in game manager
                         }
+                        */
                     }
                 }
             }
@@ -1009,8 +1015,24 @@ public class BattleManager : MonoBehaviour
 
     public void RollEvadeBlock() // creates function to roll if a defender evades/blocks
     {
-        // *** NEED TO ADD CODE TO ROLL EVADE/BLOCK ***
-        // *** NEED TO HANDLE SEPARATE CASES FOR EVADE OR BLOCK, OR BOTH? ***
+        int evadeChance = activeBattlers[selectedTarget].evadeChance; // assigns local variable to defender's evade chance
+        int evadeRoll = Mathf.RoundToInt(Random.Range(0f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
+        Debug.Log("Defender evade chance = " + evadeChance); // prints defender evade chance to debug log
+        Debug.Log("Evade roll = " + evadeRoll); // prints result of evade roll
+
+        if (evadeRoll < evadeChance) // executes if attack is evaded
+        {
+            attackEvaded = true; // sets attackEvaded to true if attack was evaded
+            Debug.Log("Attack evaded."); // prints evade success notifier to debug log
+        }
+        else // executes if attack was not evaded
+        {
+            attackEvaded = false; // sets attackEvaded to false if attack was not evaded
+            Debug.Log("Attack not evaded."); // prints evade failure notifier to debug log
+        }
+
+        // *** NEED TO ADD CODE TO ROLL BLOCK ***
+        // *** ONLY CHECK BLOCK IF SHIELD IS EQUIPPED ***
     }
 
     public void RollWeaponDamage() // creates function to roll weapon attack damage

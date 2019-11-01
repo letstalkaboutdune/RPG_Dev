@@ -95,7 +95,11 @@ MonoBehaviour:
   isItem: 0
   isWeapon: 1
   isArmor: 0
+  isAccy: 0
   isRanged: 1
+  isTwoHanded: 1
+  isOffHand: 0
+  isShield: 0
   itemName: Iron Bow
   description: Strong and fast. +10 weapon damage (ranged).
   value: 25
@@ -108,4 +112,15 @@ MonoBehaviour:
   dmgWeapon: 10
   defWeapon: 0
   defTech: 0
+  evadeArmor: 0
+  blockShield: 0
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   warningText: 

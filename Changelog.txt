@@ -1,3 +1,9 @@
+11/01/19
+********
+Feature: Implemented evading attacks for players (derived from stats + equips) and enemies (controlled directly)
+Feature: Added Wooden Shield and Iron Shield - still need to implement shields, offhand equips, and block
+Polish: Corrected how player stats are carried over after battle
+
 10/31/19
 ********
 Feature: Implemented accessories, including Ring of Heat and Ring of Freeze that modify elemental resistances
