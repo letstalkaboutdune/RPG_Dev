@@ -79,6 +79,7 @@ public class BattleManager : MonoBehaviour
     // creates variables to manage results of attack rolls
     public bool attackHit = false, attackCrit = false, attackEvaded = false, attackBlocked = false, statusResisted = false;
     public float critMulti = 1f, resMulti = 1f;
+    public float attackRowMulti = 1f, defendRowMulti = 1f;
     public int moveIndex, movePower, selectedTarget, damageRoll;
     
     // Start is called before the first frame update
@@ -169,7 +170,7 @@ public class BattleManager : MonoBehaviour
 
             AudioManager.instance.PlayBGM(musicToPlay); // starts battle music based on passed int
 
-            for (int i = 0; i < playerPositions.Length; i++) // iterates through all elements of player positions array
+            for (int i = 0; i < GameManager.instance.playerStats.Length; i++) // iterates through all elements of player positions array
             {
                 if (GameManager.instance.playerStats[i].gameObject.activeInHierarchy) // checks if player at that position is active in hierarchy by checking player stats in game manager
                 {
@@ -177,13 +178,23 @@ public class BattleManager : MonoBehaviour
                     {
                         if(playerPrefabs[j].charName == GameManager.instance.playerStats[i].charName) // checks if active player name matches any player prefab name
                         {
-                            BattleChar newPlayer = Instantiate(playerPrefabs[j], playerPositions[i].position, playerPositions[i].rotation); // instantiates new player at set position
-                            newPlayer.transform.parent = playerPositions[i]; // sets new player instance as a child of player positions array
-                            activeBattlers.Add(newPlayer); // adds new player element to active battlers list using built-in Add function
+                            if (GameManager.instance.playerStats[i].inFrontRow) // checks if player is in front row
+                            {
+                                BattleChar newPlayer = Instantiate(playerPrefabs[j], playerPositions[i].position, playerPositions[i].rotation); // instantiates new player at set position
+                                newPlayer.transform.parent = playerPositions[i]; // sets new player instance as a child of player positions array
+                                activeBattlers.Add(newPlayer); // adds new player element to active battlers list using built-in Add function
+                            }
+                            else // executes if player is in the back row
+                            {
+                                BattleChar newPlayer = Instantiate(playerPrefabs[j], playerPositions[i+3].position, playerPositions[i+3].rotation); // instantiates new player at set position in back row
+                                newPlayer.transform.parent = playerPositions[i+3]; // sets new player instance as a child of player positions array in back row
+                                activeBattlers.Add(newPlayer); // adds new player element to active battlers list using built-in Add function
+                            }
 
                             CharStats thePlayer = GameManager.instance.playerStats[i]; // stores information from player stats index for easy assignment
 
-                            // assigns all player stats for the player
+                            // assigns all player stats for the player                            
+                            activeBattlers[i].inFrontRow = thePlayer.inFrontRow;
                             activeBattlers[i].currentHP = thePlayer.currentHP;
                             activeBattlers[i].maxHP = thePlayer.maxHP;
                             activeBattlers[i].currentMP = thePlayer.currentMP;
@@ -201,17 +212,14 @@ public class BattleManager : MonoBehaviour
                             activeBattlers[i].blockChance = thePlayer.blockChance;
                             activeBattlers[i].defWeapon = thePlayer.defWeapon;
                             activeBattlers[i].defTech = thePlayer.defTech;
-                            activeBattlers[i].resHeat = thePlayer.resHeat;
-                            activeBattlers[i].resFreeze = thePlayer.resFreeze;
-                            activeBattlers[i].resShock = thePlayer.resShock;
-                            activeBattlers[i].resVirus = thePlayer.resVirus;
-                            activeBattlers[i].resChem = thePlayer.resChem;
-                            activeBattlers[i].resKinetic = thePlayer.resKinetic;
-                            activeBattlers[i].resWater = thePlayer.resWater;
-                            activeBattlers[i].resQuantum = thePlayer.resQuantum;
                             activeBattlers[i].equippedWpn = thePlayer.equippedWpn;
                             activeBattlers[i].equippedArmr = thePlayer.equippedArmr;
                             activeBattlers[i].equippedAccy = thePlayer.equippedAccy;
+                            
+                            for(int k = 0; k < thePlayer.resistances.Length; k++) // iterates through all elements of player resistances array
+                            {
+                                activeBattlers[i].resistances[k] = thePlayer.resistances[k]; // assigns resistances from player stats to active battler
+                            }
 
                             activeBattlers[i].movesAvailable = new string[thePlayer.playerAPLevel]; // initializes active battler moves list array to size equal to player AP level
 
@@ -300,14 +308,12 @@ public class BattleManager : MonoBehaviour
                         GameManager.instance.playerStats[i].blockChance = activeBattlers[i].blockChance;
                         GameManager.instance.playerStats[i].defWeapon = activeBattlers[i].defWeapon;
                         GameManager.instance.playerStats[i].defTech = activeBattlers[i].defTech;
-                        GameManager.instance.playerStats[i].resHeat = activeBattlers[i].resHeat;
-                        GameManager.instance.playerStats[i].resFreeze = activeBattlers[i].resFreeze;
-                        GameManager.instance.playerStats[i].resShock = activeBattlers[i].resShock;
-                        GameManager.instance.playerStats[i].resVirus = activeBattlers[i].resVirus;
-                        GameManager.instance.playerStats[i].resChem = activeBattlers[i].resChem;
-                        GameManager.instance.playerStats[i].resKinetic = activeBattlers[i].resKinetic;
-                        GameManager.instance.playerStats[i].resWater = activeBattlers[i].resWater;
-                        GameManager.instance.playerStats[i].resQuantum = activeBattlers[i].resQuantum;
+                        GameManager.instance.playerStats[i].inFrontRow = activeBattlers[i].inFrontRow;
+
+                        for (int k = 0; k < activeBattlers[i].resistances.Length; k++) // iterates through all elements of player resistances array
+                        {
+                            GameManager.instance.playerStats[i].resistances[k] = activeBattlers[i].resistances[k]; // assigns resistances from active battler to player in game manager
+                        }
                     }
                 }
             }
@@ -1009,6 +1015,8 @@ public class BattleManager : MonoBehaviour
 
     public void RollWeaponDamage() // creates function to roll weapon attack damage
     {
+        CheckBattlerRow(); // calls function to check row of enemy target
+        
         float multiMelee, multiRanged, damageFloat; // creates float variables to handle melee and ranged damage multipliers
 
         // prints universal weapon damage and defense parameters to debug log
@@ -1022,7 +1030,7 @@ public class BattleManager : MonoBehaviour
             Debug.Log("Attack is melee."); // prints melee attack type to debug log
             multiMelee = (activeBattlers[currentTurn].strength / 2f); // calculates attacker melee multiplier  = (strength / 2)
             Debug.Log("Attacker melee multiplier = " + multiMelee); // prints melee multiplier to debug log
-            damageFloat = (movePower + activeBattlers[currentTurn].dmgWeapon) * multiMelee * (100f / (100f + activeBattlers[selectedTarget].defWeapon)) * critMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker weapon and strength, crit multiplier, target weapon defense, and 10% RNG
+            damageFloat = (movePower + activeBattlers[currentTurn].dmgWeapon) * multiMelee * attackRowMulti * defendRowMulti * (100f / (100f + activeBattlers[selectedTarget].defWeapon)) * critMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker weapon and strength, crit multiplier, target weapon defense, and 10% RNG
 
         }
         else // executes if weapon attack is ranged
@@ -1054,43 +1062,43 @@ public class BattleManager : MonoBehaviour
         // checks for attack Tech element type, applies target's associated elemental resistance to resMulti, saves type in elementType string
         if(movesList[moveIndex].element == "Heat")
         {
-            resMulti = activeBattlers[selectedTarget].resHeat;
+            resMulti = activeBattlers[selectedTarget].resistances[0];
             elementType = "Heat";
         }
         else if (movesList[moveIndex].element == "Freeze")
-        { 
-            resMulti = activeBattlers[selectedTarget].resFreeze;
+        {
+            resMulti = activeBattlers[selectedTarget].resistances[1];
             elementType = "Freeze";
         }
         else if (movesList[moveIndex].element == "Shock")
         {
-            resMulti = activeBattlers[selectedTarget].resShock;
+            resMulti = activeBattlers[selectedTarget].resistances[2];
             elementType = "Shock";
         }
         else if (movesList[moveIndex].element == "Virus")
         {
-            resMulti = activeBattlers[selectedTarget].resVirus;
+            resMulti = activeBattlers[selectedTarget].resistances[3];
             elementType = "Virus";
         }
         else if (movesList[moveIndex].element == "Chem")
         {
-            resMulti = activeBattlers[selectedTarget].resChem;
+            resMulti = activeBattlers[selectedTarget].resistances[4];
             elementType = "Chem";
         }
         else if (movesList[moveIndex].element == "Kinetic")
         {
-            resMulti = activeBattlers[selectedTarget].resKinetic;
+            resMulti = activeBattlers[selectedTarget].resistances[5];
             elementType = "Kinetic";
         }
         else if (movesList[moveIndex].element == "Water")
         {
-            resMulti = activeBattlers[selectedTarget].resWater;
+            resMulti = activeBattlers[selectedTarget].resistances[6];
             elementType = "Water";
         }
         else if (movesList[moveIndex].element == "Quantum")
         {
-            resMulti = activeBattlers[selectedTarget].resQuantum;
-            elementType = "Water";
+            resMulti = activeBattlers[selectedTarget].resistances[7];
+            elementType = "Quantum";
         }
 
         Debug.Log("Elemental type = " + elementType); // prints element type to debug log
@@ -1122,6 +1130,87 @@ public class BattleManager : MonoBehaviour
         {
             statusResisted = false; // sets statusResisted to false if status was not resisted
             Debug.Log("Status effect applied."); // prints resist failure to debug log
+        }
+    }
+
+    public void CheckBattlerRow() // creates function to check row of active battlers
+    {
+        // creates strings to store battler positions for easier access
+        string atkPos = activeBattlers[currentTurn].transform.parent.name; 
+        string defPos = activeBattlers[selectedTarget].transform.parent.name;
+        
+        // prints positions to debug log
+        Debug.Log("Active battler position = " + atkPos);
+        Debug.Log("Selected target position = " + defPos);
+
+        // section below checks for attacker's row
+        // ***************************************
+        if (activeBattlers[currentTurn].isPlayer) // checks if attacker is player
+        {
+            if (atkPos == "Pos1_front" || atkPos == "Pos2_front" || atkPos == "Pos3_front") // checks if player is in any front position
+            {
+                Debug.Log("Player attacker is in front row."); // prints player attacker row status to debug log
+                attackRowMulti = 1f; // sets attack row multiplier to 1
+            }
+            else // executes if player is in any back position
+            {
+                Debug.Log("Player attacker is in back row."); // prints player attacker row status to debug log
+                attackRowMulti = 0.5f; // sets attack row multiplier to 0.5f
+            }
+        }
+        else // executes if attacker is enemy
+        {
+            if (atkPos == "Pos1" || atkPos == "Pos3" || atkPos == "Pos5") // checks if enemy is in any front position
+            {
+                Debug.Log("Enemy attacker is in front row."); // prints enemy attacker row status to debug log
+                attackRowMulti = 1f; // sets attack row multiplier to 1
+            }
+            // checks if any enemies are active in front row by seeing if any children of any front row enemy position indexes are active
+            else if (enemyPositions[0].GetChild(enemyPositions[0].childCount - 1).gameObject.activeInHierarchy || enemyPositions[2].GetChild(enemyPositions[2].childCount - 1).gameObject.activeInHierarchy || enemyPositions[4].GetChild(enemyPositions[4].childCount - 1).gameObject.activeInHierarchy)
+            {
+                Debug.Log("Enemy attacker is in back row."); // prints enemy attacker row status to debug log
+                attackRowMulti = 0.5f; // sets attack row multiplier to 0.5
+            }
+            else // executes if enemy is in back row but no enemies are in front row
+            {
+                Debug.Log("Enemy attacker is in back row, but unprotected."); // prints enemy attacker row status to debug log
+                attackRowMulti = 1f; // sets attack row multiplier to 1
+            }
+        }
+
+        // section below checks for defender's row
+        // ***************************************
+        if (activeBattlers[selectedTarget].isPlayer) // checks if defender is player
+        {
+            if (defPos == "Pos1_front" || defPos == "Pos2_front" || defPos == "Pos3_front") // checks if player is in any front position
+            {
+                Debug.Log("Player defender is in front row."); // prints player defender row status to debug log
+                defendRowMulti = 1f; // sets defend row multiplier to 1
+            }
+            else // executes if player is in any back position
+            {
+                Debug.Log("Player defender is in back row."); // prints player defender row status to debug log
+                defendRowMulti = 0.5f; // sets defend row multiplier to 0.5f
+            }
+        }
+        else // executes if defender is enemy
+        {
+            if (defPos == "Pos1" || defPos == "Pos3" || defPos == "Pos5") // checks if enemy is in any front position
+            {
+                Debug.Log("Enemy defender is in front row."); // prints enemy defender row status to debug log
+                defendRowMulti = 1f; // sets defend row multiplier to 1
+            }
+            // checks if any enemies are active in front row by seeing if any children of any front row enemy position indexes are active
+            else if (enemyPositions[0].GetChild(enemyPositions[0].childCount-1).gameObject.activeInHierarchy || enemyPositions[2].GetChild(enemyPositions[2].childCount - 1).gameObject.activeInHierarchy || enemyPositions[4].GetChild(enemyPositions[4].childCount - 1).gameObject.activeInHierarchy) 
+            {
+                Debug.Log("Enemy defender is in back row."); // prints enemy defender row status to debug log
+                defendRowMulti = 0.5f; // sets defender row multiplier to 0.5
+            }
+            else // executes if enemy is in back row but no enemies are in front row
+            {
+                Debug.Log("Enemy defender is in back row, but unprotected."); // prints enemy defender row status to debug log
+                defendRowMulti = 1f; // sets defend row multiplier to 1
+            }
         }
     }
 }

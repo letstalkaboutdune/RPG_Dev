@@ -115,14 +115,15 @@ MonoBehaviour:
   blockChance: 0
   defWeapon: 2
   defTech: 2
-  resHeat: 2
-  resFreeze: 2
-  resShock: 1
-  resVirus: 1
-  resChem: 1
-  resKinetic: 1
-  resWater: 1
-  resQuantum: 1
+  resistances:
+  - 2
+  - 2
+  - 0.5
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   equippedWpn: 
   equippedArmr: 
   equippedAccy: 

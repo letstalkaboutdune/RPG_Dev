@@ -114,14 +114,18 @@ MonoBehaviour:
   blockChance: 0
   defWeapon: 0
   defTech: 0
-  resHeat: 0
-  resFreeze: 0
-  resShock: 0
-  resVirus: 0
-  resChem: 0
-  resKinetic: 0
-  resWater: 0
-  resQuantum: 0
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  equippedWpn: 
+  equippedArmr: 
+  equippedAccy: 
   theSprite: {fileID: 3619751251608350851}
   deadSprite: {fileID: 21300046, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
   aliveSprite: {fileID: 21300032, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}

@@ -1,8 +1,13 @@
 10/31/19
 ********
+Feature: Implemented accessories, including Ring of Heat and Ring of Freeze that modify elemental resistances
 Feature: Implemented player basic attack switching between melee/ranged based on equipped weapon
+Feature: Implemented ability to toggle players between front and back row for combat
+Battle: Implemented row checking and updated damage calculations to incorporate row for melee attacks
 Polish: Updated shop UI to allow longer item descriptions
 Polish: Updated AP to next ability level curve
+Polish: Updated EXP and AP rewards in random battles
+Bug: Corrected half of "Back" button in Status menu not registering a click
 
 10/30/19
 ********

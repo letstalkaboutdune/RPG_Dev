@@ -210,6 +210,15 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_active", 0); // saves player inactive tag to player prefs
             }
 
+            if (playerStats[i].inFrontRow) // checks if player character is in the front row
+            {
+                PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_InFrontRow", 1); // saves player front row tag to player prefs
+            }
+            else // executes if player character is in the back row
+            {
+                PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_InFrontRow", 0); // saves player back row tag to player prefs
+            }
+
             // saves all player stats to player prefs based on char name
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_Status", playerStats[i].statusEffect);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Level", playerStats[i].playerLevel);
@@ -233,14 +242,14 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_BlockChance", playerStats[i].blockChance);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DefWeapon", playerStats[i].defWeapon);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DefTech", playerStats[i].defTech);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResHeat", playerStats[i].resHeat);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResFreeze", playerStats[i].resFreeze);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResShock", playerStats[i].resShock);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResVirus", playerStats[i].resVirus);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResChem", playerStats[i].resChem);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResKinetic", playerStats[i].resKinetic);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResWater", playerStats[i].resWater);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResQuantum", playerStats[i].resQuantum);
+            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResHeat", playerStats[i].resistances[0]);
+            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResFreeze", playerStats[i].resistances[1]);
+            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResShock", playerStats[i].resistances[2]);
+            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResVirus", playerStats[i].resistances[3]);
+            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResChem", playerStats[i].resistances[4]);
+            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResKinetic", playerStats[i].resistances[5]);
+            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResWater", playerStats[i].resistances[6]);
+            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResQuantum", playerStats[i].resistances[7]);
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedWpn", playerStats[i].equippedWpn);
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedArmr", playerStats[i].equippedArmr);
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedAccy", playerStats[i].equippedAccy);
@@ -264,13 +273,22 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < playerStats.Length; i++) // iterates through all player stats locations
         {
-            if(PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_active") == 0) // loads if player character is active in the scene
+            if(PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_active") == 0) // checks player character is not active in the scene
             {
                 playerStats[i].gameObject.SetActive(false); // deactivates player character object 
             }
-            else
+            else // executes if player is active in the scene
             {
                 playerStats[i].gameObject.SetActive(true); // activates player character object 
+            }
+
+            if (PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_InFrontRow") == 0) // checks if player character is not in the front row
+            {
+                playerStats[i].inFrontRow = false; // sets player front row status to false
+            }
+            else // executes if player is in the front row
+            {
+                playerStats[i].inFrontRow = true; // sets player front row status to true
             }
 
             // loads all player stats from player prefs based on char name
@@ -296,14 +314,14 @@ public class GameManager : MonoBehaviour
             playerStats[i].blockChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_BlockChance");
             playerStats[i].defWeapon = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DefWeapon");
             playerStats[i].defTech = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DefTech");
-            playerStats[i].resHeat = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResHeat");
-            playerStats[i].resFreeze = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResFreeze");
-            playerStats[i].resShock = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResShock");
-            playerStats[i].resVirus = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResVirus");
-            playerStats[i].resChem = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResChem");
-            playerStats[i].resKinetic = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResKinetic");
-            playerStats[i].resWater = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResWater");
-            playerStats[i].resQuantum = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResQuantum");
+            playerStats[i].resistances[0] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResHeat");
+            playerStats[i].resistances[1] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResFreeze");
+            playerStats[i].resistances[2] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResShock");
+            playerStats[i].resistances[3] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResVirus");
+            playerStats[i].resistances[4] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResChem");
+            playerStats[i].resistances[5] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResKinetic");
+            playerStats[i].resistances[6] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResWater");
+            playerStats[i].resistances[7] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResQuantum");
             playerStats[i].equippedWpn = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedWpn");
             playerStats[i].equippedArmr = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedArmr");
             playerStats[i].equippedAccy = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedAccy");

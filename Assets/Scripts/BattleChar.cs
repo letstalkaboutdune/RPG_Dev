@@ -17,7 +17,15 @@ public class BattleChar : MonoBehaviour
     public int currentHP, maxHP, currentMP, maxMP, strength, tech, endurance, agility, luck, speed;
     public bool inFrontRow;
     public int dmgWeapon, hitChance, critChance, evadeChance, blockChance, defWeapon, defTech;
-    public float resHeat = 1f, resFreeze = 1f, resShock = 1f, resVirus = 1f, resChem = 1f, resKinetic = 1f, resWater = 1f, resQuantum = 1f;
+    public float[] resistances = new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }; // creates array of floats to handle elemental resistances and initializes to default of 1
+    // [0] = heat
+    // [1] = freeze
+    // [2] = shock
+    // [3] = virus
+    // [4] = chem
+    // [5] = kinetic
+    // [6] = water
+    // [7] = quantum
     public string equippedWpn, equippedArmr, equippedAccy;
     
     public SpriteRenderer theSprite; // creates SpriteRenderer object to handle different sprites based on player status

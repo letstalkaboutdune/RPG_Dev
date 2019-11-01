@@ -63,16 +63,18 @@ MonoBehaviour:
   blockChance: 0
   defWeapon: 0
   defTech: 0
-  resHeat: 1
-  resFreeze: 1
-  resShock: 1
-  resVirus: 1
-  resChem: 1
-  resKinetic: 1
-  resWater: 1
-  resQuantum: 1
+  resistances:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   maxHP: 120
   maxMP: 12
+  inFrontRow: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -158,16 +160,18 @@ MonoBehaviour:
   blockChance: 0
   defWeapon: 0
   defTech: 0
-  resHeat: 1
-  resFreeze: 1
-  resShock: 1
-  resVirus: 1
-  resChem: 1
-  resKinetic: 1
-  resWater: 1
-  resQuantum: 1
+  resistances:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   maxHP: 120
   maxMP: 12
+  inFrontRow: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -300,6 +304,8 @@ MonoBehaviour:
   - {fileID: 5604577350711775076, guid: 7092db5ebd2efbf4a8a8e3c4b929a276, type: 3}
   - {fileID: 9085651743499681551, guid: 4601c6388c3e94a26853649ee1c3283e, type: 3}
   - {fileID: 8242204463544825777, guid: 509fe4d1a1f584ec5b837da58dbc09c3, type: 3}
+  - {fileID: 6430459205373973784, guid: e26fef75c0fbce94f86ef0ee6cef0c66, type: 3}
+  - {fileID: 1825681416343629788, guid: b0688a64e4884e74b9dad22e8ac918aa, type: 3}
   currentGold: 0
 --- !u!114 &458343848
 MonoBehaviour:
@@ -385,16 +391,18 @@ MonoBehaviour:
   blockChance: 0
   defWeapon: 0
   defTech: 0
-  resHeat: 1
-  resFreeze: 1
-  resShock: 1
-  resVirus: 1
-  resChem: 1
-  resKinetic: 1
-  resWater: 1
-  resQuantum: 1
+  resistances:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   maxHP: 120
   maxMP: 12
+  inFrontRow: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0

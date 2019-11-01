@@ -9,10 +9,9 @@ Annoying
 
 Features
 ********
-Battle: implement row checking and update attack calculations to incorporate row and melee vs. ranged
-Game: Implement accessories, then Ring of Heat and Ring of Freeze that modify elemental resistances
-Battle: implement Evade/Block, remove evade chance from base stats and add evadeArmor and blockShield instead
-Game: implement Crit Chance should be based on stats/items for players and direct for enemies
+Game: implement Evade/Block, should be based on stats + items for players and directly for enemies
+Game: implement Crit Chance, should be based on stats + items for players and directly for enemies
+Game: implement Hit chance, based on base hit + items for players and directly for enemies
 Battle: test, clean up, and balance new damage implementation
 ****************************************************
 Game/Battle: implement more spells and abilities
@@ -21,8 +20,11 @@ Battle: implement speed-based turn system
 Menu: implement small sliders on HP/MP in main menu and battle menu
 Menu: implement menu clock tracking play time
 Menu: add tooltips showing more information on various things
+Menu: add scrolling + masking menu support to UI panels
 Map: prevent direction lock when changing scenes
 Battle: add ability to see targeted enemy before attacking in battle
+Game: add ability to change order of party
+Battle: add ability to change rows during battle
 Game: add quest item audio stinger
 Battle: show level up notification in end-of-battle screen
 Game: add dash button
@@ -35,9 +37,9 @@ Menu: add item highlights in menu
 Battle: have battlechars move forward to attack
 Menu: consider changing dialog function to just have speaker name in text, not in separate box
 Map: add zoom function with mouse wheel
+Game: add controller/keyboard functionality
 
-
-Pretty
+Pretty (only do in real game)
 ******
 UI: add retro overlays
 UI: add appropriate mouse cursor
@@ -54,10 +56,9 @@ Menu: re-design menu to look like FFVII
 Menu: re-design menu to use same item system in/out of battle
 Game: add slot for 4th character, update battle menu UI
 Menu: magic screen in menu
-Menu: add equips to player stats screen
+Menu: equip screen in menu (include elem. resist/status immunities)
 Menu: add options menu from main menu
-Game: multiple save slots
-Game: add controller functionality
+Game: add multiple save slots
 Game: add SMB3-style overworld
 
 HUGE

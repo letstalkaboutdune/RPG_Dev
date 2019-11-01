@@ -13,6 +13,7 @@ public class Item : MonoBehaviour
     public bool isItem;
     public bool isWeapon;
     public bool isArmor;
+    public bool isAccy;
     public bool isRanged;
 
     [Header("Item Details")] // creates Item Details header in Unity
@@ -35,12 +36,22 @@ public class Item : MonoBehaviour
 
     public int amountToChange; // create int variable to handle numerical amount of item effect
 
-    [Header("Weapon/Armor Details")] // creates Weapon/Armor Details header in Unity
+    [Header("Weapon/Armor/Accy Details")] // creates Weapon/Armor Details header in Unity
 
     // create int variables to handle weapon and armor strength
     public int dmgWeapon;
     public int defWeapon;
     public int defTech;
+    
+    public float[] resistances = new float[] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f }; // creates array of floats to handle elemental resistances and initializes to default of 0
+    // [0] = heat
+    // [1] = freeze
+    // [2] = shock
+    // [3] = virus
+    // [4] = chem
+    // [5] = kinetic
+    // [6] = water
+    // [7] = quantum
 
     public string warningText; // creates string to handle error/warning text
 
@@ -233,13 +244,13 @@ public class Item : MonoBehaviour
 
         else if (isWeapon) // checks if item is of type weapon
         {
-            if(selectedChar.equippedWpn == itemName) // checks if same weapon already equipped
+            if(selectedChar.equippedWpn == itemName) // checks if same weapon is already equipped
             {
                 // displays error message, does not use item
                 warningText = selectedChar.charName + " already has " + itemName + " equipped!"; // gives equip weapon warning
                 ShowWarning(); // shows warning text
             }
-            else
+            else // executes if same weapon is not already equipped
             {
                 if (selectedChar.equippedWpn != "") // checks if equipped weapon slot on selected character is blank
                 {
@@ -261,13 +272,13 @@ public class Item : MonoBehaviour
         
         else if (isArmor) // checks if item is of type armor
         {
-            if (selectedChar.equippedArmr == itemName) // checks if same weapon already equipped
+            if (selectedChar.equippedArmr == itemName) // checks if same armor is already equipped
             {
                 // displays error message, does not use item
                 warningText = selectedChar.charName + " already has " + itemName + " equipped!"; // gives equip armor warning
                 ShowWarning(); // shows warning text
             }
-            else
+            else // executes if same armor is not already equipped
             {
                 if (selectedChar.equippedArmr != "") // checks if equipped armor slot on selected character is blank
                 {
@@ -284,6 +295,48 @@ public class Item : MonoBehaviour
                     // enables equip effects of armor on battle character
                     BattleManager.instance.activeBattlers[charToUseOn].defWeapon = defWeapon;
                     BattleManager.instance.activeBattlers[charToUseOn].defTech = defTech;
+                }
+
+                GameManager.instance.RemoveItem(itemName); // removes item from inventory
+            }
+        }
+    
+        else if (isAccy) // checks if item is of type accessory
+        {
+            if (selectedChar.equippedAccy == itemName) // checks if same accessory is already equipped
+            {
+                // displays error message, does not use item
+                warningText = selectedChar.charName + " already has " + itemName + " equipped!"; // gives equip accessory warning
+                ShowWarning(); // shows warning text
+            }
+            else // executes if same accessory is not already equipped
+            {
+                if (selectedChar.equippedAccy != "") // checks if equipped accessory slot on selected character is blank
+                {
+                    GameManager.instance.AddItem(selectedChar.equippedAccy); // adds previously equipped accessory to inventory
+                }
+
+                // enables equip effects of accessory on character
+                selectedChar.equippedAccy = itemName;                
+                
+                for(int i = 0; i < resistances.Length; i++) // iterates through all elements of resistances array
+                {
+                    if (resistances[i] != 0f) // checks if resistance is not 0
+                    {
+                        selectedChar.resistances[i] = resistances[i]; // applies resistance to character
+                    }
+                }
+
+                if (GameManager.instance.battleActive) // checks if battle is active
+                {
+                    // enables equip effects of accessory on battle character
+                    for (int i = 0; i < resistances.Length; i++) // iterates through all elements of resistances array
+                    {
+                        if (resistances[i] != 0f) // checks if resistance is not 0
+                        {
+                            BattleManager.instance.activeBattlers[charToUseOn].resistances[i] = resistances[i]; // applies resistance to battle character
+                        }
+                    }
                 }
 
                 GameManager.instance.RemoveItem(itemName); // removes item from inventory

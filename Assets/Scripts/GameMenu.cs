@@ -72,6 +72,8 @@ public class GameMenu : MonoBehaviour
 
     public Text[] abilityList; // creates Text array to handle list of abilities in status menu
 
+    public Toggle[] frontRowToggle; // creates Toggle array to handle player front row toggles
+
     // Start is called before the first frame update
     void Start()
     {
@@ -140,6 +142,7 @@ public class GameMenu : MonoBehaviour
                     expToNextLvl[i].SetActive(false);
                 }
 
+                frontRowToggle[i].isOn = playerStats[i].inFrontRow; // sets front row toggle indicator based on player front row status
             }
             else
             {
@@ -564,6 +567,12 @@ public class GameMenu : MonoBehaviour
 
         GameMenu.instance.gameNotification.SetActive(false); // hides game notification panel      
         GameManager.instance.noticeActive = false; // sets notice active false to allow player action
+    }
+    
+    public void ToggleFrontRow(int charToToggle) // creates function to handle toggling front row status of character
+    {
+        Debug.Log("The value of toggle " + charToToggle + " is " + frontRowToggle[charToToggle].isOn); // prints state of selected toggle
+        GameManager.instance.playerStats[charToToggle].inFrontRow = frontRowToggle[charToToggle].isOn; // sets front row state of selected character based on toggle value
     }
 }
 

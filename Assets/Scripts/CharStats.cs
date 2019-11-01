@@ -11,8 +11,17 @@ public class CharStats : MonoBehaviour
     public string charName, statusEffect, equippedWpn, equippedArmr, equippedAccy;
     public int currentHP, currentMP, strength, tech, endurance, agility, luck, speed;
     public int dmgWeapon, hitChance, critChance, evadeChance, blockChance, defWeapon, defTech;
-    public float resHeat = 1f, resFreeze = 1f, resShock = 1f, resVirus = 1f, resChem = 1f, resKinetic = 1f, resWater = 1f, resQuantum = 1f;
+    public float[] resistances = new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }; // creates array of floats to handle elemental resistances and initializes to default of 1
+    // [0] = heat
+    // [1] = freeze
+    // [2] = shock
+    // [3] = virus
+    // [4] = chem
+    // [5] = kinetic
+    // [6] = water
+    // [7] = quantum
     public int maxHP = 100, maxMP = 30;
+    public bool inFrontRow;
 
     // creates various variables to handle player level and experience
     public int playerLevel = 1, playerAPLevel = 1;
