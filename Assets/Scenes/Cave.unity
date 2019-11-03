@@ -12289,8 +12289,7 @@ MonoBehaviour:
   - enemies:
     - Eyeball
     - Eyeball
-    - Eyeball
-    rewardXP: 25
+    rewardXP: 20
     rewardAP: 5
     rewardItems:
     - Health Potion
@@ -12448,8 +12447,7 @@ MonoBehaviour:
   - enemies:
     - Eyeball
     - Eyeball
-    - Eyeball
-    rewardXP: 25
+    rewardXP: 20
     rewardAP: 5
     rewardItems:
     - Health Potion
@@ -12662,8 +12660,7 @@ MonoBehaviour:
   - enemies:
     - Eyeball
     - Eyeball
-    - Eyeball
-    rewardXP: 25
+    rewardXP: 20
     rewardAP: 5
     rewardItems:
     - Health Potion

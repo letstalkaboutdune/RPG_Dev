@@ -14,9 +14,10 @@ public class BattleChar : MonoBehaviour
     public string charName; // creates string to handle battle char name
 
     // creates various variables to handle all battle stats
-    public int currentHP, maxHP, currentMP, maxMP, strength, tech, endurance, agility, luck, speed;
+    public int currentHP, maxHP, currentSP, maxSP, strength, tech, endurance, agility, luck, speed;
     public bool inFrontRow;
     public int dmgWeapon, hitChance, critChance, evadeChance, blockChance, defWeapon, defTech;
+    public int critWeapon, evadeArmor, blockShield;
     public float[] resistances = new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }; // creates array of floats to handle elemental resistances and initializes to default of 1
     // [0] = heat
     // [1] = freeze
@@ -26,7 +27,7 @@ public class BattleChar : MonoBehaviour
     // [5] = kinetic
     // [6] = water
     // [7] = quantum
-    public string equippedWpn, equippedArmr, equippedAccy;
+    public string equippedWpn, equippedOff, equippedArmr, equippedAccy;
     
     public SpriteRenderer theSprite; // creates SpriteRenderer object to handle different sprites based on player status
     public Sprite deadSprite, aliveSprite; // creates two sprites to handle player dead/alive status

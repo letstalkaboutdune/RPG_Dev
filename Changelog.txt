@@ -1,6 +1,17 @@
+11/02/19
+********
+Feature: Reworked equip system to support two-handed and offhand equips and work across all character stats
+Feature: Updated status menu to show offhand equips
+Feature: Implemented block, based on stats + equips for players and set directly for enemies
+Feature: Implemented crit chance, based on stats + equips for players and set directly for enemies
+Feature: Implemented hit chance, based on weapon equip for players and set directly for enemies
+Feature: Added level up and ability level up notification after battle
+Feature: Added equation-based stat gain and set initial balance for all stats
+Feature: Changed MP (mana/magic points) to SP (sync points) in preparation for real game's theme
+
 11/01/19
 ********
-Feature: Implemented evading attacks for players (derived from stats + equips) and enemies (controlled directly)
+Feature: Implemented evade, based on stats + equips for players and set directly for enemies
 Feature: Added Wooden Shield and Iron Shield - still need to implement shields, offhand equips, and block
 Polish: Corrected how player stats are carried over after battle
 

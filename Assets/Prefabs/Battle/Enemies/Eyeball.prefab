@@ -98,10 +98,10 @@ MonoBehaviour:
   - Heat
   - Freeze
   charName: Eyeball
-  currentHP: 100
-  maxHP: 100
-  currentMP: 0
-  maxMP: 0
+  currentHP: 65
+  maxHP: 65
+  currentSP: 0
+  maxSP: 0
   strength: 5
   tech: 5
   endurance: 5
@@ -110,12 +110,15 @@ MonoBehaviour:
   speed: 5
   inFrontRow: 0
   dmgWeapon: 5
-  hitChance: 75
-  critChance: 15
+  hitChance: 0
+  critChance: 10
   evadeChance: 0
   blockChance: 0
   defWeapon: 5
   defTech: 5
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
   resistances:
   - 0.5
   - 0.5
@@ -126,6 +129,7 @@ MonoBehaviour:
   - 1
   - 1
   equippedWpn: 
+  equippedOff: 
   equippedArmr: 
   equippedAccy: 
   theSprite: {fileID: 6929283445118369390}

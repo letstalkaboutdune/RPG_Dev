@@ -95,14 +95,14 @@ MonoBehaviour:
   isItem: 0
   isWeapon: 1
   isArmor: 0
+  isOffHand: 0
   isAccy: 0
   isRanged: 1
   isTwoHanded: 1
-  isOffHand: 0
   isShield: 0
   itemName: Wooden Bow
-  description: Hits with a dull thud. +5 weapon damage (ranged).
-  value: 10
+  description: Hits with a dull thud.
+  value: 20
   itemSprite: {fileID: 21300136, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
   affectMP: 0
@@ -114,6 +114,8 @@ MonoBehaviour:
   defTech: 0
   evadeArmor: 0
   blockShield: 0
+  hitChance: 80
+  critWeapon: 5
   resistances:
   - 0
   - 0

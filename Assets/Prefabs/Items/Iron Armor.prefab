@@ -95,9 +95,13 @@ MonoBehaviour:
   isItem: 0
   isWeapon: 0
   isArmor: 1
+  isOffHand: 0
+  isAccy: 0
   isRanged: 0
+  isTwoHanded: 0
+  isShield: 0
   itemName: Iron Armor
-  description: Provides improved protection. +10 weapon defense, +4 Tech defense.
+  description: Provides improved protection.
   value: 25
   itemSprite: {fileID: 21300014, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
@@ -108,4 +112,17 @@ MonoBehaviour:
   dmgWeapon: 0
   defWeapon: 10
   defTech: 4
+  evadeArmor: 0
+  blockShield: 0
+  hitChance: 0
+  critWeapon: 0
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   warningText: 

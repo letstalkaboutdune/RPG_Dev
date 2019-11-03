@@ -97,10 +97,10 @@ MonoBehaviour:
   movesAvailable:
   - Melee Attack
   charName: Spider
-  currentHP: 100
-  maxHP: 100
-  currentMP: 0
-  maxMP: 0
+  currentHP: 35
+  maxHP: 35
+  currentSP: 0
+  maxSP: 0
   strength: 2
   tech: 2
   endurance: 2
@@ -110,11 +110,14 @@ MonoBehaviour:
   inFrontRow: 0
   dmgWeapon: 2
   hitChance: 75
-  critChance: 15
+  critChance: 0
   evadeChance: 0
   blockChance: 0
   defWeapon: 2
   defTech: 2
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
   resistances:
   - 2
   - 2
@@ -125,6 +128,7 @@ MonoBehaviour:
   - 1
   - 1
   equippedWpn: 
+  equippedOff: 
   equippedArmr: 
   equippedAccy: 
   theSprite: {fileID: 2046263050259084173}

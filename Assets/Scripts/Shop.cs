@@ -36,13 +36,13 @@ public class Shop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        // *DEBUG ONLY - DISABLED*
-        if (Input.GetKeyDown(KeyCode.K) && !shopMenu.activeInHierarchy) // checks if user presses K key and shop menu is not active
+        if (Input.GetButtonDown("Fire2") && !GameManager.instance.gameMenuOpen && !GameManager.instance.battleActive && !GameManager.instance.dialogActive && !GameManager.instance.noticeActive) // checks for user to press Fire2 (RMB by default), and battle, shop, dialog, and notice not active
         {
-            OpenShop(); // calls functions to open shop
+            if (shopMenu.activeInHierarchy) // checks if the shop menu is active
+            {
+                CloseShop(); // calls function to close the shop
+            }
         }
-        */
     }
 
     public void OpenShop() // creates function to handle opening shop

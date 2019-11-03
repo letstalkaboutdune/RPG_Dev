@@ -46,23 +46,27 @@ MonoBehaviour:
   charName: Sleepy
   statusEffect: 
   equippedWpn: 
+  equippedOff: 
   equippedArmr: 
   equippedAccy: 
-  currentHP: 120
-  currentMP: 12
-  strength: 10
-  tech: 10
+  currentHP: 85
+  currentSP: 20
+  strength: 8
+  tech: 12
   endurance: 10
-  agility: 10
-  luck: 10
-  speed: 10
-  dmgWeapon: 1
+  agility: 11
+  luck: 12
+  speed: 6
+  dmgWeapon: 0
   hitChance: 90
-  critChance: 10
+  critChance: 0
   evadeChance: 0
   blockChance: 0
   defWeapon: 0
   defTech: 0
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
   resistances:
   - 1
   - 1
@@ -72,8 +76,10 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  maxHP: 120
-  maxMP: 12
+  baseHP: 85
+  baseSP: 20
+  maxHP: 85
+  maxSP: 20
   inFrontRow: 1
   playerLevel: 1
   playerAPLevel: 0
@@ -82,21 +88,29 @@ MonoBehaviour:
   expToNextLevel: 
   apToNextLevel: 
   maxLevel: 100
-  maxAPLevel: 10
+  maxAPLevel: 2
+  statGain:
+  - 0.8
+  - 1
+  - 0.75
+  - 1.1
+  - 1.2
+  - 0.6
+  floatStats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   abilities:
   - Freeze
   - Virus
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
   charImage: {fileID: 21300032, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
   isMaxLevel: 0
   isMaxAPLevel: 0
+  leveledUp: 0
+  apLeveledUp: 0
 --- !u!1 &2284573409187258628
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,23 +157,27 @@ MonoBehaviour:
   charName: Tim
   statusEffect: 
   equippedWpn: 
+  equippedOff: 
   equippedArmr: 
   equippedAccy: 
-  currentHP: 120
-  currentMP: 12
-  strength: 10
-  tech: 10
-  endurance: 10
-  agility: 10
+  currentHP: 100
+  currentSP: 10
+  strength: 11
+  tech: 6
+  endurance: 12
+  agility: 8
   luck: 10
-  speed: 10
-  dmgWeapon: 1
+  speed: 9
+  dmgWeapon: 0
   hitChance: 90
-  critChance: 10
+  critChance: 0
   evadeChance: 0
   blockChance: 0
   defWeapon: 0
   defTech: 0
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
   resistances:
   - 1
   - 1
@@ -169,8 +187,10 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  maxHP: 120
-  maxMP: 12
+  baseHP: 100
+  baseSP: 10
+  maxHP: 100
+  maxSP: 10
   inFrontRow: 1
   playerLevel: 1
   playerAPLevel: 0
@@ -179,21 +199,29 @@ MonoBehaviour:
   expToNextLevel: 
   apToNextLevel: 
   maxLevel: 100
-  maxAPLevel: 10
+  maxAPLevel: 2
+  statGain:
+  - 1.1
+  - 0.5
+  - 1
+  - 0.8
+  - 1
+  - 0.9
+  floatStats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   abilities:
   - Heat
   - Freeze
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
   charImage: {fileID: 21300000, guid: c16bba35bb023f54f9847cbd9d191f0f, type: 3}
   isMaxLevel: 0
   isMaxAPLevel: 0
+  leveledUp: 0
+  apLeveledUp: 0
 --- !u!1 &2284573409583545540
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,23 +404,27 @@ MonoBehaviour:
   charName: Woody
   statusEffect: 
   equippedWpn: 
+  equippedOff: 
   equippedArmr: 
   equippedAccy: 
-  currentHP: 120
-  currentMP: 12
-  strength: 10
-  tech: 10
+  currentHP: 85
+  currentSP: 20
+  strength: 8
+  tech: 12
   endurance: 10
-  agility: 10
-  luck: 10
-  speed: 10
-  dmgWeapon: 1
+  agility: 11
+  luck: 12
+  speed: 6
+  dmgWeapon: 0
   hitChance: 90
-  critChance: 10
+  critChance: 0
   evadeChance: 0
   blockChance: 0
   defWeapon: 0
   defTech: 0
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
   resistances:
   - 1
   - 1
@@ -402,8 +434,10 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  maxHP: 120
-  maxMP: 12
+  baseHP: 85
+  baseSP: 20
+  maxHP: 85
+  maxSP: 20
   inFrontRow: 1
   playerLevel: 1
   playerAPLevel: 0
@@ -412,18 +446,26 @@ MonoBehaviour:
   expToNextLevel: 
   apToNextLevel: 
   maxLevel: 100
-  maxAPLevel: 10
+  maxAPLevel: 2
+  statGain:
+  - 0.8
+  - 1
+  - 0.75
+  - 1.1
+  - 1.2
+  - 0.6
+  floatStats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   abilities:
   - Freeze
   - Virus
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
-  - Empty
   charImage: {fileID: 21300000, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
   isMaxLevel: 0
   isMaxAPLevel: 0
+  leveledUp: 0
+  apLeveledUp: 0

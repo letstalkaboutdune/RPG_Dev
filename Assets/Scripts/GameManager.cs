@@ -227,8 +227,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CurrentAP", playerStats[i].currentAP);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CurrentHP", playerStats[i].currentHP);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_MaxHP", playerStats[i].maxHP);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CurrentMP", playerStats[i].currentMP);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_MaxMP", playerStats[i].maxMP);
+            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CurrentSP", playerStats[i].currentSP);
+            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_MaxSP", playerStats[i].maxSP);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Strength", playerStats[i].strength);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Tech", playerStats[i].tech);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Endurance", playerStats[i].endurance);
@@ -237,8 +237,11 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Speed", playerStats[i].speed);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DmgWeapon", playerStats[i].dmgWeapon);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_HitChance", playerStats[i].hitChance);
+            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CritWeapon", playerStats[i].critWeapon);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CritChance", playerStats[i].critChance);
+            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_EvadeArmor", playerStats[i].evadeArmor);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_EvadeChance", playerStats[i].evadeChance);
+            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_BlockShield", playerStats[i].blockShield);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_BlockChance", playerStats[i].blockChance);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DefWeapon", playerStats[i].defWeapon);
             PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DefTech", playerStats[i].defTech);
@@ -251,6 +254,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResWater", playerStats[i].resistances[6]);
             PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResQuantum", playerStats[i].resistances[7]);
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedWpn", playerStats[i].equippedWpn);
+            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedOff", playerStats[i].equippedOff);
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedArmr", playerStats[i].equippedArmr);
             PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedAccy", playerStats[i].equippedAccy);
         }
@@ -299,8 +303,8 @@ public class GameManager : MonoBehaviour
             playerStats[i].currentAP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CurrentAP");
             playerStats[i].currentHP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CurrentHP");
             playerStats[i].maxHP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_MaxHP");
-            playerStats[i].currentMP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CurrentMP");
-            playerStats[i].maxMP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_MaxMP");
+            playerStats[i].currentSP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CurrentSP");
+            playerStats[i].maxSP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_MaxSP");
             playerStats[i].strength = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Strength");
             playerStats[i].tech = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Tech");
             playerStats[i].endurance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Endurance");
@@ -309,8 +313,11 @@ public class GameManager : MonoBehaviour
             playerStats[i].speed = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Speed");
             playerStats[i].dmgWeapon = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DmgWeapon");
             playerStats[i].hitChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_HitChance");
+            playerStats[i].critWeapon = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CritWeapon");
             playerStats[i].critChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CritChance");
+            playerStats[i].evadeArmor = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_EvadeArmor");
             playerStats[i].evadeChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_EvadeChance");
+            playerStats[i].blockShield = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_BlockShield");
             playerStats[i].blockChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_BlockChance");
             playerStats[i].defWeapon = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DefWeapon");
             playerStats[i].defTech = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DefTech");
@@ -323,6 +330,7 @@ public class GameManager : MonoBehaviour
             playerStats[i].resistances[6] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResWater");
             playerStats[i].resistances[7] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResQuantum");
             playerStats[i].equippedWpn = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedWpn");
+            playerStats[i].equippedOff = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedOff");
             playerStats[i].equippedArmr = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedArmr");
             playerStats[i].equippedAccy = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedAccy");
         }

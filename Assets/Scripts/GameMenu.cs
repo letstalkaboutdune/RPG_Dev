@@ -15,8 +15,8 @@ public class GameMenu : MonoBehaviour
 
     private CharStats[] playerStats; // creates CharStats array to handle player stats objects in menu
 
-    public Text[] nameText, hpText, mpText, lvlText, expText; // creates Text array to handle player stats text in main menu
-    public Text[] itemNameText, itemHPText, itemMPText; // creates Text array to handle player stats text in item menu
+    public Text[] nameText, hpText, spText, lvlText, expText; // creates Text array to handle player stats text in main menu
+    public Text[] itemNameText, itemHPText, itemSPText; // creates Text array to handle player stats text in item menu
 
     public Slider[] expSlider; // creates Slider array to handle slider in menu
 
@@ -27,10 +27,10 @@ public class GameMenu : MonoBehaviour
     public GameObject[] statusButtons; // creates GameObject array to handle state of status window buttons
 
     // creates various Text variables to handle values of character stats in stats menu
-    public Text statusName, statusStatus, statusLV, statusHP, statusMP, statusNextLV, statusAbilityLV, statusNextAbility;
+    public Text statusName, statusStatus, statusLV, statusHP, statusSP, statusNextLV, statusAbilityLV, statusNextAbility;
     public Text statusStr, statusTech, statusEnd, statusAgi, statusLuck, statusSpeed;
     public Text statusWeaponDmg, statusHitChance, statusCritChance, statusWeaponDef, statusEvadeChance, statusBlockChance, statusTechDef;
-    public Text statusWeaponEquip, statusArmorEquip, statusAccyEquip;
+    public Text statusWeaponEquip, statusOffhandEquip, statusArmorEquip, statusAccyEquip;
     
     public Image statusImage; // creates Image variable to handle character image in stats menu
 
@@ -126,8 +126,8 @@ public class GameMenu : MonoBehaviour
                 hpText[i].text = "HP: " + playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in menu data
                 itemHPText[i].text = playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in item menu data
 
-                mpText[i].text = "MP: " + playerStats[i].currentMP + "/" + playerStats[i].maxMP; // updates char MP in menu data
-                itemMPText[i].text = playerStats[i].currentMP + "/" + playerStats[i].maxMP; // updates char MP in item menu data
+                spText[i].text = "SP: " + playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in menu data
+                itemSPText[i].text = playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in item menu data
 
                 lvlText[i].text = "Lvl: " + playerStats[i].playerLevel; // updates char LVL in menu data
                 expText[i].text = "" + playerStats[i].currentEXP + "/" + playerStats[i].expToNextLevel[playerStats[i].playerLevel]; // updates char LVL in menu data
@@ -234,7 +234,7 @@ public class GameMenu : MonoBehaviour
             statusName.text = playerStats[selected].charName;
             statusLV.text = playerStats[selected].playerLevel.ToString();
             statusHP.text = "" + playerStats[selected].currentHP + "/" + playerStats[selected].maxHP;
-            statusMP.text = "" + playerStats[selected].currentMP + "/" + playerStats[selected].maxMP;
+            statusSP.text = "" + playerStats[selected].currentSP + "/" + playerStats[selected].maxSP;
             statusAbilityLV.text = playerStats[selected].playerAPLevel.ToString();
 
             if (playerStats[selected].isMaxLevel) // checks if player is max level
@@ -282,6 +282,15 @@ public class GameMenu : MonoBehaviour
                 statusWeaponEquip.text = "None"; // sets weapon name to None
             }
 
+            if (playerStats[selected].equippedOff != "") // checks if equipped offhand is not empty
+            {
+                statusOffhandEquip.text = playerStats[selected].equippedOff; // updates value of equipped offhand
+            }
+            else // executes if offhand value is empty
+            {
+                statusOffhandEquip.text = "None"; // sets offhand name to None
+            }
+
             if (playerStats[selected].equippedArmr != "") // checks if equipped armor is not empty
             {
                 statusArmorEquip.text = playerStats[selected].equippedArmr; // updates value of equipped armor
@@ -300,8 +309,6 @@ public class GameMenu : MonoBehaviour
                 statusAccyEquip.text = "None"; // sets accessory name to None
             }
 
-            // *** NEED TO UPDATE UNLOCKED ABILITIES ***
-            // WIP
             for(int i = 0; i < playerStats[selected].playerAPLevel; i++) // iterates equal to number of player AP level
             {
                 abilityList[i].text = playerStats[selected].abilities[i]; // sets ability list text to currently unlocked abilities
@@ -311,7 +318,6 @@ public class GameMenu : MonoBehaviour
             {
                 abilityList[i].text = ""; // sets locked ability text to blank
             }
-            // END WIP
         }
     }
 
@@ -507,8 +513,8 @@ public class GameMenu : MonoBehaviour
             SceneManager.LoadScene(mainMenuName); // loads main menu
 
             // destroys any open objects from currently open scene
-            Destroy(GameManager.instance.gameObject);
             Destroy(PlayerController.instance.gameObject);
+            Destroy(GameManager.instance.gameObject);
             Destroy(AudioManager.instance.gameObject);
             Destroy(gameObject);
         }

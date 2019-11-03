@@ -33,7 +33,7 @@ public class BattleManager : MonoBehaviour
     
     public DamageNumber theDamageNumber; // creates DamageNumber object to handle manipulating damage number
 
-    public Text[] playerName, playerHP, playerMP; // creates Text arrays to handle player stats in battle UI
+    public Text[] playerName, playerHP, playerSP; // creates Text arrays to handle player stats in battle UI
 
     // creates game objects and BattleTargetButton objects to manage player target menu
     public GameObject targetMenu;
@@ -93,7 +93,7 @@ public class BattleManager : MonoBehaviour
     void Update()
     {
         /*
-        // *DEBUG ONLY - DISABLED* - checks for T input to test battle start
+        // *DEBUG ONLY - checks for T input to test battle start
         if (Input.GetKeyDown(KeyCode.T))  
         {
             BattleStart(new string[] {"Spider", "Spider", "Spider"}, false); // calls battle start function with test enemies
@@ -159,6 +159,7 @@ public class BattleManager : MonoBehaviour
             cannotFlee = setCannotFlee; // sets cannot flee flag to passed setCannotFlee bool
             
             battleActive = true; // sets battleActive to true to allow battle to start
+            Debug.Log("*** BATTLE START ***"); // prints battle start notification to debug log
 
             GameManager.instance.battleActive = true; // sets battleActive in game manager to true to prevent player movement
 
@@ -197,8 +198,8 @@ public class BattleManager : MonoBehaviour
                             activeBattlers[i].inFrontRow = thePlayer.inFrontRow;
                             activeBattlers[i].currentHP = thePlayer.currentHP;
                             activeBattlers[i].maxHP = thePlayer.maxHP;
-                            activeBattlers[i].currentMP = thePlayer.currentMP;
-                            activeBattlers[i].maxMP = thePlayer.maxMP;
+                            activeBattlers[i].currentSP = thePlayer.currentSP;
+                            activeBattlers[i].maxSP = thePlayer.maxSP;
                             activeBattlers[i].strength = thePlayer.strength;
                             activeBattlers[i].tech = thePlayer.tech;
                             activeBattlers[i].endurance = thePlayer.endurance;
@@ -207,12 +208,16 @@ public class BattleManager : MonoBehaviour
                             activeBattlers[i].speed = thePlayer.speed;
                             activeBattlers[i].dmgWeapon = thePlayer.dmgWeapon;
                             activeBattlers[i].hitChance = thePlayer.hitChance;
+                            activeBattlers[i].critWeapon = thePlayer.critWeapon;
                             activeBattlers[i].critChance = thePlayer.critChance;
+                            activeBattlers[i].evadeArmor = thePlayer.evadeArmor;
                             activeBattlers[i].evadeChance = thePlayer.evadeChance;
+                            activeBattlers[i].blockShield = thePlayer.blockShield;
                             activeBattlers[i].blockChance = thePlayer.blockChance;
                             activeBattlers[i].defWeapon = thePlayer.defWeapon;
                             activeBattlers[i].defTech = thePlayer.defTech;
                             activeBattlers[i].equippedWpn = thePlayer.equippedWpn;
+                            activeBattlers[i].equippedOff = thePlayer.equippedOff;
                             activeBattlers[i].equippedArmr = thePlayer.equippedArmr;
                             activeBattlers[i].equippedAccy = thePlayer.equippedAccy;
                             
@@ -263,7 +268,7 @@ public class BattleManager : MonoBehaviour
 
     public void NextTurn() // creates function to handle next turn in combat
     {
-        Debug.Log("**** NEXT TURN ****"); // prints next turn notification to debug log
+        Debug.Log("*** NEXT TURN ***"); // prints next turn notification to debug log
 
         HideSpriteGlow(currentTurn); // hides sprite glow on active battler ending turn
         
@@ -293,10 +298,9 @@ public class BattleManager : MonoBehaviour
                         // updates current player stats index in game manager with active battler
                         GameManager.instance.playerStats[i].currentHP = activeBattlers[i].currentHP;
                         GameManager.instance.playerStats[i].maxHP = activeBattlers[i].maxHP;
-                        GameManager.instance.playerStats[i].currentMP = activeBattlers[i].currentMP;
-                        GameManager.instance.playerStats[i].maxMP = activeBattlers[i].maxMP;
+                        GameManager.instance.playerStats[i].currentSP = activeBattlers[i].currentSP;
+                        GameManager.instance.playerStats[i].maxSP = activeBattlers[i].maxSP;
                         
-
                         /*
                         // DISABLED - THESE SHOULD NOT CARRY OVER AFTER BATTLE
                         // DERIVED STATS SHOULD BE KEPT UP-TO-DATE BY GAME MANAGER / CHAR STATS SCRIPTS
@@ -507,10 +511,10 @@ public class BattleManager : MonoBehaviour
 
                     playerName[i].gameObject.SetActive(true); // shows player name object if a player
 
-                    // updates player name, HP, and MP on UI, clamps HP and MP to never be < 0
+                    // updates player name, HP, and SP on UI, clamps HP and SP to never be < 0
                     playerName[i].text = playerData.charName;
                     playerHP[i].text = Mathf.Clamp(playerData.currentHP, 0, int.MaxValue) + "/" + playerData.maxHP;
-                    playerMP[i].text = Mathf.Clamp(playerData.currentMP, 0, int.MaxValue) + "/" + playerData.maxMP;
+                    playerSP[i].text = Mathf.Clamp(playerData.currentSP, 0, int.MaxValue) + "/" + playerData.maxSP;
                 }
                 else 
                 {
@@ -526,23 +530,14 @@ public class BattleManager : MonoBehaviour
     public void MeleeOrRanged() // creates function to handle if player attack is melee or ranged
     {
         string weaponName = activeBattlers[currentTurn].equippedWpn; // pulls name of active player weapon
-        int weaponIndex = 0; // creates int to store index location of weapon in item array
-        
         Debug.Log("Player weapon = " + weaponName); // prints player weapon name to debug log
 
-        for (int i = 0; i < GameManager.instance.referenceItems.Length; i++) // iterates through list of all items
+        if (weaponName != "" && GameManager.instance.GetItemDetails(weaponName).isRanged) // checks if player weapon is not blank and is a ranged weapon
         {
-            if (weaponName == GameManager.instance.referenceItems[i].name) // executes when player equipped weapon matches a weapon in the item list
-            {
-                weaponIndex = i;
-            }
-        }
-        
-        if (GameManager.instance.referenceItems[weaponIndex].isRanged) // executes if weapon is ranged
-        {
-            Debug.Log("Rolling ranged attack."); // prints rangedattack roll to debug menu
+            Debug.Log("Rolling ranged attack."); // prints ranged attack roll to debug menu
             OpenTargetMenu("Ranged Attack"); // calls open target menu with ranged attack
         }
+
         else // executes if weapon is not ranged (i.e. melee)
         {
             Debug.Log("Rolling melee attack."); // prints melee attack roll to debug menu
@@ -969,13 +964,14 @@ public class BattleManager : MonoBehaviour
             else // executes if status effect was not resisted
             {
                 // *** NEED TO ADD FUNCTION TO APPLY STATUS EFFECT ***
+                // *** CREATE "CURRENT" STATS ON TOP OF BASE STATS? ***
             }
         }
     }
 
     public void RollHit() // creates function to roll if a weapon attack hits
     {       
-        int hitRoll = Mathf.RoundToInt(Random.Range(0f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
+        int hitRoll = Mathf.RoundToInt(Random.Range(1f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
         Debug.Log("Attacker hit chance = " + activeBattlers[currentTurn].hitChance); // prints attacker hit chance to debug log
         Debug.Log("Hit roll = " + hitRoll); // prints result of hit roll to debug log
 
@@ -995,7 +991,7 @@ public class BattleManager : MonoBehaviour
     public void RollCrit() // creates function to roll if a weapon/Tech attack crits
     {
         int critChance = activeBattlers[currentTurn].critChance; // assigns local variable critChance to attacker's crit chance
-        int critRoll = Mathf.RoundToInt(Random.Range(0f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
+        int critRoll = Mathf.RoundToInt(Random.Range(1f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
         Debug.Log("Attacker crit chance = " + critChance); // prints attacker crit chance to debug log
         Debug.Log("Crit roll = " + critRoll); // prints result of crit roll
 
@@ -1015,12 +1011,14 @@ public class BattleManager : MonoBehaviour
 
     public void RollEvadeBlock() // creates function to roll if a defender evades/blocks
     {
+        // code below handles evade
+        // ************************
         int evadeChance = activeBattlers[selectedTarget].evadeChance; // assigns local variable to defender's evade chance
-        int evadeRoll = Mathf.RoundToInt(Random.Range(0f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
+        int evadeRoll = Mathf.RoundToInt(Random.Range(1f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
         Debug.Log("Defender evade chance = " + evadeChance); // prints defender evade chance to debug log
         Debug.Log("Evade roll = " + evadeRoll); // prints result of evade roll
 
-        if (evadeRoll < evadeChance) // executes if attack is evaded
+        if (evadeRoll <= evadeChance) // executes if attack is evaded
         {
             attackEvaded = true; // sets attackEvaded to true if attack was evaded
             Debug.Log("Attack evaded."); // prints evade success notifier to debug log
@@ -1030,9 +1028,24 @@ public class BattleManager : MonoBehaviour
             attackEvaded = false; // sets attackEvaded to false if attack was not evaded
             Debug.Log("Attack not evaded."); // prints evade failure notifier to debug log
         }
+        
+        // code below handles block
+        // ************************
+        int blockChance = activeBattlers[selectedTarget].blockChance; // assigns local variable to defender's block chance
+        int blockRoll = Mathf.RoundToInt(Random.Range(1f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
+        Debug.Log("Defender block chance = " + blockChance); // prints defender block chance to debug log
+        Debug.Log("Block roll = " + evadeRoll); // prints result of block roll
 
-        // *** NEED TO ADD CODE TO ROLL BLOCK ***
-        // *** ONLY CHECK BLOCK IF SHIELD IS EQUIPPED ***
+        if (blockRoll <= blockChance) // executes if attack is blocked
+        {
+            attackBlocked = true; // sets attackBlocked to true if attack was blocked
+            Debug.Log("Attack blocked."); // prints block success notifier to debug log
+        }
+        else // executes if attack was not blocked
+        {
+            attackBlocked = false; // sets attackBlocked to false if attack was not blocked
+            Debug.Log("Attack not blocked."); // prints block failure notifier to debug log
+        }
     }
 
     public void RollWeaponDamage() // creates function to roll weapon attack damage
@@ -1040,6 +1053,7 @@ public class BattleManager : MonoBehaviour
         CheckBattlerRow(); // calls function to check row of enemy target
         
         float multiMelee, multiRanged, damageFloat; // creates float variables to handle melee and ranged damage multipliers
+        //float weaponScalar = 1f, techScalar = 1f; // creates float variables to handle scale factors for damage calculation
 
         // prints universal weapon damage and defense parameters to debug log
         Debug.Log("Attacker move damage = " + movePower);

@@ -13,10 +13,14 @@ public class Item : MonoBehaviour
     public bool isItem;
     public bool isWeapon;
     public bool isArmor;
+    public bool isOffHand;
     public bool isAccy;
+
+    [Header("Item Tags")] // creates Item Tags header in Unity
+    
+    // creates bool variables to handle item tags
     public bool isRanged;
     public bool isTwoHanded;
-    public bool isOffHand;
     public bool isShield;
 
     [Header("Item Details")] // creates Item Details header in Unity
@@ -33,7 +37,7 @@ public class Item : MonoBehaviour
 
     // creates bool variables to manage type of item effect
     public bool affectHP;
-    public bool affectMP;
+    public bool affectSP;
     public bool affectStr;
     public bool affectLife;
 
@@ -41,12 +45,14 @@ public class Item : MonoBehaviour
 
     [Header("Weapon/Armor/Accy Details")] // creates Weapon/Armor Details header in Unity
 
-    // create int variables to handle weapon and armor strength
+    // create int variables to handle equippable item properties
     public int dmgWeapon;
     public int defWeapon;
     public int defTech;
     public int evadeArmor;
     public int blockShield;
+    public int hitChance;
+    public int critWeapon;
     
     public float[] resistances = new float[] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f }; // creates array of floats to handle elemental resistances and initializes to default of 0
     // [0] = heat
@@ -78,7 +84,7 @@ public class Item : MonoBehaviour
     {
         //Debug.Log("Item.Use passed item = " + itemName); // prints passed item name to debug log
 
-        CharStats selectedChar = GameManager.instance.playerStats[charToUseOn]; // creates new CharStats object which copies that location's contents of the player stats array
+        CharStats selectedChar = GameManager.instance.playerStats[charToUseOn]; // creates new CharStats object which references the selected player stats
                        
         if (isItem) // checks if item is of type item
         {
@@ -91,13 +97,6 @@ public class Item : MonoBehaviour
                         warningText = selectedChar.charName + " is already alive!"; // sets max HP error notification
                         ShowWarning(); // shows warning text
                     }
-                    /*
-                    else if (BattleManager.instance.activeBattlers[charToUseOn].currentHP <= 0) // checks if player is dead
-                    {
-                        warningText = selectedChar.charName + " must be revived first!"; // sets dead player notification
-                        ShowWarning(); // shows warning text
-                    }
-                    */
                     else
                     {
                         BattleManager.instance.activeBattlers[charToUseOn].currentHP += amountToChange; // adds item value to battle char current HP
@@ -117,13 +116,6 @@ public class Item : MonoBehaviour
                         warningText = selectedChar.charName + " is already alive!"; // sets max HP error notification
                         ShowWarning(); // shows warning text
                     }
-                    /*
-                    else if (selectedChar.currentHP <= 0) // checks if player is dead
-                    {
-                        warningText = selectedChar.charName + " must be revived first!"; // sets dead player notification
-                        ShowWarning(); // shows warning text
-                    }
-                    */
                     else
                     {
                         // adds item value to selected char HP
@@ -192,22 +184,22 @@ public class Item : MonoBehaviour
                 }
             }
 
-            else if (affectMP) // checks if item affects MP
+            else if (affectSP) // checks if item affects SP
             {
                 if (BattleManager.instance.battleActive) // checks if a battle is active
                 {
-                    if (BattleManager.instance.activeBattlers[charToUseOn].currentMP == BattleManager.instance.activeBattlers[charToUseOn].maxMP) // checks if active battler current MP = max MP
+                    if (BattleManager.instance.activeBattlers[charToUseOn].currentSP == BattleManager.instance.activeBattlers[charToUseOn].maxSP) // checks if active battler current SP = max SP
                     {
-                        warningText = selectedChar.charName + " already has maximum MP!"; // sets max MP error notification
+                        warningText = selectedChar.charName + " already has maximum SP!"; // sets max SP error notification
                         ShowWarning(); // shows warning text
                     }
                     else
                     {
-                        BattleManager.instance.activeBattlers[charToUseOn].currentMP += amountToChange; // adds item value to battle char current MP
+                        BattleManager.instance.activeBattlers[charToUseOn].currentSP += amountToChange; // adds item value to battle char current SP
 
-                        if (BattleManager.instance.activeBattlers[charToUseOn].currentMP > BattleManager.instance.activeBattlers[charToUseOn].maxMP) // checks if battle char current MP > max MP
+                        if (BattleManager.instance.activeBattlers[charToUseOn].currentSP > BattleManager.instance.activeBattlers[charToUseOn].maxSP) // checks if battle char current SP > max SP
                         {
-                            BattleManager.instance.activeBattlers[charToUseOn].currentMP = BattleManager.instance.activeBattlers[charToUseOn].maxMP; // limits battle char current MP to max MP
+                            BattleManager.instance.activeBattlers[charToUseOn].currentSP = BattleManager.instance.activeBattlers[charToUseOn].maxSP; // limits battle char current SP to max SP
                         }
 
                         GameManager.instance.RemoveItem(itemName); // removes item from inventory
@@ -215,19 +207,19 @@ public class Item : MonoBehaviour
                 }
                 else // executes if a battle is not active
                 {
-                    if (selectedChar.currentMP == selectedChar.maxMP) // checks if the player current MP = max MP
+                    if (selectedChar.currentSP == selectedChar.maxSP) // checks if the player current SP = max SP
                     {
-                        warningText = selectedChar.charName + " already has maximum MP!"; // sets max MP error notification
+                        warningText = selectedChar.charName + " already has maximum SP!"; // sets max SP error notification
                         ShowWarning(); // shows warning text
                     }
                     else
                     {
-                        // adds item value to selected char MP
-                        selectedChar.currentMP += amountToChange;
+                        // adds item value to selected char SP
+                        selectedChar.currentSP += amountToChange;
 
-                        if (selectedChar.currentMP > selectedChar.maxMP) // checks if char current MP has become larger than max MP
+                        if (selectedChar.currentSP > selectedChar.maxSP) // checks if char current SP has become larger than max SP
                         {
-                            selectedChar.currentMP = selectedChar.maxMP; // limits char current MP to max MP
+                            selectedChar.currentSP = selectedChar.maxSP; // limits char current SP to max SP
                         }
 
                         GameManager.instance.RemoveItem(itemName); // removes item from inventory
@@ -255,26 +247,57 @@ public class Item : MonoBehaviour
                 warningText = selectedChar.charName + " already has " + itemName + " equipped!"; // gives equip weapon warning
                 ShowWarning(); // shows warning text
             }
+
             else // executes if same weapon is not already equipped
             {
-                if (selectedChar.equippedWpn != "") // checks if equipped weapon slot on selected character is blank
+                if (selectedChar.equippedWpn != "") // checks if equipped weapon slot is not blank
                 {
-                    GameManager.instance.AddItem(selectedChar.equippedWpn); // adds previously equipped weapon to inventory
+                    Unequip(selectedChar.equippedWpn, charToUseOn); // calls function to unequip current weapon
+
+                    if(selectedChar.equippedOff != "" && isTwoHanded) // checks if equipped offhand slot is not blank and weapon to equip is two-handed
+                    {
+                        Unequip(selectedChar.equippedOff, charToUseOn); // calls function to unequip current offhand
+                    }
+                }
+                else if (selectedChar.equippedOff != "") // checks if equipped weapon is blank but offhand is not blank
+                {
+                    if (isTwoHanded) // checks if item to equip is two-handed
+                    {
+                        Unequip(selectedChar.equippedOff, charToUseOn); // calls function to unequip current offhand
+                    }
                 }
 
-                // enables equip effects of weapon on character
-                selectedChar.equippedWpn = itemName;
-                selectedChar.dmgWeapon = dmgWeapon;
+                Equip(itemName, charToUseOn); // calls function to equip new weapon
 
-                if (GameManager.instance.battleActive) // checks if battle is active
-                {
-                    BattleManager.instance.activeBattlers[charToUseOn].dmgWeapon = dmgWeapon; // enables equip effects of weapon on battle character
-                }
-            
-                GameManager.instance.RemoveItem(itemName); // removes item from inventory
+                selectedChar.CalculateDerivedStats(); // re-calculates new derived stats on character after equipping new weapon
             }         
         }
-        
+
+        else if (isOffHand) // checks if item is of type offhand
+        {
+            if (selectedChar.equippedOff == itemName) // checks if same offhand item is already equipped
+            {
+                // displays error message, does not use item
+                warningText = selectedChar.charName + " already has " + itemName + " equipped!"; // gives equip offhand warning
+                ShowWarning(); // shows warning text
+            }
+            else // executes if same offhand is not already equipped
+            {
+                if(selectedChar.equippedWpn != "" && GameManager.instance.GetItemDetails(selectedChar.equippedWpn).isTwoHanded) // checks if equipped weapon is not blank and is two-handed
+                {
+                    Unequip(selectedChar.equippedWpn, charToUseOn); // calls function to unequip current weapon
+                }
+                else if (selectedChar.equippedOff != "") // checks if equipped offhand is not blank
+                {
+                    Unequip(selectedChar.equippedOff, charToUseOn); // calls function to unequip current offhand
+                }
+
+                Equip(itemName, charToUseOn); // calls function to equip new offhand
+
+                selectedChar.CalculateDerivedStats(); // re-calculates new derived stats on character after equipping new offhand
+            }
+        }
+
         else if (isArmor) // checks if item is of type armor
         {
             if (selectedChar.equippedArmr == itemName) // checks if same armor is already equipped
@@ -287,27 +310,15 @@ public class Item : MonoBehaviour
             {
                 if (selectedChar.equippedArmr != "") // checks if equipped armor slot on selected character is blank
                 {
-                    GameManager.instance.AddItem(selectedChar.equippedArmr); // adds previously equipped armor to inventory
-                }
-                
-                // enables equip effects of armor on character
-                selectedChar.equippedArmr = itemName;
-                selectedChar.defWeapon = defWeapon;
-                selectedChar.defTech = defTech;
-                selectedChar.evadeChance = ((evadeArmor + selectedChar.agility + selectedChar.speed) / 3);
+                    Unequip(selectedChar.equippedArmr, charToUseOn); // calls function to unequip current armor
+                }                
 
-                if (GameManager.instance.battleActive) // checks if battle is active
-                {
-                    // enables equip effects of armor on battle character
-                    BattleManager.instance.activeBattlers[charToUseOn].defWeapon = defWeapon;
-                    BattleManager.instance.activeBattlers[charToUseOn].defTech = defTech;
-                    BattleManager.instance.activeBattlers[charToUseOn].evadeChance = ((evadeArmor + selectedChar.agility + selectedChar.speed) / 3);
-                }
+                Equip(itemName, charToUseOn); // calls function to equip new offhand
 
-                GameManager.instance.RemoveItem(itemName); // removes item from inventory
+                selectedChar.CalculateDerivedStats(); // re-calculates new derived stats on character after equipping new armor
             }
         }
-    
+        
         else if (isAccy) // checks if item is of type accessory
         {
             if (selectedChar.equippedAccy == itemName) // checks if same accessory is already equipped
@@ -320,35 +331,14 @@ public class Item : MonoBehaviour
             {
                 if (selectedChar.equippedAccy != "") // checks if equipped accessory slot on selected character is blank
                 {
-                    GameManager.instance.AddItem(selectedChar.equippedAccy); // adds previously equipped accessory to inventory
+                    Unequip(selectedChar.equippedAccy, charToUseOn); // calls function to unequip current accessory
                 }
 
-                // enables equip effects of accessory on character
-                selectedChar.equippedAccy = itemName;                
-                
-                for(int i = 0; i < resistances.Length; i++) // iterates through all elements of resistances array
-                {
-                    if (resistances[i] != 0f) // checks if resistance is not 0
-                    {
-                        selectedChar.resistances[i] = resistances[i]; // applies resistance to character
-                    }
-                }
+                Equip(itemName, charToUseOn); // calls function to equip new accessory
 
-                if (GameManager.instance.battleActive) // checks if battle is active
-                {
-                    // enables equip effects of accessory on battle character
-                    for (int i = 0; i < resistances.Length; i++) // iterates through all elements of resistances array
-                    {
-                        if (resistances[i] != 0f) // checks if resistance is not 0
-                        {
-                            BattleManager.instance.activeBattlers[charToUseOn].resistances[i] = resistances[i]; // applies resistance to battle character
-                        }
-                    }
-                }
-
-                GameManager.instance.RemoveItem(itemName); // removes item from inventory
+                selectedChar.CalculateDerivedStats(); // re-calculates new derived stats on character after equipping new accessory
             }
-        }
+        }        
     }
 
     public void ShowWarning() // creates function to show warning text
@@ -364,4 +354,217 @@ public class Item : MonoBehaviour
             GameMenu.instance.itemNoticeActive = true; // shows warning text in item menu
         }
     }   
+
+    public void Equip(string itemToEquip, int charToEquip) // creates function to handle equip of items
+    {
+        // pulls unequip item properties and selected character stats
+        Item equipItem = GameManager.instance.GetItemDetails(itemToEquip); // pulls item details from passed item name
+        CharStats selectedChar = GameManager.instance.playerStats[charToEquip]; // creates CharStats object which references the selected playerStats
+
+        // applies all item stat boosts
+        selectedChar.dmgWeapon += equipItem.dmgWeapon;
+        selectedChar.critWeapon += equipItem.critWeapon;
+        selectedChar.defWeapon += equipItem.defWeapon;
+        selectedChar.defTech += equipItem.defTech;
+        selectedChar.evadeArmor += equipItem.evadeArmor;
+        selectedChar.blockShield += equipItem.blockShield;
+        
+        if (isWeapon) // checks if equipped item is weapon
+        {
+            selectedChar.hitChance = equipItem.hitChance; // sets char hit chance equal to item hit chance
+        }
+
+        // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
+
+        // applies all item resistances
+        for (int i = 0; i < resistances.Length; i++) // iterates through all elements of item resistances array
+        {
+            if (resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
+            {
+                selectedChar.resistances[i] = resistances[i]; // sets character resistance equal to item resistance
+            }
+        }
+
+        // adds item to appropriate equip slots
+        if (equipItem.isWeapon) // checks if item is a weapon
+        {
+            selectedChar.equippedWpn = itemToEquip; // sets item name to weapon equip slot
+
+            if (equipItem.isTwoHanded) // checks if weapon is two handed
+            {
+                selectedChar.equippedOff = itemToEquip; // sets item name to offhand equip slot
+            }
+        }
+        else if (equipItem.isArmor) // checks if item is an armor
+        {
+            selectedChar.equippedArmr = itemToEquip; // sets item name to armor equip slot
+        }
+        else if (equipItem.isOffHand) // checks if item is an offhand
+        {
+            selectedChar.equippedOff = itemToEquip; // sets item name to offhand equip slot
+        }
+        else if (equipItem.isAccy) // checks if item is an accessory
+        {
+            selectedChar.equippedAccy = itemToEquip; // sets item name to accessory equip slot
+        }
+
+        if (BattleManager.instance.battleActive) // checks if battle is active
+        {
+            // applies all item stat boosts to active battler
+            BattleManager.instance.activeBattlers[charToEquip].dmgWeapon += equipItem.dmgWeapon;
+            BattleManager.instance.activeBattlers[charToEquip].critWeapon += equipItem.critWeapon;
+            BattleManager.instance.activeBattlers[charToEquip].defWeapon += equipItem.defWeapon;
+            BattleManager.instance.activeBattlers[charToEquip].defTech += equipItem.defTech;
+            BattleManager.instance.activeBattlers[charToEquip].evadeArmor += equipItem.evadeArmor;
+            BattleManager.instance.activeBattlers[charToEquip].blockShield += equipItem.blockShield;
+
+            if (isWeapon) // checks if equipped item is weapon
+            {
+                BattleManager.instance.activeBattlers[charToEquip].hitChance = equipItem.hitChance; // sets active battler hit chance equal to item hit chance
+            }
+
+            // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
+
+            // applies all item resistances to active battler
+            for (int i = 0; i < resistances.Length; i++) // iterates through all elements of item resistances array
+            {
+                if (resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
+                {
+                    BattleManager.instance.activeBattlers[charToEquip].resistances[i] = resistances[i]; // sets character resistance equal to item resistance
+                }
+            }
+
+            // adds item to appropriate equip slots
+            if (equipItem.isWeapon) // checks if item is a weapon
+            {
+                BattleManager.instance.activeBattlers[charToEquip].equippedWpn = itemToEquip; // sets item name to weapon equip slot
+
+                if (equipItem.isTwoHanded) // checks if weapon is two handed
+                {
+                    BattleManager.instance.activeBattlers[charToEquip].equippedOff = itemToEquip; // sets item name to offhand equip slot
+                }
+            }
+            else if (equipItem.isArmor) // checks if item is an armor
+            {
+                BattleManager.instance.activeBattlers[charToEquip].equippedArmr = itemToEquip; // sets item name to armor equip slot
+            }
+            else if (equipItem.isOffHand) // checks if item is an offhand
+            {
+                BattleManager.instance.activeBattlers[charToEquip].equippedOff = itemToEquip; // sets item name to offhand equip slot
+            }
+            else if (equipItem.isAccy) // checks if item is an accessory
+            {
+                BattleManager.instance.activeBattlers[charToEquip].equippedAccy = itemToEquip; // sets item name to accessory equip slot
+            }
+        }
+
+        GameManager.instance.RemoveItem(equipItem.name); // removes equipped item from inventory
+    }
+
+    public void Unequip(string itemToUnequip, int charToUnequip) // creates function to handle un-equip of items
+    {
+        // pull unequip item properties and selected character stats
+        Item unequipItem = GameManager.instance.GetItemDetails(itemToUnequip); // pulls item details from passed item name
+        CharStats selectedChar = GameManager.instance.playerStats[charToUnequip]; // creates CharStats object which references the selected playerStats
+
+        // remove all item stat boosts and resistances
+        selectedChar.dmgWeapon -= unequipItem.dmgWeapon;
+        selectedChar.critWeapon -= unequipItem.critWeapon;
+        selectedChar.defWeapon -= unequipItem.defWeapon;
+        selectedChar.defTech -= unequipItem.defTech;
+        selectedChar.evadeArmor -= unequipItem.evadeArmor;
+        selectedChar.blockShield -= unequipItem.blockShield;
+
+        if (isWeapon) // checks if unequipped item is weapon
+        {
+            selectedChar.hitChance = 90; // resets hit chance to default of 90%
+        }
+
+        // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
+
+        // *** NEED TO HANDLE IF MULTIPLE ITEMS AFFECT SAME RESISTANCES ***
+        // *** RE-EQUIP ALL ITEMS AFTER AN UNEQUIP? ***
+        for (int i = 0; i < resistances.Length; i++) // iterates through all elements of item resistances array
+        {
+            if(resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
+            {
+                selectedChar.resistances[i] = 1f; // sets character resistance to default of 1f, removing item effect
+            }
+        }
+
+        // removes item from appropriate equip slots
+        if (unequipItem.isWeapon) // checks if item is a weapon
+        {
+            selectedChar.equippedWpn = ""; // sets weapon equip slot to blank
+
+            if (unequipItem.isTwoHanded) // checks if weapon is two handed
+            {
+                selectedChar.equippedOff = ""; // sets offhand equip slot to blank
+            }
+        }
+        else if (unequipItem.isArmor) // checks if item is an armor
+        {
+            selectedChar.equippedArmr = ""; // sets armor equip slot to blank
+        }
+        else if (unequipItem.isOffHand) // checks if item is an offhand
+        {
+            selectedChar.equippedOff = ""; // sets offhand equip slot to blank
+        }
+        else if (unequipItem.isAccy) // checks if item is an accessory
+        {
+            selectedChar.equippedAccy = ""; // sets accessory equip slot to blank
+        }
+
+        if (BattleManager.instance.battleActive) // checks if battle is active
+        {
+            // removes all item stat boosts from active battler
+            BattleManager.instance.activeBattlers[charToUnequip].dmgWeapon -= unequipItem.dmgWeapon;
+            BattleManager.instance.activeBattlers[charToUnequip].critWeapon -= unequipItem.critWeapon;
+            BattleManager.instance.activeBattlers[charToUnequip].defWeapon -= unequipItem.defWeapon;
+            BattleManager.instance.activeBattlers[charToUnequip].defTech -= unequipItem.defTech;
+            BattleManager.instance.activeBattlers[charToUnequip].evadeArmor -= unequipItem.evadeArmor;
+            BattleManager.instance.activeBattlers[charToUnequip].blockShield -= unequipItem.blockShield;
+
+            if (isWeapon) // checks if equipped item is weapon
+            {
+                BattleManager.instance.activeBattlers[charToUnequip].hitChance = 90; // resets active battler hit chance equal to default of 90%
+            }
+
+            // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
+
+            // removes all item resistances from active battler
+            for (int i = 0; i < resistances.Length; i++) // iterates through all elements of item resistances array
+            {
+                if (resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
+                {
+                    BattleManager.instance.activeBattlers[charToUnequip].resistances[i] = 1f; // sets character resistance to default of 1f, removing item effect
+                }
+            }
+
+            // removes item from appropriate equip slots
+            if (unequipItem.isWeapon) // checks if item is a weapon
+            {
+                BattleManager.instance.activeBattlers[charToUnequip].equippedWpn = ""; // sets weapon equip slot to blank
+
+                if (unequipItem.isTwoHanded) // checks if weapon is two handed
+                {
+                    BattleManager.instance.activeBattlers[charToUnequip].equippedOff = ""; // sets offhand equip slot to blank
+                }
+            }
+            else if (unequipItem.isArmor) // checks if item is an armor
+            {
+                BattleManager.instance.activeBattlers[charToUnequip].equippedArmr = ""; // sets armor equip slot to blank
+            }
+            else if (unequipItem.isOffHand) // checks if item is an offhand
+            {
+                BattleManager.instance.activeBattlers[charToUnequip].equippedOff = ""; // sets offhand equip slot to blank
+            }
+            else if (unequipItem.isAccy) // checks if item is an accessory
+            {
+                BattleManager.instance.activeBattlers[charToUnequip].equippedAccy = ""; // sets accessory equip slot to blank
+            }
+        }
+
+        GameManager.instance.AddItem(unequipItem.name); // adds unequipped item back into inventory
+    }
 }

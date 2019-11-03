@@ -95,9 +95,13 @@ MonoBehaviour:
   isItem: 0
   isWeapon: 1
   isArmor: 0
+  isOffHand: 0
+  isAccy: 0
   isRanged: 0
+  isTwoHanded: 0
+  isShield: 0
   itemName: Dwarven Sword
-  description: Hums with ancient energy. +25 weapon damage (melee).
+  description: Hums with ancient energy.
   value: 100
   itemSprite: {fileID: 21300000, guid: ce281bc758d1406479c4f2d47b3d0bee, type: 3}
   affectHP: 0
@@ -108,4 +112,17 @@ MonoBehaviour:
   dmgWeapon: 25
   defWeapon: 0
   defTech: 0
+  evadeArmor: 0
+  blockShield: 0
+  hitChance: 95
+  critWeapon: 50
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   warningText: 

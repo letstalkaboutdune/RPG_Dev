@@ -95,13 +95,13 @@ MonoBehaviour:
   isItem: 0
   isWeapon: 0
   isArmor: 0
+  isOffHand: 1
   isAccy: 0
   isRanged: 0
   isTwoHanded: 0
-  isOffHand: 1
   isShield: 1
   itemName: Iron Shield
-  description: +10 weapon defense, +20 block.
+  description: Stops more enemy attacks.
   value: 50
   itemSprite: {fileID: 21300144, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
@@ -114,6 +114,8 @@ MonoBehaviour:
   defTech: 0
   evadeArmor: 0
   blockShield: 20
+  hitChance: 0
+  critWeapon: 0
   resistances:
   - 0
   - 0

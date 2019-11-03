@@ -99,10 +99,10 @@ MonoBehaviour:
   - Virus
   - Freeze
   charName: Dragon
-  currentHP: 1000
-  maxHP: 1000
-  currentMP: 0
-  maxMP: 0
+  currentHP: 500
+  maxHP: 500
+  currentSP: 0
+  maxSP: 0
   strength: 15
   tech: 10
   endurance: 10
@@ -116,7 +116,10 @@ MonoBehaviour:
   evadeChance: 0
   blockChance: 0
   defWeapon: 10
-  defTech: 5
+  defTech: 10
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
   resistances:
   - 0.5
   - 2
@@ -127,6 +130,7 @@ MonoBehaviour:
   - 1
   - 1
   equippedWpn: 
+  equippedOff: 
   equippedArmr: 
   equippedAccy: 
   theSprite: {fileID: 1565757989583917718}

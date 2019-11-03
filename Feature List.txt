@@ -2,6 +2,7 @@ Bugs
 ****
 Minor
 ******
+Tutorial text replays after exiting cave 
 Gamebreaking
 ************
 Annoying
@@ -9,32 +10,24 @@ Annoying
 
 Features
 ********
-Game: implement Block, should be based on stats + shield for players and directly for enemies
-	*** NEED TO ADD A SHIELD
-	*** NEED TO ADD AN OFFHAND SLOT
-	*** NEED TO ADD A 2-HANDED/1-HANDED/OFF-HANDED TAG FOR EQUIPS
-Game: implement Crit Chance, should be based on stats + items for players and directly for enemies
-Game: implement Hit chance, based on base hit + items for players and directly for enemies
-Battle: test, clean up, and balance new damage implementation
+Menu: add tooltips showing more information on various things, clean up item descriptions
 ****************************************************
 Game/Battle: implement more spells and abilities
 Battle: implement speed-based turn system
 *****************************************************
+Battle: fix order of enemy positions (all front, then all back)
 Menu: implement small sliders on HP/MP in main menu and battle menu
 Menu: implement menu clock tracking play time
-Menu: add tooltips showing more information on various things
 Menu: add scrolling + masking menu support to UI panels
 Map: prevent direction lock when changing scenes
 Battle: add ability to see targeted enemy before attacking in battle
 Game: add ability to change order of party
 Battle: add ability to change rows during battle
 Game: add quest item audio stinger
-Battle: show level up notification in end-of-battle screen
-Game: add dash button
+???Game: add dash button
 Game: add an inn, item shop, magic shop, and better weapon shop to the town
 Sound: add checks to play item unsuccessful sound
 Sound: prevent re-starting same music when entering main menu from game over (replace game over music?)
-Game: error when trying to control PlayerController transform.position in scenes without a player
 Game: Add randomness to battle rewards
 Menu: add item highlights in menu
 Battle: have battlechars move forward to attack
@@ -57,9 +50,10 @@ MAJOR
 *****
 Menu: re-design menu to look like FFVII
 Menu: re-design menu to use same item system in/out of battle
-Game: add slot for 4th character, update battle menu UI
+???Game: add slot for 4th character, update battle menu UI
 Menu: magic screen in menu
 Menu: equip screen in menu (include elem. resist/status immunities)
+Game: implement stat restrictions on items
 Menu: add options menu from main menu
 Game: add multiple save slots
 Game: add SMB3-style overworld

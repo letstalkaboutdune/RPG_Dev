@@ -40,22 +40,22 @@ public class BattleMagicSelect : MonoBehaviour
 
         if (spellFound == true) // executes if spellFound is true, meaning the spell was found
         {
-            if (BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn].currentMP >= spellCost) // checks if player's MP is sufficient to cast the spell
+            if (BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn].currentSP >= spellCost) // checks if player's SP is sufficient to cast the spell
             {
                 BattleManager.instance.magicMenu.SetActive(false); // hides magic menu
                 BattleManager.instance.OpenTargetMenu(spellName); // calls open target menu to get targets for spells
-                BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn].currentMP -= spellCost; // subtracts MP from player to pay for spell
+                BattleManager.instance.activeBattlers[BattleManager.instance.currentTurn].currentSP -= spellCost; // subtracts SP from player to pay for spell
             }
-            else // executes if player doesn't have enough MP to cast the spell
+            else // executes if player doesn't have enough SP to cast the spell
             {
-                BattleManager.instance.battleNotice.theText.text = "Not enough MP!"; // sets battle notification text to MP warning
+                BattleManager.instance.battleNotice.theText.text = "Not enough SP!"; // sets battle notification text to SP warning
                 BattleManager.instance.battleNotice.Activate(); // activates battle notification object
                 BattleManager.instance.magicMenu.SetActive(false); // backs out of magic menu
             }
         }
         else // executes if the spell was not found
         {
-            BattleManager.instance.battleNotice.theText.text = "Ability not valid!"; // sets battle notification text to MP warning
+            BattleManager.instance.battleNotice.theText.text = "Ability not valid!"; // sets battle notification text to SP warning
             BattleManager.instance.battleNotice.Activate(); // activates battle notification object
             BattleManager.instance.magicMenu.SetActive(false); // backs out of magic menu
         }

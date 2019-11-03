@@ -96,12 +96,11 @@ MonoBehaviour:
   hasDied: 0
   movesAvailable:
   - Melee Attack
-  - Freeze
   charName: Skeleton
-  currentHP: 100
-  maxHP: 100
-  currentMP: 0
-  maxMP: 0
+  currentHP: 50
+  maxHP: 50
+  currentSP: 0
+  maxSP: 0
   strength: 5
   tech: 5
   endurance: 5
@@ -116,6 +115,9 @@ MonoBehaviour:
   blockChance: 0
   defWeapon: 5
   defTech: 5
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
   resistances:
   - 2
   - 1
@@ -126,6 +128,7 @@ MonoBehaviour:
   - 1
   - 1
   equippedWpn: 
+  equippedOff: 
   equippedArmr: 
   equippedAccy: 
   theSprite: {fileID: 6283427687434653244}
