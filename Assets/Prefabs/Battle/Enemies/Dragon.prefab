@@ -104,7 +104,7 @@ MonoBehaviour:
   currentSP: 0
   maxSP: 0
   strength: 15
-  tech: 10
+  tech: 15
   endurance: 10
   agility: 10
   luck: 10
@@ -112,7 +112,7 @@ MonoBehaviour:
   inFrontRow: 0
   dmgWeapon: 10
   hitChance: 90
-  critChance: 25
+  critChance: 15
   evadeChance: 0
   blockChance: 0
   defWeapon: 10

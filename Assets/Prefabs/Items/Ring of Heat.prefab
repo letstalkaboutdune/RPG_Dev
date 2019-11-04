@@ -95,20 +95,26 @@ MonoBehaviour:
   isItem: 0
   isWeapon: 0
   isArmor: 0
+  isOffHand: 0
   isAccy: 1
   isRanged: 0
+  isTwoHanded: 0
+  isShield: 0
   itemName: Ring of Heat
-  description: Doubles resistance to heat.
+  description: Inlaid with a burning ruby.
   value: 100
   itemSprite: {fileID: 21300138, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
-  affectMP: 0
-  affectStr: 0
+  affectSP: 0
   affectLife: 0
   amountToChange: 0
   dmgWeapon: 0
   defWeapon: 0
   defTech: 0
+  evadeArmor: 0
+  blockShield: 0
+  hitChance: 0
+  critWeapon: 0
   resistances:
   - 0.5
   - 1

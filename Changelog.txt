@@ -1,3 +1,8 @@
+11/03/19
+********
+Feature: Implemented tooltip showing item stats and explanation of player stats
+Feature: Implemented toggle to show/hide tooltips in status menu
+
 11/02/19
 ********
 Feature: Reworked equip system to support two-handed and offhand equips and work across all character stats

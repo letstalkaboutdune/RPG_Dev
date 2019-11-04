@@ -35,10 +35,12 @@ public class QuestMarker : MonoBehaviour
         if (markComplete) // checks if quest should be marked complete
         {
             QuestManager.instance.MarkQuestComplete(questToMark); // marks quest as complete using function
+            Debug.Log("Quest marked complete.");
         }
         else
         {
             QuestManager.instance.MarkQuestIncomplete(questToMark); // marks quest as incomplete using function
+            Debug.Log("Quest marked incomplete.");
         }
 
         gameObject.SetActive(!deactivateOnMarking); // activates/deactivates game object based on setting

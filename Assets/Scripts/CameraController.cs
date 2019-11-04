@@ -33,11 +33,11 @@ public class CameraController : MonoBehaviour
         halfWidth = halfHeight * Camera.main.aspect; // calculates the half-width using the half-height and the camera aspect ratio
 
         bottomLeftLimit = theMap.localBounds.min + new Vector3(halfWidth, halfHeight, 0f); // sets the bottom-left limit to the min of the localBounds of the linked tilemap
-                                                                                            // adds an offset for half-width, half-height to compensate for camera size
+                                                                                           // adds an offset for half-width, half-height to compensate for camera size
         topRightLimit = theMap.localBounds.max + new Vector3(-halfWidth, -halfHeight, 0f); // sets the top-right limit to the max of the localBounds of the linked tilemap
-                                                                                            // subtracts an offset for half-width, half-height to compensate for camera size
+                                                                                           // subtracts an offset for half-width, half-height to compensate for camera size
         PlayerController.instance.SetBounds(theMap.localBounds.min, theMap.localBounds.max); // calls the SetBounds function in the PlayerController instance in order to clamp player position in the map
-                                                                                                // passes the min/max of the tilemap localBounds without the offset for camera size
+                                                                                             // passes the min/max of the tilemap localBounds without the offset for camera size
     }
 
 

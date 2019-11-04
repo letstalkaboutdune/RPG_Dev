@@ -101,12 +101,11 @@ MonoBehaviour:
   isTwoHanded: 0
   isShield: 0
   itemName: Mana Potion
-  description: Restores 50 SP.
+  description: Seethes with mystical power.
   value: 10
   itemSprite: {fileID: 21300004, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
   affectSP: 1
-  affectStr: 0
   affectLife: 0
   amountToChange: 50
   dmgWeapon: 0

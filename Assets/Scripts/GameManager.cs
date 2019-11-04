@@ -268,6 +268,15 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetString("ItemInInventory_" + i, itemsHeld[i]);
             PlayerPrefs.SetInt("ItemAmount_" + i, numberOfItems[i]);
         }
+        
+        if (GameMenu.instance.showStatusTooltip.isOn)
+        {
+            PlayerPrefs.SetInt("ShowTooltips", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ShowTooltips", 0);
+        }
     }
 
     public void LoadData() // creates function to handle loading all game data
@@ -343,6 +352,16 @@ public class GameManager : MonoBehaviour
         {
             itemsHeld[i] = PlayerPrefs.GetString("ItemInInventory_" + i);
             numberOfItems[i] = PlayerPrefs.GetInt("ItemAmount_" + i);
+        }
+
+        if (PlayerPrefs.GetInt("ShowTooltips") == 1)
+        {
+
+            GameMenu.instance.showStatusTooltip.isOn = true;
+        }
+        else
+        {
+            GameMenu.instance.showStatusTooltip.isOn = false;
         }
     }
 }

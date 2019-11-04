@@ -97,20 +97,20 @@ MonoBehaviour:
   movesAvailable:
   - Melee Attack
   charName: Skeleton
-  currentHP: 50
-  maxHP: 50
+  currentHP: 75
+  maxHP: 75
   currentSP: 0
   maxSP: 0
-  strength: 5
-  tech: 5
+  strength: 8
+  tech: 0
   endurance: 5
   agility: 5
   luck: 5
   speed: 5
   inFrontRow: 0
-  dmgWeapon: 5
+  dmgWeapon: 3
   hitChance: 75
-  critChance: 15
+  critChance: 0
   evadeChance: 0
   blockChance: 0
   defWeapon: 5

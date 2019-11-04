@@ -74,6 +74,8 @@ public class GameMenu : MonoBehaviour
 
     public Toggle[] frontRowToggle; // creates Toggle array to handle player front row toggles
 
+    public Toggle showStatusTooltip; // creates toggle to handle display of status menu tooltips
+
     // Start is called before the first frame update
     void Start()
     {
@@ -577,7 +579,7 @@ public class GameMenu : MonoBehaviour
     
     public void ToggleFrontRow(int charToToggle) // creates function to handle toggling front row status of character
     {
-        Debug.Log("The value of toggle " + charToToggle + " is " + frontRowToggle[charToToggle].isOn); // prints state of selected toggle
+        //Debug.Log("The value of toggle " + charToToggle + " is " + frontRowToggle[charToToggle].isOn); // prints state of selected toggle
         GameManager.instance.playerStats[charToToggle].inFrontRow = frontRowToggle[charToToggle].isOn; // sets front row state of selected character based on toggle value
     }
 }

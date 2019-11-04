@@ -97,18 +97,18 @@ MonoBehaviour:
   movesAvailable:
   - Melee Attack
   charName: Spider
-  currentHP: 35
-  maxHP: 35
+  currentHP: 50
+  maxHP: 50
   currentSP: 0
   maxSP: 0
-  strength: 2
-  tech: 2
+  strength: 4
+  tech: 0
   endurance: 2
   agility: 2
   luck: 2
   speed: 2
   inFrontRow: 0
-  dmgWeapon: 2
+  dmgWeapon: 3
   hitChance: 75
   critChance: 0
   evadeChance: 0

@@ -28,7 +28,6 @@ public class Item : MonoBehaviour
     // create string variables to handle item names and desciptions
     public string itemName;
     public string description;
-
     public int value; // create int variable to handle item shop value
 
     public Sprite itemSprite; // create Sprite variable to handle item image sprite
@@ -38,7 +37,6 @@ public class Item : MonoBehaviour
     // creates bool variables to manage type of item effect
     public bool affectHP;
     public bool affectSP;
-    public bool affectStr;
     public bool affectLife;
 
     public int amountToChange; // create int variable to handle numerical amount of item effect
@@ -224,17 +222,6 @@ public class Item : MonoBehaviour
 
                         GameManager.instance.RemoveItem(itemName); // removes item from inventory
                     }
-                }
-            }
-
-            else if (affectStr) // checks if item affects Strength
-            {
-                // adds item value to selected char and battle char Strength
-                selectedChar.strength += amountToChange;
-
-                if (GameManager.instance.battleActive)
-                {
-                    BattleManager.instance.activeBattlers[charToUseOn].strength += amountToChange;
                 }
             }
         }    

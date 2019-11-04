@@ -4221,6 +4221,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Custom Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 6661099676121682764, guid: 33388beb69aa05949b46d82e214617ba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6661099676121682753, guid: 33388beb69aa05949b46d82e214617ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6271,22 +6276,22 @@ PrefabInstance:
     - target: {fileID: 4483275354882085734, guid: 9cb09936513ae0a458c68cec0da7f730,
         type: 3}
       propertyPath: m_Offset.x
-      value: -5.1556253
+      value: -6.410644
       objectReference: {fileID: 0}
     - target: {fileID: 4483275354882085734, guid: 9cb09936513ae0a458c68cec0da7f730,
         type: 3}
       propertyPath: m_Size.x
-      value: 6.883335
+      value: 4.4382296
       objectReference: {fileID: 0}
     - target: {fileID: 4483275354882085734, guid: 9cb09936513ae0a458c68cec0da7f730,
         type: 3}
       propertyPath: m_Offset.y
-      value: -0.6419251
+      value: -1.0435487
       objectReference: {fileID: 0}
     - target: {fileID: 4483275354882085734, guid: 9cb09936513ae0a458c68cec0da7f730,
         type: 3}
       propertyPath: m_Size.y
-      value: 5.0836806
+      value: 4.56312
       objectReference: {fileID: 0}
     - target: {fileID: 4483275354882085734, guid: 9cb09936513ae0a458c68cec0da7f730,
         type: 3}

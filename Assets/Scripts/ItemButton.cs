@@ -5,18 +5,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // includes Unity UI library
+using UnityEngine.EventSystems; // includes Unity EventSystems library
 
-public class ItemButton : MonoBehaviour
+public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // creates various variables to handle item button details
     public Image buttonImage;
     public Text amountText;
     public int buttonValue;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    private Tooltip tooltip; // creates reference to tooltip to control tooltip display
 
+    private void Awake()
+    {
+        tooltip = GameObject.Find("Tooltip").GetComponent<Tooltip>(); // gets reference to tooltip
     }
 
     // Update is called once per frame
@@ -56,14 +58,38 @@ public class ItemButton : MonoBehaviour
         {
             if (GameManager.instance.itemsHeld[buttonValue] != "") // checks if itemsHeld array contains an item when an item button is pressed
             {
-                // WIP
                 BattleManager.instance.SelectBattleItem(GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[buttonValue])/*, GameManager.instance.numberOfItems[buttonValue]*/); // calls SelectBattleItem function in BattleManager to pull item details when a particular item button is clicked
             }
             else  // executes if selected item is null
             {
                 BattleManager.instance.SelectBattleItem(null/*, 0*/); // returns null value
-                // END WIP
             }
         }
+    }
+
+    // function is called by IPointerEnterHandler whenever a user mouses over an item
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(buttonImage.gameObject.activeInHierarchy) // check if item button image is active in hierarchy, meaning item isn't 
+        {
+            Item item = null; // creates local item variable to store passed item
+            
+            if (GameManager.instance.gameMenuOpen || GameManager.instance.battleActive) // checks if game menu or battle menu is open, since both pull from character inventory
+            {
+                item = GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[buttonValue]); // calls GetItemDetails function to pull item from itemsHeld array at button location                
+            }
+            else if (GameManager.instance.shopActive) // checks if game menu is open
+            {
+                item = GameManager.instance.GetItemDetails(Shop.instance.itemsForSale[buttonValue]); // calls GetItemDetails function to pull item from itemsForSale array at button location                
+            }
+
+            tooltip.GenerateTooltip(item); // calls function to generate and display tooltip based on passed item
+        }
+    }
+
+    // function is called by IPointerExitHandler whenever a user stops mousing over an item
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        tooltip.gameObject.SetActive(false); // hides tooltip
     }
 }

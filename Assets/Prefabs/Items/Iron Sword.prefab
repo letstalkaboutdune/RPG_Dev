@@ -105,11 +105,11 @@ MonoBehaviour:
   value: 25
   itemSprite: {fileID: 21300078, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
-  affectMP: 0
+  affectSP: 0
   affectStr: 0
   affectLife: 0
   amountToChange: 0
-  dmgWeapon: 10
+  dmgWeapon: 5
   defWeapon: 0
   defTech: 0
   evadeArmor: 0

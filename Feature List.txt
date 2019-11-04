@@ -2,7 +2,6 @@ Bugs
 ****
 Minor
 ******
-Tutorial text replays after exiting cave 
 Gamebreaking
 ************
 Annoying
@@ -10,11 +9,10 @@ Annoying
 
 Features
 ********
-Menu: add tooltips showing more information on various things, clean up item descriptions
-****************************************************
-Game/Battle: implement more spells and abilities
 Battle: implement speed-based turn system
 *****************************************************
+Battle: update magic menu to fill screen based on available abilities
+Menu: add drag-and-drop to interface
 Battle: fix order of enemy positions (all front, then all back)
 Menu: implement small sliders on HP/MP in main menu and battle menu
 Menu: implement menu clock tracking play time
@@ -48,15 +46,17 @@ Battle: add cleaner sprite glow fade
 
 MAJOR
 *****
+Game/Battle: implement more spells and abilities
 Menu: re-design menu to look like FFVII
 Menu: re-design menu to use same item system in/out of battle
-???Game: add slot for 4th character, update battle menu UI
 Menu: magic screen in menu
 Menu: equip screen in menu (include elem. resist/status immunities)
 Game: implement stat restrictions on items
 Menu: add options menu from main menu
 Game: add multiple save slots
 Game: add SMB3-style overworld
+???Game: add slot for 4th character, update battle menu UI
+???Code: replace discrete variables with dictionaries
 
 HUGE
 ****

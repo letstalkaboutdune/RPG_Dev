@@ -98,12 +98,12 @@ MonoBehaviour:
   - Heat
   - Freeze
   charName: Eyeball
-  currentHP: 65
-  maxHP: 65
+  currentHP: 85
+  maxHP: 85
   currentSP: 0
   maxSP: 0
   strength: 5
-  tech: 5
+  tech: 10
   endurance: 5
   agility: 5
   luck: 5
@@ -111,7 +111,7 @@ MonoBehaviour:
   inFrontRow: 0
   dmgWeapon: 5
   hitChance: 0
-  critChance: 10
+  critChance: 0
   evadeChance: 0
   blockChance: 0
   defWeapon: 5

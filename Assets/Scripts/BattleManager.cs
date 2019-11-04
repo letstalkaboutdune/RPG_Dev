@@ -122,12 +122,14 @@ public class BattleManager : MonoBehaviour
                 }
             }                            
              
+            /*
             // *DEBUG ONLY* - checks for N input to test turn order
             if (Input.GetKeyDown(KeyCode.N))
             {
                NextTurn(); // calls next turn function
             } 
             // END DEBUG    
+            */
             
             // WIP
             /*
@@ -1141,7 +1143,7 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Defender elemental resistance = " + resMulti + "x"); // prints defender elemental resistance multiplier
 
         // calculates Tech attack damage
-        float damageFloat = movePower * activeBattlers[currentTurn].tech * (100f / (100f + activeBattlers[selectedTarget].defTech)) * critMulti * resMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker Tech, target Tech defense, affected elemental resistance, and 10% RNG
+        float damageFloat = movePower * (activeBattlers[currentTurn].tech/2f) * (100f / (100f + activeBattlers[selectedTarget].defTech)) * critMulti * resMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker Tech, target Tech defense, affected elemental resistance, and 10% RNG
 
         // calculates rounded attack damage
         damageRoll = Mathf.RoundToInt(damageFloat); // rounds damage calc float to damage roll int
