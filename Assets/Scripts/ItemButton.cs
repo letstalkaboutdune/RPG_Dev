@@ -74,11 +74,11 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             Item item = null; // creates local item variable to store passed item
             
-            if (GameManager.instance.gameMenuOpen || GameManager.instance.battleActive) // checks if game menu or battle menu is open, since both pull from character inventory
+            if (GameManager.instance.gameMenuOpen || GameManager.instance.battleActive || Shop.instance.sellMenu.activeInHierarchy) // checks if game menu, battle menu, or shop sell window are open, since all pull from character inventory
             {
                 item = GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[buttonValue]); // calls GetItemDetails function to pull item from itemsHeld array at button location                
             }
-            else if (GameManager.instance.shopActive) // checks if game menu is open
+            else if (/*GameManager.instance.shopActive*/ Shop.instance.buyMenu.activeInHierarchy) // checks if shop buy window is open
             {
                 item = GameManager.instance.GetItemDetails(Shop.instance.itemsForSale[buttonValue]); // calls GetItemDetails function to pull item from itemsForSale array at button location                
             }

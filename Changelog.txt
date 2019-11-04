@@ -1,7 +1,8 @@
 11/03/19
 ********
 Feature: Implemented tooltip showing item stats and explanation of player stats
-Feature: Implemented toggle to show/hide tooltips in status menu
+Feature: Implemented toggle to show/hide tooltips in status menu\
+Polish: Made further refinements to game balance
 
 11/02/19
 ********

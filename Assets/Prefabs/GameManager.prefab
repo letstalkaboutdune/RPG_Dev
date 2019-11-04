@@ -49,7 +49,7 @@ MonoBehaviour:
   equippedOff: 
   equippedArmr: 
   equippedAccy: 
-  currentHP: 85
+  currentHP: 170
   currentSP: 20
   strength: 8
   tech: 12
@@ -76,9 +76,9 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  baseHP: 85
+  baseHP: 135
   baseSP: 20
-  maxHP: 85
+  maxHP: 170
   maxSP: 20
   inFrontRow: 1
   playerLevel: 1
@@ -160,7 +160,7 @@ MonoBehaviour:
   equippedOff: 
   equippedArmr: 
   equippedAccy: 
-  currentHP: 100
+  currentHP: 200
   currentSP: 10
   strength: 11
   tech: 6
@@ -187,9 +187,9 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  baseHP: 100
+  baseHP: 150
   baseSP: 10
-  maxHP: 100
+  maxHP: 200
   maxSP: 10
   inFrontRow: 1
   playerLevel: 1
@@ -407,7 +407,7 @@ MonoBehaviour:
   equippedOff: 
   equippedArmr: 
   equippedAccy: 
-  currentHP: 85
+  currentHP: 170
   currentSP: 20
   strength: 8
   tech: 12
@@ -434,9 +434,9 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  baseHP: 85
+  baseHP: 135
   baseSP: 20
-  maxHP: 85
+  maxHP: 170
   maxSP: 20
   inFrontRow: 1
   playerLevel: 1
