@@ -1,3 +1,8 @@
+11/05/19
+********
+Feature: Added ability to specify enemy positions when defining battles
+Polish: Tweaked order of battler positions to be all front, then all back in sequence
+
 11/04/19
 ********
 Feature: Designed initial version of speed-based battle turn system
@@ -207,6 +212,6 @@ Bug: Corrected dragon unintentionally re-spawning after re-entering cave
 ********
 . Bug: Transform issues when transitioning
 	Fix: delete Player element from Countryside hierarchy, was duplicated by EssentialsLoader
-. Bug: Hide dialog box from UI upon first load - done
+. Bug: Hide dialog box from UI upon first load
 	Fix 1: de-activate DialogBox by default in UI Canvas prefab
 	Fix 2: make sure NPC had correct number of lines of text

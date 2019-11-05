@@ -87,7 +87,7 @@ public class QuestManager : MonoBehaviour
             case "Town_end": // executes when Town_end quest marked complete
 
                 Debug.Log("Awarded Dwarven Sword."); // prints notice to debug log                
-                GameMenu.instance.notificationText.text = "Received a Dwarven Sword!"; // sets item notification text to show Dwarven Sword
+                GameMenu.instance.notificationText.text = "Received a <color=orange>Dwarven Sword</color>!"; // sets item notification text to show Dwarven Sword
                 GameManager.instance.AddItem("Dwarven Sword"); // adds Dwarven Sword reward to inventory
                 StartCoroutine(ShowGameNotification(3)); // calls game notification coroutine to show notice and block dialog
                 break; // ends case

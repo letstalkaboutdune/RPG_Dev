@@ -91,7 +91,9 @@ public class BattleStarter : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f); // forces 1.5-second wait to allow for fade to black
 
-        BattleManager.instance.BattleStart(potentialBattles[selectedBattle].enemies, cannotFlee, musicToPlay); // starts battle based on enemies from selected battle, cannotFlee flag, and music to play
+        // starts battle based on enemies from selected battle, cannotFlee flag, music to play, and enemy placement
+        BattleManager.instance.BattleStart(potentialBattles[selectedBattle].enemies, cannotFlee, musicToPlay, 
+                                           potentialBattles[selectedBattle].enemyPlacement);
 
         UIFade.instance.FadeFromBlack(); // calls UI fade from black function
 

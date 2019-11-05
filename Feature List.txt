@@ -9,8 +9,6 @@ Annoying
 
 Features
 ********
-Battle: fix order of enemy positions (all front, then all back)
-	*** will need to update row check as well
 Battle: implement speed-based turn system
 	*** add countdown and "tick speed" to battle
 	*** add "ticks" stat to all abilities

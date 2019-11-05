@@ -81,7 +81,9 @@ public class BattleManager : MonoBehaviour
     public float critMulti = 1f, resMulti = 1f;
     public float attackRowMulti = 1f, defendRowMulti = 1f;
     public int moveIndex, movePower, selectedTarget, damageRoll;
-    
+
+    private SpriteRenderer enemySprite; // creates enemy sprite renderer to handle layer sorting 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -152,10 +154,11 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void BattleStart(string[] enemiesToSpawn, bool setCannotFlee, int musicToPlay) // creates function to manage battle start
-                                                                         // requires string array of enemy names to execute
-                                                                         // also requires bool for whether party can flee
-    {
+    public void BattleStart(string[] enemiesToSpawn, bool setCannotFlee, int musicToPlay, int[] enemyPlacement) // creates function to manage battle start
+                                                                                                                 // requires string array of enemy names to execute
+                                                                                                                 // also requires bool for whether party can flee
+                                                                                                                 // also requires bool[] for enemy placement
+    {       
         if (!battleActive) // checks if a battle is already underway
         {
             cannotFlee = setCannotFlee; // sets cannot flee flag to passed setCannotFlee bool
@@ -241,14 +244,31 @@ public class BattleManager : MonoBehaviour
 
             for (int i = 0; i < enemiesToSpawn.Length; i++) // iterates through all elements of enemies to spawn array
             {
-                if(enemiesToSpawn[i] != "") // checks if enemy in array is not blank
+                if (enemiesToSpawn[i] != "") // checks if enemy in array is not blank
                 {
                     for (int j = 0; j < enemyPrefabs.Length; j++) // iterates through all elements of enemy prefabs array
                     {
                         if(enemyPrefabs[j].charName == enemiesToSpawn[i]) // checks if any enemy in prefabs matches current element of enemies to spawn array
                         {
-                            BattleChar newEnemy = Instantiate(enemyPrefabs[j], enemyPositions[i].position, enemyPositions[i].rotation); // instantiates new enemy at set position
-                            newEnemy.transform.parent = enemyPositions[i]; // sets new enemy instance as a child of enemy positions array
+                            BattleChar newEnemy = Instantiate(enemyPrefabs[j], enemyPositions[enemyPlacement[i]].position, enemyPositions[enemyPlacement[i]].rotation); // instantiates new enemy at set position based on passed enemyPlacement array                                                        
+                            newEnemy.transform.parent = enemyPositions[enemyPlacement[i]]; // sets new enemy instance as a child of enemy positions array
+
+                            enemySprite = newEnemy.gameObject.GetComponent<SpriteRenderer>(); // grabs sprite renderer of newEnemy
+                            
+                            // checks which position the enemy is placed in, sets the sorting order accordingly so more front is always on top
+                            if (enemyPlacement[i] == 0 || enemyPlacement[i] == 3)
+                            {
+                                enemySprite.sortingOrder = 0;
+                            }
+                            else if (enemyPlacement[i] == 1 || enemyPlacement[i] == 4)
+                            {
+                                enemySprite.sortingOrder = 1;
+                            }
+                            else
+                            {
+                                enemySprite.sortingOrder = 2;
+                            }
+
                             activeBattlers.Add(newEnemy); // adds new player element to active battlers list
                         }
                     }
@@ -1198,13 +1218,13 @@ public class BattleManager : MonoBehaviour
         }
         else // executes if attacker is enemy
         {
-            if (atkPos == "Pos1" || atkPos == "Pos3" || atkPos == "Pos5") // checks if enemy is in any front position
+            if (atkPos == "Pos1" || atkPos == "Pos2" || atkPos == "Pos3") // checks if enemy is in any front position
             {
                 Debug.Log("Enemy attacker is in front row."); // prints enemy attacker row status to debug log
                 attackRowMulti = 1f; // sets attack row multiplier to 1
             }
             // checks if any enemies are active in front row by seeing if any children of any front row enemy position indexes are active
-            else if (enemyPositions[0].GetChild(enemyPositions[0].childCount - 1).gameObject.activeInHierarchy || enemyPositions[2].GetChild(enemyPositions[2].childCount - 1).gameObject.activeInHierarchy || enemyPositions[4].GetChild(enemyPositions[4].childCount - 1).gameObject.activeInHierarchy)
+            else if (enemyPositions[0].GetChild(enemyPositions[0].childCount - 1).gameObject.activeInHierarchy || enemyPositions[1].GetChild(enemyPositions[1].childCount - 1).gameObject.activeInHierarchy || enemyPositions[2].GetChild(enemyPositions[2].childCount - 1).gameObject.activeInHierarchy)
             {
                 Debug.Log("Enemy attacker is in back row."); // prints enemy attacker row status to debug log
                 attackRowMulti = 0.5f; // sets attack row multiplier to 0.5
@@ -1233,13 +1253,13 @@ public class BattleManager : MonoBehaviour
         }
         else // executes if defender is enemy
         {
-            if (defPos == "Pos1" || defPos == "Pos3" || defPos == "Pos5") // checks if enemy is in any front position
+            if (defPos == "Pos1" || defPos == "Pos2" || defPos == "Pos3") // checks if enemy is in any front position
             {
                 Debug.Log("Enemy defender is in front row."); // prints enemy defender row status to debug log
                 defendRowMulti = 1f; // sets defend row multiplier to 1
             }
             // checks if any enemies are active in front row by seeing if any children of any front row enemy position indexes are active
-            else if (enemyPositions[0].GetChild(enemyPositions[0].childCount-1).gameObject.activeInHierarchy || enemyPositions[2].GetChild(enemyPositions[2].childCount - 1).gameObject.activeInHierarchy || enemyPositions[4].GetChild(enemyPositions[4].childCount - 1).gameObject.activeInHierarchy) 
+            else if (enemyPositions[0].GetChild(enemyPositions[0].childCount-1).gameObject.activeInHierarchy || enemyPositions[1].GetChild(enemyPositions[1].childCount - 1).gameObject.activeInHierarchy || enemyPositions[2].GetChild(enemyPositions[2].childCount - 1).gameObject.activeInHierarchy) 
             {
                 Debug.Log("Enemy defender is in back row."); // prints enemy defender row status to debug log
                 defendRowMulti = 0.5f; // sets defender row multiplier to 0.5

@@ -1129,6 +1129,7 @@ MonoBehaviour:
   potentialBattles:
   - enemies:
     - Dragon
+    enemyPlacement: 01000000
     rewardXP: 500
     rewardAP: 10
     rewardItems:
@@ -12281,6 +12282,7 @@ MonoBehaviour:
   - enemies:
     - Skeleton
     - Spider
+    enemyPlacement: 
     rewardXP: 15
     rewardAP: 3
     rewardItems:
@@ -12289,6 +12291,7 @@ MonoBehaviour:
   - enemies:
     - Eyeball
     - Eyeball
+    enemyPlacement: 
     rewardXP: 20
     rewardAP: 5
     rewardItems:
@@ -12297,6 +12300,7 @@ MonoBehaviour:
     rewardGold: 20
   - enemies:
     - Spider
+    enemyPlacement: 
     rewardXP: 5
     rewardAP: 1
     rewardItems:
@@ -12305,6 +12309,7 @@ MonoBehaviour:
   - enemies:
     - Skeleton
     - Skeleton
+    enemyPlacement: 
     rewardXP: 20
     rewardAP: 4
     rewardItems:
@@ -12314,6 +12319,7 @@ MonoBehaviour:
     - Spider
     - Spider
     - Spider
+    enemyPlacement: 
     rewardXP: 15
     rewardAP: 2
     rewardItems:
@@ -12324,6 +12330,7 @@ MonoBehaviour:
     - Eyeball
     - Skeleton
     - Spider
+    enemyPlacement: 
     rewardXP: 20
     rewardAP: 4
     rewardItems:
@@ -12439,6 +12446,7 @@ MonoBehaviour:
   - enemies:
     - Skeleton
     - Spider
+    enemyPlacement: 0100000002000000
     rewardXP: 15
     rewardAP: 3
     rewardItems:
@@ -12447,6 +12455,7 @@ MonoBehaviour:
   - enemies:
     - Eyeball
     - Eyeball
+    enemyPlacement: 0200000004000000
     rewardXP: 20
     rewardAP: 5
     rewardItems:
@@ -12455,6 +12464,7 @@ MonoBehaviour:
     rewardGold: 20
   - enemies:
     - Spider
+    enemyPlacement: 01000000
     rewardXP: 5
     rewardAP: 1
     rewardItems:
@@ -12463,6 +12473,7 @@ MonoBehaviour:
   - enemies:
     - Skeleton
     - Skeleton
+    enemyPlacement: 0100000002000000
     rewardXP: 20
     rewardAP: 4
     rewardItems:
@@ -12472,6 +12483,7 @@ MonoBehaviour:
     - Spider
     - Spider
     - Spider
+    enemyPlacement: 010000000200000004000000
     rewardXP: 15
     rewardAP: 2
     rewardItems:
@@ -12482,6 +12494,7 @@ MonoBehaviour:
     - Eyeball
     - Skeleton
     - Spider
+    enemyPlacement: 040000000100000002000000
     rewardXP: 20
     rewardAP: 4
     rewardItems:
@@ -12652,6 +12665,7 @@ MonoBehaviour:
   - enemies:
     - Skeleton
     - Spider
+    enemyPlacement: 
     rewardXP: 15
     rewardAP: 3
     rewardItems:
@@ -12660,6 +12674,7 @@ MonoBehaviour:
   - enemies:
     - Eyeball
     - Eyeball
+    enemyPlacement: 
     rewardXP: 20
     rewardAP: 5
     rewardItems:
@@ -12668,6 +12683,7 @@ MonoBehaviour:
     rewardGold: 20
   - enemies:
     - Spider
+    enemyPlacement: 
     rewardXP: 5
     rewardAP: 1
     rewardItems:
@@ -12676,6 +12692,7 @@ MonoBehaviour:
   - enemies:
     - Skeleton
     - Skeleton
+    enemyPlacement: 
     rewardXP: 20
     rewardAP: 4
     rewardItems:
@@ -12685,6 +12702,7 @@ MonoBehaviour:
     - Spider
     - Spider
     - Spider
+    enemyPlacement: 
     rewardXP: 15
     rewardAP: 2
     rewardItems:
@@ -12695,6 +12713,7 @@ MonoBehaviour:
     - Eyeball
     - Skeleton
     - Spider
+    enemyPlacement: 
     rewardXP: 20
     rewardAP: 4
     rewardItems:

@@ -120,7 +120,7 @@ public class Tooltip : MonoBehaviour
             {
                 if(item.resistances[i] != 1f) // checks if an element of the array is non-zero
                 {
-                    statText += "Vuln_" + elementNames[i] + " = " + item.resistances[i] + "x \n"; // adds that resistance to stat text
+                    statText += elementNames[i] + " vulnerability = " + item.resistances[i] + "x \n"; // adds that resistance to stat text
                 }
             }
         }
@@ -132,6 +132,7 @@ public class Tooltip : MonoBehaviour
         //itemValue = "Value: <color=green>" + item.value + "g</color>"; // sets item value
         statText = statText.Trim();
 
+        //
         if(item.tier == "Common")
         {
             itemName = "<color=white>" + item.itemName + "</color>";
@@ -152,6 +153,7 @@ public class Tooltip : MonoBehaviour
         {
             itemName = "<color=magenta>" + item.itemName + "</color>";
         }
+        //
 
         string tooltipText = string.Format("{0}\n{1}", itemName, statText/*, itemValue*/); // formats string of tooltip text
         tooltip.text = tooltipText; // sets tooltip text equal to formatted string
