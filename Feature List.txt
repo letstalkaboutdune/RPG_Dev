@@ -9,11 +9,15 @@ Annoying
 
 Features
 ********
+Battle: fix order of enemy positions (all front, then all back)
+	*** will need to update row check as well
 Battle: implement speed-based turn system
+	*** add countdown and "tick speed" to battle
+	*** add "ticks" stat to all abilities
 *****************************************************
+Game: Add randomness to battle rewards
 Battle: update magic menu to fill screen based on available abilities
 Menu: add drag-and-drop to interface
-Battle: fix order of enemy positions (all front, then all back)
 Menu: implement small sliders on HP/MP in main menu and battle menu
 Menu: implement menu clock tracking play time
 Menu: add scrolling + masking menu support to UI panels
@@ -26,7 +30,6 @@ Game: add quest item audio stinger
 Game: add an inn, item shop, magic shop, and better weapon shop to the town
 Sound: add checks to play item unsuccessful sound
 Sound: prevent re-starting same music when entering main menu from game over (replace game over music?)
-Game: Add randomness to battle rewards
 Menu: add item highlights in menu
 Battle: have battlechars move forward to attack
 Menu: consider changing dialog function to just have speaker name in text, not in separate box

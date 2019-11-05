@@ -27,8 +27,9 @@ public class Tooltip : MonoBehaviour
 
     public void GenerateTooltip(Item item) // creates a function to generate a tooltip based on item stats
     {
-        // creates new blank strings to store stat text and item value
+        // creates new blank strings to store stat and item text
         string statText = "";
+        string itemName = "";
         //string itemValue = "";
 
         if (item.isItem) // checks if passed item is an item
@@ -58,15 +59,15 @@ public class Tooltip : MonoBehaviour
             statText += "Crit +" + item.critWeapon + "\n";
             if (item.isRanged)
             {
-                statText += "<color=orange>Ranged</color>\n";
+                statText += "Ranged\n";
             }
             else
             {
-                statText += "<color=orange>Melee</color>\n";
+                statText += "Melee\n";
             }
             if (item.isTwoHanded)
             {
-                statText += "<color=orange>Two-handed</color>\n";
+                statText += "Two-handed\n";
             }
         }
         else if (item.isArmor) // checks if passed item is armor
@@ -106,7 +107,7 @@ public class Tooltip : MonoBehaviour
             }
             if (item.isRanged)
             {
-                statText += "<color=orange>Ranged</color>\n";
+                statText += "Ranged\n";
             }
         }
         else if (item.isAccy) // checks if passed item is an accessory
@@ -131,7 +132,28 @@ public class Tooltip : MonoBehaviour
         //itemValue = "Value: <color=green>" + item.value + "g</color>"; // sets item value
         statText = statText.Trim();
 
-        string tooltipText = string.Format("{0}\n{1}", item.itemName, statText/*, itemValue*/); // formats string of tooltip text
+        if(item.tier == "Common")
+        {
+            itemName = "<color=white>" + item.itemName + "</color>";
+        }
+        else if (item.tier == "Magic")
+        {
+            itemName = "<color=#0089FFFF>" + item.itemName + "</color>";
+        }
+        else if (item.tier == "Rare")
+        {
+            itemName = "<color=yellow>" + item.itemName + "</color>";
+        }
+        else if (item.tier == "Legendary")
+        {
+            itemName = "<color=orange>" + item.itemName + "</color>";
+        }
+        else if (item.tier == "Unique")
+        {
+            itemName = "<color=magenta>" + item.itemName + "</color>";
+        }
+
+        string tooltipText = string.Format("{0}\n{1}", itemName, statText/*, itemValue*/); // formats string of tooltip text
         tooltip.text = tooltipText; // sets tooltip text equal to formatted string
         gameObject.SetActive(true); // shows tooltip panel
         
@@ -161,10 +183,10 @@ public class Tooltip : MonoBehaviour
                 tooltipText = "Multiplies melee damage\nMulti = Strength/2\nAffects Block%";
                 break;
             case "Tech":
-                tooltipText = "Multiplies Tech ability power\nMulti = Tech/2\nDictates SP gain per level";
+                tooltipText = "Multiplies Tech ability power\nMulti = Tech/2\nSets SP gain per level";
                 break;
             case "Endurance":
-                tooltipText = "Dictates HP gain per level\nDictates chance to resist statuses";
+                tooltipText = "Sets HP gain per level\nSets chance to resist statuses";
                 break;
             case "Agility":
                 tooltipText = "Multiplies ranged damage\nMulti = Agility/2\nAffects Crit%\nAffects Evade%";
@@ -179,13 +201,13 @@ public class Tooltip : MonoBehaviour
                 tooltipText = "Base damage of equipped weapon\nAdds to base damage of attack skill\nMultiplied by Str/Agi multi for total damage";
                 break;
             case "Hit%":
-                tooltipText = "% chance to hit target when attacking\nDictated by equipped weapon\nHit% = 90 when unarmed";
+                tooltipText = "% chance to hit target when attacking\nSet by equipped weapon\nHit% = 90 when unarmed";
                 break;
             case "Crit%":
                 tooltipText = "% chance to deal 2x damage\nCrit% = (Agility + Luck + WeaponCrit)/3";
                 break;
             case "Weapon Def":
-                tooltipText = "Defense against weapon damage\nDictated by equipment";
+                tooltipText = "Defense against weapon damage\nSet by equipment";
                 break;
             case "Evade%":
                 tooltipText = "% chance to dodge an attack\nEvade% = (Agility + Speed + ArmorEvade)/3";
@@ -194,7 +216,7 @@ public class Tooltip : MonoBehaviour
                 tooltipText = "% chance to block an attack\nBlock% = (Strength + ShieldBlock)/2\nBlock% = 0 with no shield equipped";
                 break;
             case "Tech Def":
-                tooltipText = "Defense against Tech damage\nDictated by equipment";
+                tooltipText = "Defense against Tech damage\nSet by equipment";
                 break;
             default:
                 tooltipText = "Stat was not found!";

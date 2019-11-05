@@ -102,6 +102,7 @@ MonoBehaviour:
   isShield: 0
   itemName: Ring of Freeze
   description: Inlaid with a frosty sapphire.
+  tier: Magic
   value: 100
   itemSprite: {fileID: 21300140, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0

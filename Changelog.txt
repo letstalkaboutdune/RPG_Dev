@@ -1,3 +1,9 @@
+11/04/19
+********
+Feature: Designed initial version of speed-based battle turn system
+Feature: Implemented item tier system with color coding
+Bug: Corrected ability to open game menu when transitioning scenes
+
 11/03/19
 ********
 Feature: Implemented tooltip showing item stats and explanation of player stats

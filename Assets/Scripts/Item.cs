@@ -28,6 +28,7 @@ public class Item : MonoBehaviour
     // create string variables to handle item names and desciptions
     public string itemName;
     public string description;
+    public string tier;
     public int value; // create int variable to handle item shop value
 
     public Sprite itemSprite; // create Sprite variable to handle item image sprite

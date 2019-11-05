@@ -102,11 +102,11 @@ MonoBehaviour:
   isShield: 0
   itemName: Iron Bow
   description: Strong and fast.
+  tier: Common
   value: 40
   itemSprite: {fileID: 21300132, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
   affectSP: 0
-  affectStr: 0
   affectLife: 0
   amountToChange: 0
   dmgWeapon: 5

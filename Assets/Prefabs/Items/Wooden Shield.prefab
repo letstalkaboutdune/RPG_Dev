@@ -102,11 +102,11 @@ MonoBehaviour:
   isShield: 1
   itemName: Wooden Shield
   description: Stops some enemy attacks.
+  tier: Common
   value: 25
   itemSprite: {fileID: 21300142, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
-  affectMP: 0
-  affectStr: 0
+  affectSP: 0
   affectLife: 0
   amountToChange: 0
   dmgWeapon: 0

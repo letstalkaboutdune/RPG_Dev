@@ -72,13 +72,13 @@ public class CharStats : MonoBehaviour
     void Update()
     {
         // *DEBUG ONLY - adds EXP, AP if "K" key is pressed
-        ///*
+        /*
         if (Input.GetKeyDown(KeyCode.K))  
         {
             AddExp(10000000); // calls AddExp function to increase EXP
             AddAP(1000); // calls AddAP function to increase AP
         }
-        //*/
+        */
     }
 
     public void AddExp(int expToAdd) // creates function to add experience to currentExp and check for level-up

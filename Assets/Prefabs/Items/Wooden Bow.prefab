@@ -102,11 +102,11 @@ MonoBehaviour:
   isShield: 0
   itemName: Wooden Bow
   description: Hits with a dull thud.
+  tier: Common
   value: 20
   itemSprite: {fileID: 21300136, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
   affectSP: 0
-  affectStr: 0
   affectLife: 0
   amountToChange: 0
   dmgWeapon: 2

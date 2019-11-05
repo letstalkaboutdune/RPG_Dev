@@ -102,6 +102,7 @@ MonoBehaviour:
   isShield: 0
   itemName: Revive Potion
   description: Purified essence of life.
+  tier: Common
   value: 25
   itemSprite: {fileID: 21300130, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0

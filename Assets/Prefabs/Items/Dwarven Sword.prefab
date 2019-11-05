@@ -102,11 +102,11 @@ MonoBehaviour:
   isShield: 0
   itemName: Dwarven Sword
   description: Hums with ancient energy.
+  tier: Legendary
   value: 100
   itemSprite: {fileID: 21300000, guid: ce281bc758d1406479c4f2d47b3d0bee, type: 3}
   affectHP: 0
   affectSP: 0
-  affectStr: 0
   affectLife: 0
   amountToChange: 0
   dmgWeapon: 15

@@ -86,7 +86,7 @@ public class GameMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire2") && !GameManager.instance.battleActive && !GameManager.instance.shopActive && !GameManager.instance.dialogActive && !GameManager.instance.noticeActive) // checks for user to press Fire2 (RMB by default), and battle, shop, dialog, and notice not active
+        if (Input.GetButtonDown("Fire2") && !GameManager.instance.battleActive && !GameManager.instance.shopActive && !GameManager.instance.dialogActive && !GameManager.instance.noticeActive && !GameManager.instance.fadingBetweenAreas) // checks for user to press Fire2 (RMB by default), and various game states not active
         {
             if (theMenu.activeInHierarchy) // checks if the menu is active
             {
