@@ -1,5 +1,11 @@
+11/06/19
+********
+Feature: Implemented speed-based turn system in battle, with each ability having different time requirement
+Feature: Implemented all player's turn counter resetting on failed flee
+
 11/05/19
 ********
+Feature: Implemented play time clock in game menu
 Feature: Added ability to specify enemy positions when defining battles
 Polish: Tweaked order of battler positions to be all front, then all back in sequence
 

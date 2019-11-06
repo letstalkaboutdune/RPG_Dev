@@ -6979,6 +6979,7 @@ MonoBehaviour:
   - moveName: Melee Attack
     movePower: 5
     moveCost: 0
+    moveCounter: 100
     theEffect: {fileID: 5443424553989747901, guid: bfc1985962a6986499555b15d8096f8f,
       type: 3}
     isWeapon: 1
@@ -6989,6 +6990,7 @@ MonoBehaviour:
   - moveName: Ranged Attack
     movePower: 5
     moveCost: 0
+    moveCounter: 100
     theEffect: {fileID: 5443424553989747901, guid: bfc1985962a6986499555b15d8096f8f,
       type: 3}
     isWeapon: 1
@@ -6999,6 +7001,7 @@ MonoBehaviour:
   - moveName: Heat
     movePower: 7
     moveCost: 5
+    moveCounter: 150
     theEffect: {fileID: 4987815889332692341, guid: 1d1143ad6e9cf594aa96a92e269b5047,
       type: 3}
     isWeapon: 0
@@ -7009,6 +7012,7 @@ MonoBehaviour:
   - moveName: Freeze
     movePower: 7
     moveCost: 5
+    moveCounter: 150
     theEffect: {fileID: 6357308049703714338, guid: 07898d3bf75a901499a62ee024059b7c,
       type: 3}
     isWeapon: 0
@@ -7019,6 +7023,7 @@ MonoBehaviour:
   - moveName: Virus
     movePower: 7
     moveCost: 5
+    moveCounter: 150
     theEffect: {fileID: 7641006353339823828, guid: fce3396b32aad3f4cb0221049b153e9f,
       type: 3}
     isWeapon: 0
@@ -7069,7 +7074,7 @@ MonoBehaviour:
   - {fileID: 2347986989219177013}
   battleNotice: {fileID: 1262981341337600736}
   battleNoticeActive: 0
-  chanceToFlee: 35
+  chanceToFlee: 33
   itemMenu: {fileID: 1262981341283977091}
   battleItemButtons:
   - {fileID: 1262981342930600565}

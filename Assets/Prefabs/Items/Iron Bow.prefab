@@ -103,7 +103,7 @@ MonoBehaviour:
   itemName: Iron Bow
   description: Strong and fast.
   tier: Common
-  value: 40
+  value: 50
   itemSprite: {fileID: 21300132, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
   affectSP: 0
@@ -114,8 +114,8 @@ MonoBehaviour:
   defTech: 0
   evadeArmor: 0
   blockShield: 0
-  hitChance: 90
-  critWeapon: 15
+  hitChance: 85
+  critWeapon: 5
   resistances:
   - 0
   - 0

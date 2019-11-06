@@ -46,7 +46,7 @@ public class BattleManager : MonoBehaviour
     public BattleNotification battleNotice; // creates reference to battle notification object
     public bool battleNoticeActive; // creates bool to handle if battle notice is active
 
-    public int chanceToFlee = 35; // creates int to handle chance to fleeing from battle
+    public int chanceToFlee = 33; // creates int to handle chance to fleeing from battle
     private bool fleeing; // creates bool to handle whether party is fleeing
 
     // creates various objects and variables to handle item menu
@@ -84,6 +84,9 @@ public class BattleManager : MonoBehaviour
 
     private SpriteRenderer enemySprite; // creates enemy sprite renderer to handle layer sorting 
 
+    private bool shouldTick = false; // creates bool to handle when counter should be ticked
+    private int[] battlerCounter; // creates int array to handle counter values for each battler
+
     // Start is called before the first frame update
     void Start()
     {
@@ -94,23 +97,29 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        // *DEBUG ONLY - checks for T input to test battle start
-        if (Input.GetKeyDown(KeyCode.T))  
-        {
-            BattleStart(new string[] {"Spider", "Spider", "Spider"}, false); // calls battle start function with test enemies
-        }
-        // *END DEBUG
-        */
-
         if (battleActive) // checks if battle is active
         {
+            if (shouldTick) // checks if shouldTick is true
+            {
+                if (!CheckTurn()) // checks if check turn function did not find any battlers with move
+                {
+                    TickCounter(); // calls function to tick down battle counter
+                }
+                else // executes if check turn did find battler with move
+                {
+                    Debug.Log("*** NEW TURN = " + activeBattlers[currentTurn] + " ***"); // prints new turn notice to debug log
+                    turnWaiting = true; // sets turnWaiting flag
+                }
+            }
+
             if (turnWaiting) // checks if we are waiting on a turn
             {
                 GreenSpriteGlow(currentTurn); // shows green sprite glow on current turn active battler
 
                 if (activeBattlers[currentTurn].isPlayer) // checks if active battler is a player
                 {
+                    shouldTick = false; // stops battle counter
+
                     if (!playerActing) // checks if player is not in the middle of a move
                     {
                         uiButtonsHolder.SetActive(true); // enables UI buttons since a player has yet to move
@@ -118,12 +127,12 @@ public class BattleManager : MonoBehaviour
                 }
                 else
                 {
+                    shouldTick = false; // stops battle counter
                     uiButtonsHolder.SetActive(false); // hides UI buttons since a player is inactive
-
                     StartCoroutine(EnemyMoveCo()); // calls EnemyMoveCo coroutine to handle enemy turn
                 }
-            }                            
-             
+            }
+
             /*
             // *DEBUG ONLY* - checks for N input to test turn order
             if (Input.GetKeyDown(KeyCode.N))
@@ -132,7 +141,7 @@ public class BattleManager : MonoBehaviour
             } 
             // END DEBUG    
             */
-            
+
             // WIP
             /*
             if (spriteFadeOut) // checks if spriteFadeOut is true, meaning a sprite needs to fade out
@@ -176,6 +185,7 @@ public class BattleManager : MonoBehaviour
 
             AudioManager.instance.PlayBGM(musicToPlay); // starts battle music based on passed int
 
+            // instantiates players as active battlers
             for (int i = 0; i < GameManager.instance.playerStats.Length; i++) // iterates through all elements of player positions array
             {
                 if (GameManager.instance.playerStats[i].gameObject.activeInHierarchy) // checks if player at that position is active in hierarchy by checking player stats in game manager
@@ -237,11 +247,14 @@ public class BattleManager : MonoBehaviour
                             {
                                 activeBattlers[i].movesAvailable[k] = thePlayer.abilities[k]; // builds the player's move list based on the abilities unlocked for that ability level
                             }
+
+                            activeBattlers[i].tickRate = Mathf.RoundToInt((0.2f * activeBattlers[i].speed) + 5f); // assigns player tick rate based on speed
                         }
                     }
                 }
             }
 
+            // instantiates enemies as active battlers
             for (int i = 0; i < enemiesToSpawn.Length; i++) // iterates through all elements of enemies to spawn array
             {
                 if (enemiesToSpawn[i] != "") // checks if enemy in array is not blank
@@ -250,7 +263,8 @@ public class BattleManager : MonoBehaviour
                     {
                         if(enemyPrefabs[j].charName == enemiesToSpawn[i]) // checks if any enemy in prefabs matches current element of enemies to spawn array
                         {
-                            BattleChar newEnemy = Instantiate(enemyPrefabs[j], enemyPositions[enemyPlacement[i]].position, enemyPositions[enemyPlacement[i]].rotation); // instantiates new enemy at set position based on passed enemyPlacement array                                                        
+                            BattleChar newEnemy = Instantiate(enemyPrefabs[j], enemyPositions[enemyPlacement[i]].position, enemyPositions[enemyPlacement[i]].rotation); // instantiates new enemy at set position based on passed enemyPlacement array 
+                            newEnemy.tickRate = Mathf.RoundToInt((0.2f * newEnemy.speed) + 5f); // sets enemy tick rate based on speed
                             newEnemy.transform.parent = enemyPositions[enemyPlacement[i]]; // sets new enemy instance as a child of enemy positions array
 
                             enemySprite = newEnemy.gameObject.GetComponent<SpriteRenderer>(); // grabs sprite renderer of newEnemy
@@ -275,36 +289,26 @@ public class BattleManager : MonoBehaviour
                 }
             }
 
+            // initializes and starts battle counter ticking down
+            battlerCounter = new int[activeBattlers.Count]; // initializes battleCounter array to empty int equal to number of active battlers
+            StartTurnOrder(); // calls function to initialize battler turn order
+            shouldTick = true; // starts battle counter
+
             AddSpriteGlow(); // calls function to add sprite glow to all active battlers
-
-            // initializes basic variables controlling combat turns
-            turnWaiting = true;
-            currentTurn = Random.Range(0, activeBattlers.Count); // randomizes who gets to go first using built-in Random.Range function
-                                                                 // since activeBattlers is of type List, must use Count (for list) rather than Length (for array)
-                                                                 //currentTurn = 0; // sets turn to 0
             UpdateBattle(); // calls function to update battle to reflect player dead upon battle entry
-
             UpdateUIStats(); // calls function to update UI battle stats
         }
     }
 
     public void NextTurn() // creates function to handle next turn in combat
-    {
+    {        
         Debug.Log("*** NEXT TURN ***"); // prints next turn notification to debug log
 
-        HideSpriteGlow(currentTurn); // hides sprite glow on active battler ending turn
-        
-        currentTurn++; // increments current turn
-        
-        if(currentTurn >= activeBattlers.Count) // checks if current turn is greater than active battlers count
-        {
-            currentTurn = 0; // resets current turn to 0
-        }
-
-        turnWaiting = true; // sets turn waiting to true
-
+        HideSpriteGlow(currentTurn); // hides sprite glow from current turn battler
         UpdateBattle(); // updates information in battle whenever a turn completes
         UpdateUIStats(); // calls function to update UI battle stats
+
+        shouldTick = true; // starts battle counter
     }
 
     public void UpdateGameManager() // creates function to handle updating game manager based on battle stats
@@ -401,20 +405,7 @@ public class BattleManager : MonoBehaviour
             {
                 StartCoroutine(GameOverCo()); // calls coroutine to end battle in failure
             }
-        }
-        else // executes if battle is not over
-        {
-            while (activeBattlers[currentTurn].currentHP == 0) // executes if current battler HP = 0
-                                                               // set as while loop to handle multiple dead battlers
-            {
-                currentTurn++; // increments current turn to skip dead battler
-                
-                if(currentTurn >= activeBattlers.Count) // checks if end of turn order has been reached by comparing to # of battlers
-                {
-                    currentTurn = 0; // resets turn order to 0
-                }
-            }
-        }
+        }        
     }
 
     public IEnumerator EnemyMoveCo() // creates function to handle enemy move delay
@@ -447,6 +438,7 @@ public class BattleManager : MonoBehaviour
             if (movesList[i].moveName == activeBattlers[currentTurn].movesAvailable[selectAttack]) // checks if selected move is contained in move list
             {
                 moveIndex = i; // assigns current value of i to moveIndex for use in damage rolls
+                battlerCounter[currentTurn] = Mathf.RoundToInt(movesList[i].moveCounter * Random.Range(0.9f, 1.1f)); // resets counter on current battler to moveCounter value ±10% RNG
 
                 Instantiate(movesList[i].theEffect, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation); // instantiates attack effect on selected target
 
@@ -465,6 +457,8 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator PlayerMoveCo(string moveName, int playerTarget) // creates function to handle players attacking
     {
+        turnWaiting = false; // sets turn waiting to false since player is doing a move
+        
         selectedTarget = playerTarget;
         playerActing = true; // sets playerActing true to stop update loop from acting on UI
         
@@ -478,7 +472,8 @@ public class BattleManager : MonoBehaviour
             if (movesList[i].moveName == moveName) // checks if selected move is contained in move list
             {
                 moveIndex = i; // assign i value to moveIndex when move is found
-                
+                battlerCounter[currentTurn] = Mathf.RoundToInt(movesList[i].moveCounter * Random.Range(0.9f, 1.1f)); // resets counter on current battler to moveCounter value ±10% RNG
+
                 RedSpriteGlow(selectedTarget); // shows red sprite glow on current selected target
                 
                 Instantiate(movesList[i].theEffect, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation); // instantiates attack effect on selected target
@@ -552,17 +547,17 @@ public class BattleManager : MonoBehaviour
     public void MeleeOrRanged() // creates function to handle if player attack is melee or ranged
     {
         string weaponName = activeBattlers[currentTurn].equippedWpn; // pulls name of active player weapon
-        Debug.Log("Player weapon = " + weaponName); // prints player weapon name to debug log
+        //Debug.Log("Player weapon = " + weaponName); // prints player weapon name to debug log
 
         if (weaponName != "" && GameManager.instance.GetItemDetails(weaponName).isRanged) // checks if player weapon is not blank and is a ranged weapon
         {
-            Debug.Log("Rolling ranged attack."); // prints ranged attack roll to debug menu
+            //Debug.Log("Rolling ranged attack."); // prints ranged attack roll to debug menu
             OpenTargetMenu("Ranged Attack"); // calls open target menu with ranged attack
         }
 
         else // executes if weapon is not ranged (i.e. melee)
         {
-            Debug.Log("Rolling melee attack."); // prints melee attack roll to debug menu
+            //Debug.Log("Rolling melee attack."); // prints melee attack roll to debug menu
             OpenTargetMenu("Melee Attack"); // calls open target menu with melee attack
         }    
     }
@@ -644,12 +639,15 @@ public class BattleManager : MonoBehaviour
         }
         else // executes if party can flee from battle
         {
-            int fleeSuccess = Random.Range(0, 100); // uses RNG from 0 to 100 to determine flee success
+            int fleeSuccess = Random.Range(1, 100); // uses RNG from 1 to 100 to determine flee success
+            //Debug.Log("Chance to flee = " + chanceToFlee + "%"); // prints chance to flee to debug log
+            //Debug.Log("Flee roll = " + fleeSuccess); // prints flee roll to debug log
 
             if (fleeSuccess < chanceToFlee) // checks if flee success result is lower than threshold set by chance to flee
                                             // flee is successful when fleeSuccess < chanceToFlee
             {
-                fleeing = true; // sets fleeing booleran to true
+                Debug.Log("Flee successful."); // prints flee success notice to debug log
+                fleeing = true; // sets fleeing boolean to true
 
                 HideSpriteGlow(currentTurn); // hides sprite glow from current turn active battler
 
@@ -657,7 +655,18 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
-                NextTurn(); // moves to next character's turn
+                Debug.Log("Flee failed."); // prints flee failure notice to debug log
+
+                for (int i = 0; i < activeBattlers.Count; i++) // iterates through all active battlers
+                {
+                    if(activeBattlers[i].isPlayer && activeBattlers[i].currentHP > 0) // checks if active battler is a player and alive
+                    {
+                        battlerCounter[i] = Mathf.RoundToInt(100 * Random.Range(0.9f, 1.1f)); // resets counter on current battler to 100 ±10% RNG
+                    }
+                }
+                
+                turnWaiting = false; // sets turn waiting flag to false                 
+                NextTurn(); // calls next turn function
                 battleNotice.theText.text = "Couldn't escape!"; // sets battle notification text to escape failure
                 battleNotice.Activate(); // activates battle notification text in menu
             }
@@ -787,20 +796,6 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log(battleActiveItem.itemName + " was used."); // prints debug text to notify on item use
 
-            /*
-            // WIP
-            battleActiveItemQuantity--; // decrements active item quantity
-            if (battleActiveItemQuantity <= 0) // checks if active 
-            {
-                battleActiveItem = null; // resets active item to null
-                CloseActionButtons(); // closes item action panel
-
-                // resets item details in menu to default values
-                battleItemName.text = "Please select an item.";
-                battleItemDescription.text = "";
-            }
-            */
-
             CloseItemsMenu(); // calls function to close items menu
             CloseActionButtons(); // closes item action panel
 
@@ -819,6 +814,7 @@ public class BattleManager : MonoBehaviour
     {
         battleActive = false; // sets battle active to false to prevent more turns
         turnWaiting = false; // sets turn waiting to false to prevent issues loading battle
+        shouldTick = false; // stops battle counter
 
         // hides all battle UI
         uiButtonsHolder.SetActive(false);
@@ -866,6 +862,7 @@ public class BattleManager : MonoBehaviour
     {
         battleActive = false; // sets battle active to false to prevent more turns
         turnWaiting = false; // sets turn waiting to false to prevent issues loading battle
+        shouldTick = false; // stops battle counter
 
         // hides all battle UI
         uiButtonsHolder.SetActive(false);
@@ -932,7 +929,7 @@ public class BattleManager : MonoBehaviour
         activeBattlers[battlerToHide].theSprite.GetComponent<SpriteGlowEffect>().enabled = false; // hides sprite glow        
     }
 
-     public void AttackRolls() // creates function to manage common attack rolls algorithm
+    public void AttackRolls() // creates function to manage common attack rolls algorithm
     {
         if (movesList[moveIndex].isWeapon) // executes if move is of type weapon
         {
@@ -994,13 +991,13 @@ public class BattleManager : MonoBehaviour
     public void RollHit() // creates function to roll if a weapon attack hits
     {       
         int hitRoll = Mathf.RoundToInt(Random.Range(1f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
-        Debug.Log("Attacker hit chance = " + activeBattlers[currentTurn].hitChance); // prints attacker hit chance to debug log
-        Debug.Log("Hit roll = " + hitRoll); // prints result of hit roll to debug log
+        //Debug.Log("Attacker hit chance = " + activeBattlers[currentTurn].hitChance); // prints attacker hit chance to debug log
+        //Debug.Log("Hit roll = " + hitRoll); // prints result of hit roll to debug log
 
         if (hitRoll <= activeBattlers[currentTurn].hitChance) // executes if attack hit
         {
             attackHit = true; // sets attackHit to true if attack hit
-            Debug.Log("Attack hits."); // prints hit success to debug log
+            //Debug.Log("Attack hits."); // prints hit success to debug log
         }
         else // executes if attack missed
         {
@@ -1014,8 +1011,8 @@ public class BattleManager : MonoBehaviour
     {
         int critChance = activeBattlers[currentTurn].critChance; // assigns local variable critChance to attacker's crit chance
         int critRoll = Mathf.RoundToInt(Random.Range(1f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
-        Debug.Log("Attacker crit chance = " + critChance); // prints attacker crit chance to debug log
-        Debug.Log("Crit roll = " + critRoll); // prints result of crit roll
+        //Debug.Log("Attacker crit chance = " + critChance); // prints attacker crit chance to debug log
+        //Debug.Log("Crit roll = " + critRoll); // prints result of crit roll
 
         if (critRoll <= critChance) // executes if attack crits
         {
@@ -1027,7 +1024,7 @@ public class BattleManager : MonoBehaviour
         {
             attackCrit = false; // sets attackCrit to false if attack did not crit
             critMulti = 1f; // sets crit multiplier to 1x
-            Debug.Log("Attack does not crit."); // print crit failure notifier to debug log
+            //Debug.Log("Attack does not crit."); // print crit failure notifier to debug log
         }
     }
 
@@ -1037,8 +1034,8 @@ public class BattleManager : MonoBehaviour
         // ************************
         int evadeChance = activeBattlers[selectedTarget].evadeChance; // assigns local variable to defender's evade chance
         int evadeRoll = Mathf.RoundToInt(Random.Range(1f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
-        Debug.Log("Defender evade chance = " + evadeChance); // prints defender evade chance to debug log
-        Debug.Log("Evade roll = " + evadeRoll); // prints result of evade roll
+        //Debug.Log("Defender evade chance = " + evadeChance); // prints defender evade chance to debug log
+        //Debug.Log("Evade roll = " + evadeRoll); // prints result of evade roll
 
         if (evadeRoll <= evadeChance) // executes if attack is evaded
         {
@@ -1048,15 +1045,15 @@ public class BattleManager : MonoBehaviour
         else // executes if attack was not evaded
         {
             attackEvaded = false; // sets attackEvaded to false if attack was not evaded
-            Debug.Log("Attack not evaded."); // prints evade failure notifier to debug log
+            //Debug.Log("Attack not evaded."); // prints evade failure notifier to debug log
         }
         
         // code below handles block
         // ************************
         int blockChance = activeBattlers[selectedTarget].blockChance; // assigns local variable to defender's block chance
         int blockRoll = Mathf.RoundToInt(Random.Range(1f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
-        Debug.Log("Defender block chance = " + blockChance); // prints defender block chance to debug log
-        Debug.Log("Block roll = " + evadeRoll); // prints result of block roll
+        //Debug.Log("Defender block chance = " + blockChance); // prints defender block chance to debug log
+        //Debug.Log("Block roll = " + evadeRoll); // prints result of block roll
 
         if (blockRoll <= blockChance) // executes if attack is blocked
         {
@@ -1066,7 +1063,7 @@ public class BattleManager : MonoBehaviour
         else // executes if attack was not blocked
         {
             attackBlocked = false; // sets attackBlocked to false if attack was not blocked
-            Debug.Log("Attack not blocked."); // prints block failure notifier to debug log
+            //Debug.Log("Attack not blocked."); // prints block failure notifier to debug log
         }
     }
 
@@ -1078,24 +1075,24 @@ public class BattleManager : MonoBehaviour
         //float weaponScalar = 1f, techScalar = 1f; // creates float variables to handle scale factors for damage calculation
 
         // prints universal weapon damage and defense parameters to debug log
-        Debug.Log("Attacker move damage = " + movePower);
-        Debug.Log("Attacker weapon damage = " + activeBattlers[currentTurn].dmgWeapon);
-        Debug.Log("Attacker crit multiplier = " + critMulti);
-        Debug.Log("Defender weapon defense = " + activeBattlers[selectedTarget].defWeapon);
+        //Debug.Log("Attacker move damage = " + movePower);
+        //Debug.Log("Attacker weapon damage = " + activeBattlers[currentTurn].dmgWeapon);
+        //Debug.Log("Attacker crit multiplier = " + critMulti);
+        //Debug.Log("Defender weapon defense = " + activeBattlers[selectedTarget].defWeapon);
 
         if (!movesList[moveIndex].isRanged) // executes if weapon attack is not ranged (i.e. melee)
         {
-            Debug.Log("Attack is melee."); // prints melee attack type to debug log
+            //Debug.Log("Attack is melee."); // prints melee attack type to debug log
             multiMelee = (activeBattlers[currentTurn].strength / 2f); // calculates attacker melee multiplier  = (strength / 2)
-            Debug.Log("Attacker melee multiplier = " + multiMelee); // prints melee multiplier to debug log
+            //Debug.Log("Attacker melee multiplier = " + multiMelee); // prints melee multiplier to debug log
             damageFloat = (movePower + activeBattlers[currentTurn].dmgWeapon) * multiMelee * attackRowMulti * defendRowMulti * (100f / (100f + activeBattlers[selectedTarget].defWeapon)) * critMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker weapon and strength, crit multiplier, target weapon defense, and 10% RNG
 
         }
         else // executes if weapon attack is ranged
         {
-            Debug.Log("Attack is ranged."); // prints ranged attack type to debug log
+            //Debug.Log("Attack is ranged."); // prints ranged attack type to debug log
             multiRanged = (activeBattlers[currentTurn].agility / 2f); // calculates attacker ranged multiplier = (agility / 2)
-            Debug.Log("Attacker ranged multiplier = " + multiRanged); // prints ranged multiplier to debug log
+            //Debug.Log("Attacker ranged multiplier = " + multiRanged); // prints ranged multiplier to debug log
             damageFloat = (movePower + activeBattlers[currentTurn].dmgWeapon) * multiRanged * (100f / (100f + activeBattlers[selectedTarget].defWeapon)) * critMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker weapon and strength, crit multiplier, target weapon defense, and 10% RNG
         }
 
@@ -1103,64 +1100,64 @@ public class BattleManager : MonoBehaviour
         damageRoll = Mathf.RoundToInt(damageFloat); // rounds damage calc float to damage roll int
 
         // prints damage results to debug log
-        Debug.Log("Weapon damage float = " + damageFloat); // prints damage float calc to debug log
-        Debug.Log("Weapon damage roll = " + damageRoll); // prints damage roll to debug log
+        //Debug.Log("Weapon damage float = " + damageFloat); // prints damage float calc to debug log
+        //Debug.Log("Weapon damage roll = " + damageRoll); // prints damage roll to debug log
     }
 
     public void RollTechDamage() // creates function to roll tech attack damage
     {
-        string elementType = ""; // creates local string variable to manage element type of attack
+        //string elementType = ""; // creates local string variable to manage element type of attack
 
         // prints move and weapon base damage parameters to debug log
-        Debug.Log("Attacker move damage = " + movePower);
-        Debug.Log("Tech multiplier = " + activeBattlers[currentTurn].tech);
-        Debug.Log("Attacker crit multiplier = " + critMulti);
-        Debug.Log("Defender Tech defense = " + activeBattlers[selectedTarget].defTech);
+        //Debug.Log("Attacker move damage = " + movePower);
+        //Debug.Log("Tech multiplier = " + activeBattlers[currentTurn].tech);
+        //Debug.Log("Attacker crit multiplier = " + critMulti);
+        //Debug.Log("Defender Tech defense = " + activeBattlers[selectedTarget].defTech);
 
         // checks for attack Tech element type, applies target's associated elemental resistance to resMulti, saves type in elementType string
         if(movesList[moveIndex].element == "Heat")
         {
             resMulti = activeBattlers[selectedTarget].resistances[0];
-            elementType = "Heat";
+            //elementType = "Heat";
         }
         else if (movesList[moveIndex].element == "Freeze")
         {
             resMulti = activeBattlers[selectedTarget].resistances[1];
-            elementType = "Freeze";
+            //elementType = "Freeze";
         }
         else if (movesList[moveIndex].element == "Shock")
         {
             resMulti = activeBattlers[selectedTarget].resistances[2];
-            elementType = "Shock";
+            //elementType = "Shock";
         }
         else if (movesList[moveIndex].element == "Virus")
         {
             resMulti = activeBattlers[selectedTarget].resistances[3];
-            elementType = "Virus";
+            //elementType = "Virus";
         }
         else if (movesList[moveIndex].element == "Chem")
         {
             resMulti = activeBattlers[selectedTarget].resistances[4];
-            elementType = "Chem";
+            //elementType = "Chem";
         }
         else if (movesList[moveIndex].element == "Kinetic")
         {
             resMulti = activeBattlers[selectedTarget].resistances[5];
-            elementType = "Kinetic";
+            //elementType = "Kinetic";
         }
         else if (movesList[moveIndex].element == "Water")
         {
             resMulti = activeBattlers[selectedTarget].resistances[6];
-            elementType = "Water";
+            //elementType = "Water";
         }
         else if (movesList[moveIndex].element == "Quantum")
         {
             resMulti = activeBattlers[selectedTarget].resistances[7];
-            elementType = "Quantum";
+            //elementType = "Quantum";
         }
 
-        Debug.Log("Elemental type = " + elementType); // prints element type to debug log
-        Debug.Log("Defender elemental resistance = " + resMulti + "x"); // prints defender elemental resistance multiplier
+        //Debug.Log("Elemental type = " + elementType); // prints element type to debug log
+        //Debug.Log("Defender elemental resistance = " + resMulti + "x"); // prints defender elemental resistance multiplier
 
         // calculates Tech attack damage
         float damageFloat = movePower * (activeBattlers[currentTurn].tech/2f) * (100f / (100f + activeBattlers[selectedTarget].defTech)) * critMulti * resMulti * Random.Range(0.9f, 1.1f); // calculates damage based on move power, attacker Tech, target Tech defense, affected elemental resistance, and 10% RNG
@@ -1169,15 +1166,15 @@ public class BattleManager : MonoBehaviour
         damageRoll = Mathf.RoundToInt(damageFloat); // rounds damage calc float to damage roll int
 
         // prints damage results to debug log
-        Debug.Log("Tech damage float = " + damageFloat); // prints damage float calc to debug log
-        Debug.Log("Tech damage roll = " + damageRoll); // prints damage roll to debug log
+        //Debug.Log("Tech damage float = " + damageFloat); // prints damage float calc to debug log
+        //Debug.Log("Tech damage roll = " + damageRoll); // prints damage roll to debug log
     }
 
     public void RollStatusResist() // creates function to roll if a defender resists a status effect
     {
         int statusRoll = Mathf.RoundToInt(Random.Range(0f, 100f)); // rolls random number between 1 and 100, rounds to nearest int
-        Debug.Log("Defender status resist chance = " + activeBattlers[selectedTarget].endurance); // prints defender's status resist to debug log
-        Debug.Log("Status roll = " + statusRoll); // prints result of status roll to debug log
+        //Debug.Log("Defender status resist chance = " + activeBattlers[selectedTarget].endurance); // prints defender's status resist to debug log
+        //Debug.Log("Status roll = " + statusRoll); // prints result of status roll to debug log
 
         if (statusRoll <= activeBattlers[currentTurn].endurance) // executes if status was resisted
         {
@@ -1187,7 +1184,7 @@ public class BattleManager : MonoBehaviour
         else // executes if status was not resisted
         {
             statusResisted = false; // sets statusResisted to false if status was not resisted
-            Debug.Log("Status effect applied."); // prints resist failure to debug log
+            //Debug.Log("Status effect applied."); // prints resist failure to debug log
         }
     }
 
@@ -1198,8 +1195,8 @@ public class BattleManager : MonoBehaviour
         string defPos = activeBattlers[selectedTarget].transform.parent.name;
         
         // prints positions to debug log
-        Debug.Log("Active battler position = " + atkPos);
-        Debug.Log("Selected target position = " + defPos);
+        //Debug.Log("Active battler position = " + atkPos);
+        //Debug.Log("Selected target position = " + defPos);
 
         // section below checks for attacker's row
         // ***************************************
@@ -1207,12 +1204,12 @@ public class BattleManager : MonoBehaviour
         {
             if (atkPos == "Pos1_front" || atkPos == "Pos2_front" || atkPos == "Pos3_front") // checks if player is in any front position
             {
-                Debug.Log("Player attacker is in front row."); // prints player attacker row status to debug log
+                //Debug.Log("Player attacker is in front row."); // prints player attacker row status to debug log
                 attackRowMulti = 1f; // sets attack row multiplier to 1
             }
             else // executes if player is in any back position
             {
-                Debug.Log("Player attacker is in back row."); // prints player attacker row status to debug log
+                //Debug.Log("Player attacker is in back row."); // prints player attacker row status to debug log
                 attackRowMulti = 0.5f; // sets attack row multiplier to 0.5f
             }
         }
@@ -1220,18 +1217,18 @@ public class BattleManager : MonoBehaviour
         {
             if (atkPos == "Pos1" || atkPos == "Pos2" || atkPos == "Pos3") // checks if enemy is in any front position
             {
-                Debug.Log("Enemy attacker is in front row."); // prints enemy attacker row status to debug log
+                //Debug.Log("Enemy attacker is in front row."); // prints enemy attacker row status to debug log
                 attackRowMulti = 1f; // sets attack row multiplier to 1
             }
             // checks if any enemies are active in front row by seeing if any children of any front row enemy position indexes are active
             else if (enemyPositions[0].GetChild(enemyPositions[0].childCount - 1).gameObject.activeInHierarchy || enemyPositions[1].GetChild(enemyPositions[1].childCount - 1).gameObject.activeInHierarchy || enemyPositions[2].GetChild(enemyPositions[2].childCount - 1).gameObject.activeInHierarchy)
             {
-                Debug.Log("Enemy attacker is in back row."); // prints enemy attacker row status to debug log
+                //Debug.Log("Enemy attacker is in back row."); // prints enemy attacker row status to debug log
                 attackRowMulti = 0.5f; // sets attack row multiplier to 0.5
             }
             else // executes if enemy is in back row but no enemies are in front row
             {
-                Debug.Log("Enemy attacker is in back row, but unprotected."); // prints enemy attacker row status to debug log
+                //Debug.Log("Enemy attacker is in back row, but unprotected."); // prints enemy attacker row status to debug log
                 attackRowMulti = 1f; // sets attack row multiplier to 1
             }
         }
@@ -1242,12 +1239,12 @@ public class BattleManager : MonoBehaviour
         {
             if (defPos == "Pos1_front" || defPos == "Pos2_front" || defPos == "Pos3_front") // checks if player is in any front position
             {
-                Debug.Log("Player defender is in front row."); // prints player defender row status to debug log
+                //Debug.Log("Player defender is in front row."); // prints player defender row status to debug log
                 defendRowMulti = 1f; // sets defend row multiplier to 1
             }
             else // executes if player is in any back position
             {
-                Debug.Log("Player defender is in back row."); // prints player defender row status to debug log
+                //Debug.Log("Player defender is in back row."); // prints player defender row status to debug log
                 defendRowMulti = 0.5f; // sets defend row multiplier to 0.5f
             }
         }
@@ -1255,19 +1252,77 @@ public class BattleManager : MonoBehaviour
         {
             if (defPos == "Pos1" || defPos == "Pos2" || defPos == "Pos3") // checks if enemy is in any front position
             {
-                Debug.Log("Enemy defender is in front row."); // prints enemy defender row status to debug log
+                //Debug.Log("Enemy defender is in front row."); // prints enemy defender row status to debug log
                 defendRowMulti = 1f; // sets defend row multiplier to 1
             }
             // checks if any enemies are active in front row by seeing if any children of any front row enemy position indexes are active
             else if (enemyPositions[0].GetChild(enemyPositions[0].childCount-1).gameObject.activeInHierarchy || enemyPositions[1].GetChild(enemyPositions[1].childCount - 1).gameObject.activeInHierarchy || enemyPositions[2].GetChild(enemyPositions[2].childCount - 1).gameObject.activeInHierarchy) 
             {
-                Debug.Log("Enemy defender is in back row."); // prints enemy defender row status to debug log
+                //Debug.Log("Enemy defender is in back row."); // prints enemy defender row status to debug log
                 defendRowMulti = 0.5f; // sets defender row multiplier to 0.5
             }
             else // executes if enemy is in back row but no enemies are in front row
             {
-                Debug.Log("Enemy defender is in back row, but unprotected."); // prints enemy defender row status to debug log
+                //Debug.Log("Enemy defender is in back row, but unprotected."); // prints enemy defender row status to debug log
                 defendRowMulti = 1f; // sets defend row multiplier to 1
+            }
+        }
+    }
+
+    // TURN ORDER ALGORITHM
+    // ********************
+    // IN BATTLESTART, INITIALIZE ALL BATTLERS TO ICV = 100 AND SET SHOULDTICK = TRUE
+    // EACH UPDATE, CHECK IF SHOULDTICK = TRUE
+        // IF SO, CALL CHECKTURN
+            // IF CHECKTURN FINDS BATTLER NEEDS TO MOVE, SET THAT BATTLER AS CURRENT TURN
+                // IF PLAYER, SHOW THE UI BUTTONS AND SET SHOULDTICK = FALSE
+                    // ONCE PLAYER MOVE COMPLETE, SET SHOULDTICK = TRUE
+                // IF ENEMY, START ENEMY MOVE AND SET SHOULDTICK = FALSE
+                    // ONCE ENEMY MOVE COMPLETE, SET SHOULDTICK = TRUE
+            // IF CHECKTURN FINDS NO BATTLER TO MOVE, CALL TICKCOUNTER
+
+    public void StartTurnOrder() // creates function to initialize battler turn order
+    {
+        for (int i = 0; i < activeBattlers.Count; i++) // iterates through all active battlers
+        {
+            battlerCounter[i] = Mathf.RoundToInt(100 * Random.Range(0.9f, 1.1f)); // initializes battler counter to default of 100 ±10% RNG
+        } 
+    }
+
+    public bool CheckTurn() // creates function to check for next battler turn
+    {
+        for (int i = 0; i < activeBattlers.Count; i++) // iterates through all active battlers
+        {
+            if (activeBattlers[i].currentHP > 0) // checks if current battler is alive
+            {
+                if (battlerCounter[i] == 0) // checks for the first active battler with a counter = 0
+                {
+                    //battlerCounter[i] = Mathf.RoundToInt(100 * Random.Range(0.9f, 1.1f)); // resets counter on current battler to 100 ±10% RNG
+                    currentTurn = i; // sets current turn to that battler
+                    return true; // once battler turn found, return true
+                }
+            }
+        }
+
+        return false; // if no battlers turn found, return false
+    }
+    public void TickCounter() // creates function to decrement battler counter
+    {
+        for (int i = 0; i < activeBattlers.Count; i++) // iterates through all active battlers
+        {
+            if(activeBattlers[i].currentHP > 0) // checks if current battler is alive
+            {
+                //Debug.Log("Battler name = " + activeBattlers[i].charName); // prints battler name to debug log
+                //Debug.Log("Battler speed = " + activeBattlers[i].speed); // prints battler speed to debug log
+                //Debug.Log("Battler tick rate = " + activeBattlers[i].tickRate); // prints battler tick rate to debug log
+                //Debug.Log("Battler " + i + " counter = " + battlerCounter[i]); // prints battler counter to debug log
+
+                battlerCounter[i] -= activeBattlers[i].tickRate; // decrements counter by battler tick rate
+
+                if (battlerCounter[i] <= 0) // checks if any battlerCounter value <= 0
+                {
+                    battlerCounter[i] = 0; // clamps battlerCounter value to 0
+                }
             }
         }
     }

@@ -103,7 +103,7 @@ MonoBehaviour:
   itemName: Wooden Bow
   description: Hits with a dull thud.
   tier: Common
-  value: 20
+  value: 25
   itemSprite: {fileID: 21300136, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   affectHP: 0
   affectSP: 0
@@ -114,8 +114,8 @@ MonoBehaviour:
   defTech: 0
   evadeArmor: 0
   blockShield: 0
-  hitChance: 80
-  critWeapon: 5
+  hitChance: 75
+  critWeapon: 3
   resistances:
   - 0
   - 0

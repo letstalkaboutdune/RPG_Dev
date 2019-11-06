@@ -76,6 +76,11 @@ public class GameMenu : MonoBehaviour
 
     public Toggle showStatusTooltip; // creates toggle to handle display of status menu tooltips
 
+    // creates variables to manage game timer
+    public Text timerText;
+    public float secondsCount;
+    public int minuteCount, hourCount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -108,6 +113,8 @@ public class GameMenu : MonoBehaviour
 
             AudioManager.instance.PlaySFX(5); // plays UI beep 2 from audio manager
         }
+
+        UpdateTimerUI(); // calls function to update game timer in menu
     }
 
     public void UpdateMainStats() // creates function to update basic stats in main menu
@@ -581,6 +588,22 @@ public class GameMenu : MonoBehaviour
     {
         //Debug.Log("The value of toggle " + charToToggle + " is " + frontRowToggle[charToToggle].isOn); // prints state of selected toggle
         GameManager.instance.playerStats[charToToggle].inFrontRow = frontRowToggle[charToToggle].isOn; // sets front row state of selected character based on toggle value
+    }
+
+    public void UpdateTimerUI() // creates function to track game time and update timer UI
+    {
+        secondsCount += Time.deltaTime;
+        timerText.text = hourCount.ToString("000") + ":" + minuteCount.ToString("00") + ":" + ((int)secondsCount).ToString("00");
+        if (secondsCount >= 60)
+        {
+            minuteCount++;
+            secondsCount = 0;
+        }
+        else if (minuteCount >= 60)
+        {
+            hourCount++;
+            minuteCount = 0;
+        }
     }
 }
 

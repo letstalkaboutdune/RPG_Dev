@@ -79,6 +79,36 @@ public class GameManager : MonoBehaviour
         return null; // returns null just to manage every possible outcome
     }
 
+    public string GetItemTier(string itemName) // creates function to find tier of item based on name
+    {
+        //Debug.Log("Item name = " + itemName);
+        Item item = GetItemDetails(itemName); // grabs details of passed item
+        
+        // checks item tier and formats string color appropriately
+        if (item.tier == "Common")
+        {
+            itemName = "<color=white>" + item.itemName + "</color>";
+        }
+        else if (item.tier == "Magic")
+        {
+            itemName = "<color=#0089FFFF>" + item.itemName + "</color>";
+        }
+        else if (item.tier == "Rare")
+        {
+            itemName = "<color=yellow>" + item.itemName + "</color>";
+        }
+        else if (item.tier == "Legendary")
+        {
+            itemName = "<color=orange>" + item.itemName + "</color>";
+        }
+        else if (item.tier == "Unique")
+        {
+            itemName = "<color=magenta>" + item.itemName + "</color>";
+        }
+
+        return itemName;
+    }
+
     public void SortItems() // creates function to sort items in inventory
     {
         bool itemAfterSpace = true; // creates bool variable to handle if an item is present after a space or empty item
@@ -269,6 +299,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("ItemAmount_" + i, numberOfItems[i]);
         }
         
+        // saves tooltip option selection
         if (GameMenu.instance.showStatusTooltip.isOn)
         {
             PlayerPrefs.SetInt("ShowTooltips", 1);
@@ -277,6 +308,11 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("ShowTooltips", 0);
         }
+
+        // saves game timer
+        PlayerPrefs.SetInt("Hours", GameMenu.instance.hourCount);
+        PlayerPrefs.SetInt("Minutes", GameMenu.instance.minuteCount);
+        PlayerPrefs.SetInt("Seconds", (int)GameMenu.instance.secondsCount);
     }
 
     public void LoadData() // creates function to handle loading all game data
@@ -354,14 +390,19 @@ public class GameManager : MonoBehaviour
             numberOfItems[i] = PlayerPrefs.GetInt("ItemAmount_" + i);
         }
 
+        // loads tooltip option selection
         if (PlayerPrefs.GetInt("ShowTooltips") == 1)
         {
-
             GameMenu.instance.showStatusTooltip.isOn = true;
         }
         else
         {
             GameMenu.instance.showStatusTooltip.isOn = false;
         }
+
+        // loads game timer
+        GameMenu.instance.hourCount = PlayerPrefs.GetInt("Hours");
+        GameMenu.instance.minuteCount = PlayerPrefs.GetInt("Minutes");
+        GameMenu.instance.secondsCount = (float)PlayerPrefs.GetInt("Seconds");
     }
 }

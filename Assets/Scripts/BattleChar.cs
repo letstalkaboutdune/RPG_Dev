@@ -28,6 +28,7 @@ public class BattleChar : MonoBehaviour
     // [6] = water
     // [7] = quantum
     public string equippedWpn, equippedOff, equippedArmr, equippedAccy;
+    public int tickRate;
     
     public SpriteRenderer theSprite; // creates SpriteRenderer object to handle different sprites based on player status
     public Sprite deadSprite, aliveSprite; // creates two sprites to handle player dead/alive status

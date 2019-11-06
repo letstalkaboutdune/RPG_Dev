@@ -9,30 +9,24 @@ Annoying
 
 Features
 ********
-Battle: implement speed-based turn system
-	*** add countdown and "tick speed" to battle
-	*** add "ticks" stat to all abilities
-*****************************************************
 Game: Add randomness to battle rewards
-Battle: update magic menu to fill screen based on available abilities
-Menu: add drag-and-drop to interface
 Menu: implement small sliders on HP/MP in main menu and battle menu
-Menu: implement menu clock tracking play time
-Menu: add scrolling + masking menu support to UI panels
+Game: add quest item audio stinger
+Game: add an inn to the town
 Map: prevent direction lock when changing scenes
-Battle: add ability to see targeted enemy before attacking in battle
+Sound: add checks to play item unsuccessful sound
+Menu: consider changing dialog function to just have speaker name in text, not in separate box
+Menu: add gradual display of text
+Sound: prevent re-starting same music when entering main menu from game over (replace game over music?)
+Map: add zoom function with mouse wheel
+******
+Battle: add ability to see targeted enemy before attacking in battl
+Battle: update magic menu to fill screen based on available abilities
 Game: add ability to change order of party
 Battle: add ability to change rows during battle
-Game: add quest item audio stinger
-???Game: add dash button
-Game: add an inn, item shop, magic shop, and better weapon shop to the town
-Sound: add checks to play item unsuccessful sound
-Sound: prevent re-starting same music when entering main menu from game over (replace game over music?)
 Menu: add item highlights in menu
 Battle: have battlechars move forward to attack
-Menu: consider changing dialog function to just have speaker name in text, not in separate box
-Map: add zoom function with mouse wheel
-Game: add controller/keyboard functionality
+???Game: add dash button
 
 Pretty (only do in real game)
 ******
@@ -47,13 +41,23 @@ Battle: add cleaner sprite glow fade
 
 MAJOR
 *****
+Game: add controller/keyboard functionality
 Game/Battle: implement more spells and abilities
+Menu: add drag-and-drop to item/equip/spell interface
 Menu: re-design menu to look like FFVII
 Menu: re-design menu to use same item system in/out of battle
 Menu: magic screen in menu
 Menu: equip screen in menu (include elem. resist/status immunities)
+	*** include trade-in function in shops
+	*** include live comparison with current equips
+Menu: add scrolling + masking menu support to UI panels
 Game: implement stat restrictions on items
 Menu: add options menu from main menu
+	*** text/battle speed
+	*** show tooltips
+	*** key binds
+	*** music/sfx volume
+	*** resolution	
 Game: add multiple save slots
 Game: add SMB3-style overworld
 ???Game: add slot for 4th character, update battle menu UI

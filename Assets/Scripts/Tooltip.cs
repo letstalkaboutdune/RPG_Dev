@@ -27,9 +27,9 @@ public class Tooltip : MonoBehaviour
 
     public void GenerateTooltip(Item item) // creates a function to generate a tooltip based on item stats
     {
-        // creates new blank strings to store stat and item text
+        // creates new strings to store stat and item text
         string statText = "";
-        string itemName = "";
+        string itemName = item.name;
         //string itemValue = "";
 
         if (item.isItem) // checks if passed item is an item
@@ -129,31 +129,9 @@ public class Tooltip : MonoBehaviour
             statText = "Error! Item type not found in database."; // sets error message to stat text
         }
 
-        //itemValue = "Value: <color=green>" + item.value + "g</color>"; // sets item value
-        statText = statText.Trim();
+        statText = statText.Trim(); // trims extra white space off ends of stat text
 
-        //
-        if(item.tier == "Common")
-        {
-            itemName = "<color=white>" + item.itemName + "</color>";
-        }
-        else if (item.tier == "Magic")
-        {
-            itemName = "<color=#0089FFFF>" + item.itemName + "</color>";
-        }
-        else if (item.tier == "Rare")
-        {
-            itemName = "<color=yellow>" + item.itemName + "</color>";
-        }
-        else if (item.tier == "Legendary")
-        {
-            itemName = "<color=orange>" + item.itemName + "</color>";
-        }
-        else if (item.tier == "Unique")
-        {
-            itemName = "<color=magenta>" + item.itemName + "</color>";
-        }
-        //
+        itemName = GameManager.instance.GetItemTier(itemName); // calls get item tier function to format item name color
 
         string tooltipText = string.Format("{0}\n{1}", itemName, statText/*, itemValue*/); // formats string of tooltip text
         tooltip.text = tooltipText; // sets tooltip text equal to formatted string

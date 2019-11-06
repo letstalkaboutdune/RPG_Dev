@@ -843,6 +843,144 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &68130582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 68130583}
+  - component: {fileID: 68130585}
+  - component: {fileID: 68130584}
+  m_Layer: 0
+  m_Name: Zone 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &68130583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68130582}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.794035, y: 2.912339, z: -0.38481426}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 450520691}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &68130584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68130582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7066cc99508df44be4c96c2da28ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potentialBattles:
+  - enemies:
+    - Skeleton
+    - Spider
+    enemyPlacement: 0100000002000000
+    rewardXP: 15
+    rewardAP: 3
+    rewardItems:
+    - Wooden Sword
+    rewardGold: 10
+  - enemies:
+    - Eyeball
+    - Eyeball
+    enemyPlacement: 0200000004000000
+    rewardXP: 20
+    rewardAP: 5
+    rewardItems:
+    - Health Potion
+    - Health Potion
+    rewardGold: 20
+  - enemies:
+    - Spider
+    enemyPlacement: 01000000
+    rewardXP: 5
+    rewardAP: 1
+    rewardItems:
+    - Leather Armor
+    rewardGold: 5
+  - enemies:
+    - Skeleton
+    - Skeleton
+    enemyPlacement: 0100000002000000
+    rewardXP: 20
+    rewardAP: 4
+    rewardItems:
+    - Wooden Sword
+    rewardGold: 15
+  - enemies:
+    - Spider
+    - Spider
+    - Spider
+    enemyPlacement: 010000000200000004000000
+    rewardXP: 15
+    rewardAP: 2
+    rewardItems:
+    - Leather Armor
+    - Health Potion
+    rewardGold: 10
+  - enemies:
+    - Eyeball
+    - Skeleton
+    - Spider
+    enemyPlacement: 040000000100000002000000
+    rewardXP: 20
+    rewardAP: 4
+    rewardItems:
+    - Leather Armor
+    - Wooden Sword
+    rewardGold: 25
+  activateOnEnter: 0
+  activateOnStay: 1
+  activateOnExit: 0
+  timeBetweenBattles: 1.5
+  deactivateAfterStarting: 0
+  cannotFlee: 0
+  shouldCompleteQuest: 0
+  questToComplete: 
+  musicToPlay: 0
+--- !u!61 &68130585
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68130582}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 26.946917, y: -6.3664846}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 7.0767174, y: 9.048853}
+  m_EdgeRadius: 0
 --- !u!1 &97154486
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,11 +1226,149 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1774156879}
-  - {fileID: 1491179596}
-  - {fileID: 1903600093}
+  - {fileID: 653077695}
+  - {fileID: 68130583}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &653077694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 653077695}
+  - component: {fileID: 653077697}
+  - component: {fileID: 653077696}
+  m_Layer: 0
+  m_Name: Zone 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &653077695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653077694}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.794035, y: 2.912339, z: -0.38481426}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 450520691}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &653077696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653077694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7066cc99508df44be4c96c2da28ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potentialBattles:
+  - enemies:
+    - Skeleton
+    - Spider
+    enemyPlacement: 0100000002000000
+    rewardXP: 15
+    rewardAP: 3
+    rewardItems:
+    - Wooden Sword
+    rewardGold: 10
+  - enemies:
+    - Eyeball
+    - Eyeball
+    enemyPlacement: 0200000004000000
+    rewardXP: 20
+    rewardAP: 5
+    rewardItems:
+    - Health Potion
+    - Health Potion
+    rewardGold: 20
+  - enemies:
+    - Spider
+    enemyPlacement: 01000000
+    rewardXP: 5
+    rewardAP: 1
+    rewardItems:
+    - Leather Armor
+    rewardGold: 5
+  - enemies:
+    - Skeleton
+    - Skeleton
+    enemyPlacement: 0100000002000000
+    rewardXP: 20
+    rewardAP: 4
+    rewardItems:
+    - Wooden Sword
+    rewardGold: 15
+  - enemies:
+    - Spider
+    - Spider
+    - Spider
+    enemyPlacement: 010000000200000004000000
+    rewardXP: 15
+    rewardAP: 2
+    rewardItems:
+    - Leather Armor
+    - Health Potion
+    rewardGold: 10
+  - enemies:
+    - Eyeball
+    - Skeleton
+    - Spider
+    enemyPlacement: 040000000100000002000000
+    rewardXP: 20
+    rewardAP: 4
+    rewardItems:
+    - Leather Armor
+    - Wooden Sword
+    rewardGold: 25
+  activateOnEnter: 0
+  activateOnStay: 1
+  activateOnExit: 0
+  timeBetweenBattles: 1.5
+  deactivateAfterStarting: 0
+  cannotFlee: 0
+  shouldCompleteQuest: 0
+  questToComplete: 
+  musicToPlay: 0
+--- !u!61 &653077697
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653077694}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 26.679861, y: 5.4800196}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.8430824, y: 2.5883083}
+  m_EdgeRadius: 0
 --- !u!1 &823933825
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,7 +1406,7 @@ MonoBehaviour:
   - enemies:
     - Dragon
     enemyPlacement: 01000000
-    rewardXP: 500
+    rewardXP: 1000
     rewardAP: 10
     rewardItems:
     - Revive Potion
@@ -12234,144 +12510,6 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
---- !u!1 &1491179595
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1491179596}
-  - component: {fileID: 1491179598}
-  - component: {fileID: 1491179597}
-  m_Layer: 0
-  m_Name: Zone 2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1491179596
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491179595}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.794035, y: 2.912339, z: -0.38481426}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 450520691}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1491179597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491179595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7066cc99508df44be4c96c2da28ac5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  potentialBattles:
-  - enemies:
-    - Skeleton
-    - Spider
-    enemyPlacement: 
-    rewardXP: 15
-    rewardAP: 3
-    rewardItems:
-    - Wooden Sword
-    rewardGold: 10
-  - enemies:
-    - Eyeball
-    - Eyeball
-    enemyPlacement: 
-    rewardXP: 20
-    rewardAP: 5
-    rewardItems:
-    - Health Potion
-    - Health Potion
-    rewardGold: 20
-  - enemies:
-    - Spider
-    enemyPlacement: 
-    rewardXP: 5
-    rewardAP: 1
-    rewardItems:
-    - Leather Armor
-    rewardGold: 5
-  - enemies:
-    - Skeleton
-    - Skeleton
-    enemyPlacement: 
-    rewardXP: 20
-    rewardAP: 4
-    rewardItems:
-    - Wooden Sword
-    rewardGold: 15
-  - enemies:
-    - Spider
-    - Spider
-    - Spider
-    enemyPlacement: 
-    rewardXP: 15
-    rewardAP: 2
-    rewardItems:
-    - Leather Armor
-    - Health Potion
-    rewardGold: 10
-  - enemies:
-    - Eyeball
-    - Skeleton
-    - Spider
-    enemyPlacement: 
-    rewardXP: 20
-    rewardAP: 4
-    rewardItems:
-    - Leather Armor
-    - Wooden Sword
-    rewardGold: 25
-  activateOnEnter: 0
-  activateOnStay: 1
-  activateOnExit: 0
-  timeBetweenBattles: 1.5
-  deactivateAfterStarting: 0
-  cannotFlee: 0
-  shouldCompleteQuest: 0
-  questToComplete: 
-  musicToPlay: 0
---- !u!61 &1491179598
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491179595}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 26.531872, y: 5.4251795}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.5023212, y: 2.6979885}
-  m_EdgeRadius: 0
 --- !u!1 &1774156877
 GameObject:
   m_ObjectHideFlags: 0
@@ -12617,141 +12755,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 700fa786fc948bb4da97fd3310792942, type: 3}
---- !u!1 &1903600092
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1903600093}
-  - component: {fileID: 1903600095}
-  - component: {fileID: 1903600094}
-  m_Layer: 0
-  m_Name: Zone 3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1903600093
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1903600092}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.794035, y: 2.912339, z: -0.38481426}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 450520691}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1903600094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1903600092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7066cc99508df44be4c96c2da28ac5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  potentialBattles:
-  - enemies:
-    - Skeleton
-    - Spider
-    enemyPlacement: 
-    rewardXP: 15
-    rewardAP: 3
-    rewardItems:
-    - Wooden Sword
-    rewardGold: 10
-  - enemies:
-    - Eyeball
-    - Eyeball
-    enemyPlacement: 
-    rewardXP: 20
-    rewardAP: 5
-    rewardItems:
-    - Health Potion
-    - Health Potion
-    rewardGold: 20
-  - enemies:
-    - Spider
-    enemyPlacement: 
-    rewardXP: 5
-    rewardAP: 1
-    rewardItems:
-    - Leather Armor
-    rewardGold: 5
-  - enemies:
-    - Skeleton
-    - Skeleton
-    enemyPlacement: 
-    rewardXP: 20
-    rewardAP: 4
-    rewardItems:
-    - Wooden Sword
-    rewardGold: 15
-  - enemies:
-    - Spider
-    - Spider
-    - Spider
-    enemyPlacement: 
-    rewardXP: 15
-    rewardAP: 2
-    rewardItems:
-    - Leather Armor
-    - Health Potion
-    rewardGold: 10
-  - enemies:
-    - Eyeball
-    - Skeleton
-    - Spider
-    enemyPlacement: 
-    rewardXP: 20
-    rewardAP: 4
-    rewardItems:
-    - Leather Armor
-    - Wooden Sword
-    rewardGold: 25
-  activateOnEnter: 0
-  activateOnStay: 1
-  activateOnExit: 0
-  timeBetweenBattles: 1.5
-  deactivateAfterStarting: 0
-  cannotFlee: 0
-  shouldCompleteQuest: 0
-  questToComplete: 
-  musicToPlay: 0
---- !u!61 &1903600095
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1903600092}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 26.583529, y: -7.4324694}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.7243996, y: 11.37871}
-  m_EdgeRadius: 0
