@@ -96,11 +96,11 @@ MonoBehaviour:
   hasDied: 0
   movesAvailable:
   - Melee Attack
+  - Heat
   - Virus
-  - Freeze
   charName: Dragon
-  currentHP: 500
-  maxHP: 500
+  currentHP: 1000
+  maxHP: 1000
   currentSP: 0
   maxSP: 0
   strength: 15
@@ -115,8 +115,8 @@ MonoBehaviour:
   critChance: 15
   evadeChance: 0
   blockChance: 0
-  defWeapon: 10
-  defTech: 10
+  defWeapon: 20
+  defTech: 15
   critWeapon: 0
   evadeArmor: 0
   blockShield: 0
@@ -133,6 +133,7 @@ MonoBehaviour:
   equippedOff: 
   equippedArmr: 
   equippedAccy: 
+  tickRate: 0
   theSprite: {fileID: 1565757989583917718}
   deadSprite: {fileID: 0}
   aliveSprite: {fileID: 0}

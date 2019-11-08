@@ -64,6 +64,7 @@ public class BattleManager : MonoBehaviour
     // creates variables to handle providing battle rewards
     public int rewardXP, rewardAP, rewardGold;
     public string[] rewardItems;
+    public int[] itemChances;
 
     public bool cannotFlee; // creates bool to handle whether party can flee from battle
 
@@ -82,7 +83,7 @@ public class BattleManager : MonoBehaviour
     public float attackRowMulti = 1f, defendRowMulti = 1f;
     public int moveIndex, movePower, selectedTarget, damageRoll;
 
-    private SpriteRenderer enemySprite; // creates enemy sprite renderer to handle layer sorting 
+    private SpriteRenderer enemySprite, targetSprite, effectSprite; // creates sprite renderers to handle layer sorting
 
     private bool shouldTick = false; // creates bool to handle when counter should be ticked
     private int[] battlerCounter; // creates int array to handle counter values for each battler
@@ -442,6 +443,11 @@ public class BattleManager : MonoBehaviour
 
                 Instantiate(movesList[i].theEffect, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation); // instantiates attack effect on selected target
 
+                // sets the sprite layer order of the move on top of the selected target
+                targetSprite = activeBattlers[selectedTarget].gameObject.GetComponent<SpriteRenderer>(); // finds reference to selected target sprite
+                effectSprite = GameObject.FindWithTag("Effects").GetComponent<SpriteRenderer>(); // finds reference to the attack effect sprite
+                effectSprite.sortingOrder = (targetSprite.sortingOrder + 1); // sets attack effect sprite layer one layer above target
+
                 yield return new WaitForSeconds(movesList[i].theEffect.effectLength); // wait for length of time so that attack animation can finish
 
                 AttackRolls(); // calls function to manage various attack rolls
@@ -477,6 +483,11 @@ public class BattleManager : MonoBehaviour
                 RedSpriteGlow(selectedTarget); // shows red sprite glow on current selected target
                 
                 Instantiate(movesList[i].theEffect, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation); // instantiates attack effect on selected target
+
+                // sets the sprite layer order of the move on top of the selected target
+                targetSprite = activeBattlers[selectedTarget].gameObject.GetComponent<SpriteRenderer>(); // finds reference to selected target sprite
+                effectSprite = GameObject.FindWithTag("Effects").GetComponent<SpriteRenderer>(); // finds reference to the attack effect sprite
+                effectSprite.sortingOrder = (targetSprite.sortingOrder + 1); // sets attack effect sprite layer one layer above target
 
                 movePower = movesList[i].movePower; // pulls move power from moves list and stores to movePower variable                               
             }
@@ -852,7 +863,7 @@ public class BattleManager : MonoBehaviour
         }
         else // calls reward screen if party is not fleeing
         {
-            BattleReward.instance.OpenRewardScreen(rewardXP, rewardAP, rewardItems, rewardGold); // calls battle reward function based on passed XP, AP, items, and gold
+            BattleReward.instance.OpenRewardScreen(rewardXP, rewardAP, rewardGold, rewardItems, itemChances); // calls battle reward function based on passed XP, AP, items, and gold
         }
 
         AudioManager.instance.PlayBGM(FindObjectOfType<CameraController>().musicToPlay); // changes BGM back to current scene

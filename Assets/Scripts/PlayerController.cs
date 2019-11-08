@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.InteropServices;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,18 @@ public class PlayerController : MonoBehaviour
     private Vector3 bottomLeftLimit, topRightLimit; // creates Vector3 variables to handle bottom-left and top-right limit of map
 
     public bool canMove = true;     // creates bool variable to handle restriction of player movement, sets default to true
+
+    [DllImport("user32.dll")]
+    public static extern short GetAsyncKeyState(int vkey);
+
+    public const int up_arrow_key = 0x26;
+    public const int down_arrow_key = 0x28;
+    public const int left_arrow_key = 0x25;
+    public const int right_arrow_key = 0x27; 
+    public const int w_key = 0x57;
+    public const int s_key = 0x53;
+    public const int a_key = 0x41;
+    public const int d_key = 0x44;
 
     // Start is called before the first frame update
     //void Awake()
@@ -46,7 +59,28 @@ public class PlayerController : MonoBehaviour
     {
 		if(canMove) // checks if canMove is true
         {
-            theRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed; // assigns value to the velocity (built-in Rigidbody2D) of the player, using Input.GetAxisRaw function in Unity
+            // WIP
+            float horizontal = 0f, vertical = 0f;
+            if ((GetAsyncKeyState(left_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(a_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
+            {
+                horizontal = -1f; // sets horizontal to -1 (left)
+            }
+            else if ((GetAsyncKeyState(right_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(d_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
+            {
+                horizontal = 1f; // sets horizontal to 1 (right)
+            }
+            if ((GetAsyncKeyState(up_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(w_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
+            {
+                vertical = 1f; // sets vertical to 1 (up)
+            }
+            else if ((GetAsyncKeyState(down_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(s_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
+            {
+                vertical = -1f; // sets vertical to -1 (down)
+            }
+            theRB.velocity = new Vector2(horizontal, vertical) * moveSpeed;
+            // END WIP
+            
+            //theRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed; // assigns value to the velocity (built-in Rigidbody2D) of the player, using Input.GetAxisRaw function in Unity
                                                                                                                     // multiplies velocity vector by moveSpeed, allowing player move speed to be adjusted
         }
         else

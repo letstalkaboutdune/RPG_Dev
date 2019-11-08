@@ -33,7 +33,8 @@ public class AreaExit : MonoBehaviour
             if (waitToLoad <= 0) // checks if waitToLoad time has reached 0
             {
                 shouldLoadAfterFade = false; //resets shouldLoadAfterFade to false since new scene is about to load
-           
+
+                //SceneManager.LoadSceneAsync(areaToLoad); //calls SceneManager.LoadSceneAsync in order to load new scene
                 SceneManager.LoadScene(areaToLoad); //calls SceneManager.LoadScene in order to load new scene
             }
         }

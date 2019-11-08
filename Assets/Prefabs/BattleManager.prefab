@@ -2355,7 +2355,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957680554115649231}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.75, y: 3.51, z: 0}
+  m_LocalPosition: {x: 1, y: 3.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1335021490677823546}
@@ -3745,7 +3745,7 @@ GameObject:
   - component: {fileID: 1262981340937779449}
   - component: {fileID: 1262981340937779448}
   m_Layer: 0
-  m_Name: Eyeball
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3801,8 +3801,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -486275991
   m_SortingLayer: 4
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300010, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300014, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4128,7 +4128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262981341062013570}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: 1, z: 0}
+  m_LocalPosition: {x: -7, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1262981342856413042}
@@ -4488,7 +4488,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262981341177649178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: 4, z: 0}
+  m_LocalPosition: {x: -6, y: 3.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1262981341741323655}
@@ -4810,7 +4810,7 @@ GameObject:
   - component: {fileID: 1262981341232790890}
   - component: {fileID: 1262981341232790891}
   m_Layer: 0
-  m_Name: Eyeball
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4867,7 +4867,7 @@ SpriteRenderer:
   m_SortingLayerID: -486275991
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300010, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
+  m_Sprite: {fileID: 21300014, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5366,7 +5366,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262981341332553763}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: 2.5, z: 0}
+  m_LocalPosition: {x: -6.5, y: 2.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1262981342296268140}
@@ -5899,7 +5899,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 157.45, y: -39.85}
+  m_AnchoredPosition: {x: 157.45001, y: -39.85}
   m_SizeDelta: {x: 242.9, y: 67.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1262981341481532839
@@ -6999,9 +6999,9 @@ MonoBehaviour:
     isRanged: 1
     element: 
   - moveName: Heat
-    movePower: 7
+    movePower: 10
     moveCost: 5
-    moveCounter: 150
+    moveCounter: 125
     theEffect: {fileID: 4987815889332692341, guid: 1d1143ad6e9cf594aa96a92e269b5047,
       type: 3}
     isWeapon: 0
@@ -7010,9 +7010,9 @@ MonoBehaviour:
     isRanged: 0
     element: Heat
   - moveName: Freeze
-    movePower: 7
+    movePower: 10
     moveCost: 5
-    moveCounter: 150
+    moveCounter: 125
     theEffect: {fileID: 6357308049703714338, guid: 07898d3bf75a901499a62ee024059b7c,
       type: 3}
     isWeapon: 0
@@ -7021,9 +7021,9 @@ MonoBehaviour:
     isRanged: 0
     element: Freeze
   - moveName: Virus
-    movePower: 7
+    movePower: 10
     moveCost: 5
-    moveCounter: 150
+    moveCounter: 125
     theEffect: {fileID: 7641006353339823828, guid: fce3396b32aad3f4cb0221049b153e9f,
       type: 3}
     isWeapon: 0
@@ -7135,6 +7135,7 @@ MonoBehaviour:
   rewardItems:
   - Health Potion
   - Mana Potion
+  itemChances: 
   cannotFlee: 0
   effectCheck: {fileID: 0}
   waitCounter: 0
@@ -7242,7 +7243,7 @@ GameObject:
   - component: {fileID: 1262981341741323655}
   - component: {fileID: 1262981341741323654}
   m_Layer: 0
-  m_Name: Eyeball
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7299,7 +7300,7 @@ SpriteRenderer:
   m_SortingLayerID: -486275991
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300010, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
+  m_Sprite: {fileID: 21300014, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -8111,7 +8112,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262981342220465801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5, y: 3, z: 0}
+  m_LocalPosition: {x: -4, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1262981340937779449}
@@ -8142,7 +8143,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262981342222691770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.5, y: 4.5, z: 0}
+  m_LocalPosition: {x: -3.5, y: 3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1262981341232790890}
@@ -8395,7 +8396,7 @@ GameObject:
   - component: {fileID: 1262981342296268140}
   - component: {fileID: 1262981342296268147}
   m_Layer: 0
-  m_Name: Eyeball
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8451,8 +8452,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -486275991
   m_SortingLayer: 4
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300010, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300014, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9032,7 +9033,7 @@ GameObject:
   - component: {fileID: 1262981342556888395}
   - component: {fileID: 1262981342556888394}
   m_Layer: 0
-  m_Name: Eyeball
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9088,8 +9089,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -486275991
   m_SortingLayer: 4
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300010, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300014, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9416,7 +9417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262981342809768904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0.92, z: 0}
+  m_LocalPosition: {x: 2.5, y: 0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1262981341494356471}
@@ -9434,7 +9435,7 @@ GameObject:
   - component: {fileID: 1262981342856413042}
   - component: {fileID: 1262981342856413041}
   m_Layer: 0
-  m_Name: Eyeball
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9490,8 +9491,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -486275991
   m_SortingLayer: 4
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300010, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300014, guid: 988d560df8d322a468c97243cbfd76e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -12514,7 +12515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2607587745760179049}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.75, y: 0.92, z: 0}
+  m_LocalPosition: {x: 3, y: 0.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8465173268693978581}
@@ -13514,7 +13515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3057530884354572718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.75, y: 2.3, z: 0}
+  m_LocalPosition: {x: 2, y: 2.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2962676984899014088}

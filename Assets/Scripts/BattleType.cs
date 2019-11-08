@@ -14,5 +14,6 @@ public class BattleType
     public int rewardXP;
     public int rewardAP;
     public string[] rewardItems;
+    public int[] itemChances;
     public int rewardGold;
 }

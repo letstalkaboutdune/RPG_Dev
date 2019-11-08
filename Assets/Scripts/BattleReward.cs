@@ -15,6 +15,8 @@ public class BattleReward : MonoBehaviour
     public GameObject rewardScreen; // creates GameObject to handle display of reward screen
 
     public string[] rewardItems; // creates string array to handle found items
+    public int[] itemChances; // creates int array to handle chance of finding items
+    private List<string> foundItems = new List<string>(); // creates string list to handle found items
     public int xpEarned; // creates int to handle EXP earned
     public int apEarned; // creates int to handle AP earned
     public int rewardGold; // creates int to handle gold earned    
@@ -44,23 +46,42 @@ public class BattleReward : MonoBehaviour
         */
     }
 
-    public void OpenRewardScreen(int xp, int ap, string[] rewards, int gold) // creates function to handle display of reward screen
+    public void OpenRewardScreen(int xp, int ap, int gold, string[] items, int[] chances) // creates function to handle display of reward screen
     {
         // assigns values in script to passed function values
-        xpEarned = xp;
-        apEarned = ap;
-        rewardItems = rewards;
-        rewardGold = gold;
+        xpEarned = Mathf.RoundToInt(xp * Random.Range(0.9f, 1.1f));
+        apEarned = Mathf.RoundToInt(ap * Random.Range(0.9f, 1.1f));
+        rewardGold = Mathf.RoundToInt(gold * Random.Range(0.9f, 1.1f));
 
-        xpText.text = "Earned " + xpEarned + " EXP!"; // displays EXP earned text
-        apText.text = "Earned " + apEarned + " AP!"; // displays AP earned text
-        goldText.text = "Earned " + rewardGold + " gold!"; // displays gold earned text
+        // displays XP, AP, and gold earned text
+        xpText.text = "Earned " + xpEarned + " EXP!";
+        apText.text = "Earned " + apEarned + " AP!";
+        goldText.text = "Earned " + rewardGold + " gold!";
+        
+        // initializes item variables and text
+        itemText.text = "";
+        rewardItems = items;
+        itemChances = chances;
+        foundItems.Clear();
 
-        itemText.text = ""; // resets any previous item text
-
+        // checks if potential reward items were found
         for (int i = 0; i < rewardItems.Length; i++) // iterates through all available item rewards
         {
-            itemText.text += rewards[i] + "\n"; // applies current index of item text plus a line break
+            if(Mathf.RoundToInt(Random.Range(1, 100)) <= itemChances[i]) // checks if roll is less than or equal to chance to receive item
+            {
+                Debug.Log("Found " + rewardItems[i]); // prints item found notice to debug log
+                itemText.text += rewardItems[i] + "\n"; // applies current index of item text plus a line break
+                foundItems.Add(rewardItems[i]); // adds item to found items list
+            }
+            else // checks if roll is greater than chance to receive item
+            {
+                Debug.Log("Didn't find " + rewardItems[i]); // prints item not found notice to debug log
+            }
+        }
+
+        if (foundItems.Count == 0) // checks if no items were found
+        {
+            itemText.text += "None"; // notifies that no items were found
         }
 
         rewardScreen.SetActive(true); // shows reward screen
@@ -123,12 +144,15 @@ public class BattleReward : MonoBehaviour
             StartCoroutine(QuestManager.instance.ShowGameNotification(2)); // calls game notification coroutine to show notice for 2 seconds
         }
 
-        for (int i = 0; i < rewardItems.Length; i++) // iterates through array of reward items
-        {
-            GameManager.instance.AddItem(rewardItems[i]); // adds each item in reward items array to inventory
-        }
-
         GameManager.instance.currentGold += rewardGold; // adds reward gold to inventory
+
+        if (foundItems.Count != 0)
+        {
+            for (int i = 0; i < foundItems.Count; i++) // iterates through array of found items
+            {
+                GameManager.instance.AddItem(foundItems[i]); // adds each item in found items array to inventory
+            }
+        }
 
         rewardScreen.SetActive(false); // hides reward screen
         GameManager.instance.battleActive = false;

@@ -1,3 +1,11 @@
+11/07/19
+********
+Polish: Added % chance to find items in battle
+Polish: Added 10% tolerance to battle XP, AP, and gold rewards
+Polish: Fixed sprite sorting orders on ability effects
+Polish: Tweaked battler positions
+Bug: Fixed movement keys not responding when held while changing scenes
+
 11/06/19
 ********
 Feature: Implemented speed-based turn system in battle, with each ability having different time requirement

@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7641006353339823829}
   - component: {fileID: 7641006353339823828}
   m_Layer: 0
-  m_Name: Plasma
-  m_TagString: Untagged
+  m_Name: Virus
+  m_TagString: Effects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

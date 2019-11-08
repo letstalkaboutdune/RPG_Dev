@@ -85,6 +85,7 @@ public class BattleStarter : MonoBehaviour
         int selectedBattle = Random.Range(0, potentialBattles.Length); // creates variable to handle selected battle, picks randomly from available battles
 
         BattleManager.instance.rewardItems = potentialBattles[selectedBattle].rewardItems; // passes selected battle reward items to battle manager
+        BattleManager.instance.itemChances = potentialBattles[selectedBattle].itemChances; // passes selected battle reward item chances to battle manager
         BattleManager.instance.rewardXP = potentialBattles[selectedBattle].rewardXP; // passes selected battle reward EXP to battle manager
         BattleManager.instance.rewardAP = potentialBattles[selectedBattle].rewardAP; // passes selected battle reward AP to battle manager
         BattleManager.instance.rewardGold = potentialBattles[selectedBattle].rewardGold; // passes selected battle gold to battle manager

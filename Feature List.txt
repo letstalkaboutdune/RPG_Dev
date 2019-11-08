@@ -7,63 +7,30 @@ Gamebreaking
 Annoying
 ************
 
-Features
+MINOR
 ********
-Game: Add randomness to battle rewards
-Menu: implement small sliders on HP/MP in main menu and battle menu
-Game: add quest item audio stinger
+UI: implement small sliders on HP/MP in main menu and battle menu
 Game: add an inn to the town
-Map: prevent direction lock when changing scenes
-Sound: add checks to play item unsuccessful sound
-Menu: consider changing dialog function to just have speaker name in text, not in separate box
-Menu: add gradual display of text
+Game: add quest item audio stinger
+Sound: add item unsuccessful sound
 Sound: prevent re-starting same music when entering main menu from game over (replace game over music?)
-Map: add zoom function with mouse wheel
-******
-Battle: add ability to see targeted enemy before attacking in battl
-Battle: update magic menu to fill screen based on available abilities
 Game: add ability to change order of party
-Battle: add ability to change rows during battle
-Menu: add item highlights in menu
-Battle: have battlechars move forward to attack
-???Game: add dash button
+Game: add multiple save slots
+Map: add zoom function with mouse wheel
+Game: add SMB3-style overworld
 
-Pretty (only do in real game)
-******
-UI: add retro overlays
-UI: add appropriate mouse cursor
-Game: show equipped armor/weapon on char sprites
-Levels: add more detail to the tilemaps
-Levels: add animations to the background
-Battle: add encounter transition effect
-Battle: add attack animations
-Battle: add cleaner sprite glow fade
 
 MAJOR
 *****
-Game: add controller/keyboard functionality
 Game/Battle: implement more spells and abilities
-Menu: add drag-and-drop to item/equip/spell interface
-Menu: re-design menu to look like FFVII
-Menu: re-design menu to use same item system in/out of battle
-Menu: magic screen in menu
-Menu: equip screen in menu (include elem. resist/status immunities)
+	*** Cure ability with player targeting
+UI: magic screen in menu
+UI: equip screen in menu (include elem. resist/status immunities)
 	*** include trade-in function in shops
 	*** include live comparison with current equips
-Menu: add scrolling + masking menu support to UI panels
 Game: implement stat restrictions on items
-Menu: add options menu from main menu
-	*** text/battle speed
-	*** show tooltips
-	*** key binds
-	*** music/sfx volume
-	*** resolution	
-Game: add multiple save slots
-Game: add SMB3-style overworld
-???Game: add slot for 4th character, update battle menu UI
-???Code: replace discrete variables with dictionaries
 
-HUGE
+HUGE (new game only)
 ****
 Game Design: create all new spells and effects
 Game Design: create all new enemies and stats
@@ -74,3 +41,30 @@ Story: write story scenario and major character plot points
 Art: create all new pixel art for cyberpunk style
 Music: create all new background music
 SFX: create all new sound FX
+
+Polish (new game only)
+******
+UI: re-design menu to look like FFVII
+UI: re-design menu to use same item system in/out of battle
+UI: add drag-and-drop to item/equip/spell interface
+UI: add retro overlays
+UI: add appropriate mouse cursor
+UI: add gradual display of text with typing sound effects
+UI: change dialog box to show speaker portrait + name on one side
+UI: add support for different aspect ratios
+UI: add scrolling + masking menu support to UI panels
+UI: add options menu from main menu
+	*** text/battle speed, show tooltips, key binds, music/sfx volume, resolution	
+Game: show equipped armor/weapon on char sprites
+Input: add controller/keyboard functionality
+Code: rethink all databases, replace discrete variables with dictionaries
+Levels: add more detail to the tilemaps
+Levels: add animations to the background
+Battle: set sprites pivot point to bottom center
+Battle: change battle perspective
+Battle: add ability to see targeted enemy before attacking in battle
+Battle: add encounter transition effect
+Battle: add attack animations
+Battle: add clean sprite glow fade
+Battle: update ability menu to fill screen based on available abilities
+Battle: add ability to change rows during battle
