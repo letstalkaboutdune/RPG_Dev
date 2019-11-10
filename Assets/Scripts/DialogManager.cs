@@ -22,6 +22,9 @@ public class DialogManager : MonoBehaviour
     private string questToMark; 
     private bool markQuestComplete;
     private bool shouldMarkQuest;
+    
+    // creates bool to handle waiting for button press
+    public bool waitForButtons = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,46 +39,48 @@ public class DialogManager : MonoBehaviour
         {
             if (Input.GetButtonUp("Fire1")) // checks if player has pressed and released the Fire1 button
             {
-                if (!justStarted) // checks if the dialog box has just been started
+                if (!waitForButtons) // checks if buttons are visible
                 {
-                    currentLine++; // increments current line of dialog
-                    
-                    if (currentLine >= dialogLines.Length) // checks if currentLine is outside of array size to prevent out-of-bounds errors
+                    if (!justStarted) // checks if the dialog box has just been started
                     {
-                        dialogBox.SetActive(false); // de-activates dialogBox from the scene using SetActive function
+                        currentLine++; // increments current line of dialog
 
-                        GameManager.instance.dialogActive = false; // sets dialogActive tag to false to allow player movement
-
-                        // PlayerController.instance.canMove = true; // *disabled* resets canMove to true to re-enable player movement after dialog
-
-                        if (shouldMarkQuest) // checks if shouldMarkQuest is true to manage quest marking
+                        if (currentLine >= dialogLines.Length) // checks if currentLine is outside of array size to prevent out-of-bounds errors
                         {
-                            shouldMarkQuest = false; // resets marker to prevent unwanted marking
-                            if (markQuestComplete) // checks if quest should be marked complete
+                            dialogBox.SetActive(false); // de-activates dialogBox from the scene using SetActive function
+
+                            GameManager.instance.dialogActive = false; // sets dialogActive tag to false to allow player movement
+
+                            if (shouldMarkQuest) // checks if shouldMarkQuest is true to manage quest marking
                             {
-                                QuestManager.instance.MarkQuestComplete(questToMark); // calls mark quest complete function
+                                shouldMarkQuest = false; // resets marker to prevent unwanted marking
+                                if (markQuestComplete) // checks if quest should be marked complete
+                                {
+                                    QuestManager.instance.MarkQuestComplete(questToMark); // calls mark quest complete function
+                                }
+                                else
+                                {
+                                    QuestManager.instance.MarkQuestIncomplete(questToMark); // calls mark quest incomplete function
+                                }
                             }
-                            else
-                            {
-                                QuestManager.instance.MarkQuestIncomplete(questToMark); // calls mark quest incomplete function
-                            }
+                        }
+                        else
+                        {
+                            CheckIfName(); // calls CheckIfName function to handle name display instead of dialog display
+
+                            dialogText.text = dialogLines[currentLine]; // displays the current line in the dialogLines array to the dialog text box
+
+                            CheckIfButtons(); // calls CheckIfButtons to check if dialog line is a button indicator
                         }
                     }
                     else
                     {
-                        CheckIfName(); // calls CheckIfName function to handle name display instead of dialog display
-
-                        dialogText.text = dialogLines[currentLine]; // displays the current line in the dialogLines array to the dialog text box
+                        justStarted = false; // resets justStarted to false
                     }
-                }
-                else
-                {
-                    justStarted = false; // resets justStarted to false
                 }
             }
         }
     }
-
 
     public void ShowDialog(string[] newLines, bool isPerson, bool isAuto) // creates function to show dialog on screen that's accessible by DialogActivator script
                                                                           // requires an array of strings in order to execute
@@ -87,7 +92,7 @@ public class DialogManager : MonoBehaviour
 
             currentLine = 0; // resets current line to 0
 
-            CheckIfName(); // resets current line to 0
+            CheckIfName(); // checks if current line is a name
 
             dialogText.text = dialogLines[currentLine]; // sets the dialog box text to the first string in the array
 
@@ -98,19 +103,31 @@ public class DialogManager : MonoBehaviour
                 justStarted = true; // sets the justStarted bool to true to handle first-line display issues
             }
 
-            nameBox.SetActive(isPerson); // activates the name box UI element
+            nameBox.SetActive(isPerson); // activates the name box UI element if isPerson is true
 
             GameManager.instance.dialogActive = true; // sets dialogActive tag to true to prevent player movement
         }      
     }
 
-    public void CheckIfName()     // creates function to check if the current line in the dialog is a name
+    public void CheckIfName() // creates function to check if the current line in the dialog is a name
     {
         if (dialogLines[currentLine].StartsWith("n-")) // checks if current line of text starts with 'n-', our tag for a name
         {
             nameText.text = dialogLines[currentLine].Replace("n-", ""); // displays current line to the name text box
                                                                         // replaces 'n-' tag with blank
             currentLine++; // increments current line of dialog
+        }
+    }
+
+    public void CheckIfButtons() // creates function to check if the current line is a button prompt
+    {
+        if (dialogLines[currentLine].Contains("-buttons-")) // checks if current line of text contains "buttons", our tag for buttons
+        {
+            dialogText.text = dialogLines[currentLine].Replace("-buttons-", ""); // displays current line to the dialog text box
+                                                                                 // replaces 'buttons' tag with blank
+
+            GameMenu.instance.yesNoButtons.gameObject.SetActive(true); // shows yes/no buttons
+            waitForButtons = true; // sets waitforbuttons to true
         }
     }
 

@@ -1,3 +1,17 @@
+11/09/19
+********
+Feature: Implemented saving to multiple save slots and created new save menu
+Feature: Implemented inn functionality and added an inn to the town
+Feature: Created prefabs for hidden items and treasure chests
+Feature: Added two hidden items in town
+Polish: Added background animations to town and countryside
+
+11/08/19
+********
+Feature: Added HP/SP sliders to game, item, status, and battle menus
+Feature: Added XP/AP sliders to status menu
+Feature: Added row explanation tooltips
+
 11/07/19
 ********
 Polish: Added % chance to find items in battle

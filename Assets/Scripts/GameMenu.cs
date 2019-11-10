@@ -18,7 +18,8 @@ public class GameMenu : MonoBehaviour
     public Text[] nameText, hpText, spText, lvlText, expText; // creates Text array to handle player stats text in main menu
     public Text[] itemNameText, itemHPText, itemSPText; // creates Text array to handle player stats text in item menu
 
-    public Slider[] expSlider; // creates Slider array to handle slider in menu
+    // creates slider arrays to handle various menu sliders
+    public Slider[] hpSlider, spSlider, expSlider, itemHPSlider, itemSPSlider;
 
     public Image[] charImage; // creates Image array to handle image of character in menu
 
@@ -31,7 +32,7 @@ public class GameMenu : MonoBehaviour
     public Text statusStr, statusTech, statusEnd, statusAgi, statusLuck, statusSpeed;
     public Text statusWeaponDmg, statusHitChance, statusCritChance, statusWeaponDef, statusEvadeChance, statusBlockChance, statusTechDef;
     public Text statusWeaponEquip, statusOffhandEquip, statusArmorEquip, statusAccyEquip;
-    
+    public Slider statusHPSlider, statusSPSlider, statusXPSlider, statusAPSlider;
     public Image statusImage; // creates Image variable to handle character image in stats menu
 
     public ItemButton[] itemButtons; // creates ItemButtons array to manage item button details
@@ -80,6 +81,15 @@ public class GameMenu : MonoBehaviour
     public Text timerText;
     public float secondsCount;
     public int minuteCount, hourCount;
+
+    public GameObject yesNoButtons; // creates game object reference to store yes/no dialog choice buttons
+    private bool isRunning = false; // creates private bool to handle if dialog-driven coroutine is running
+
+    // creates variables to manage save window
+    public GameObject[] savePanels;
+    public Text[] saveLeader, saveLV, saveAreaName, saveTime, saveGold;
+    public SavePortraits[] savePortraits;
+    public Sprite emptyPortrait, timPortrait, woodyPortrait, sleepyPortrait;
 
     // Start is called before the first frame update
     void Start()
@@ -134,6 +144,18 @@ public class GameMenu : MonoBehaviour
 
                 hpText[i].text = "HP: " + playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in menu data
                 itemHPText[i].text = playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in item menu data
+
+                // updates HP sliders in char info and item window
+                hpSlider[i].maxValue = playerStats[i].maxHP;
+                hpSlider[i].value = playerStats[i].currentHP;
+                itemHPSlider[i].maxValue = playerStats[i].maxHP;
+                itemHPSlider[i].value = playerStats[i].currentHP;
+
+                // updates SP sliders in char info and item window
+                spSlider[i].maxValue = playerStats[i].maxSP;
+                spSlider[i].value = playerStats[i].currentSP;
+                itemSPSlider[i].maxValue = playerStats[i].maxSP;
+                itemSPSlider[i].value = playerStats[i].currentSP;
 
                 spText[i].text = "SP: " + playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in menu data
                 itemSPText[i].text = playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in item menu data
@@ -245,23 +267,37 @@ public class GameMenu : MonoBehaviour
             statusHP.text = "" + playerStats[selected].currentHP + "/" + playerStats[selected].maxHP;
             statusSP.text = "" + playerStats[selected].currentSP + "/" + playerStats[selected].maxSP;
             statusAbilityLV.text = playerStats[selected].playerAPLevel.ToString();
+            
+            // updates basic stats of selected char in status window
+            statusHPSlider.maxValue = playerStats[selected].maxHP;
+            statusHPSlider.value = playerStats[selected].currentHP;
+            statusSPSlider.maxValue = playerStats[selected].maxSP;
+            statusSPSlider.value = playerStats[selected].currentSP;
 
             if (playerStats[selected].isMaxLevel) // checks if player is max level
             {
                 statusNextLV.text = "MAX"; // sets "MAX" text on exp to next level
+                statusXPSlider.gameObject.SetActive(false); // hides XP slider
             }
             else // executes if player is not max level
             {
                 statusNextLV.text = (playerStats[selected].expToNextLevel[playerStats[selected].playerLevel] - playerStats[selected].currentEXP).ToString(); // sets exp to next level text
+                statusXPSlider.maxValue = playerStats[selected].expToNextLevel[playerStats[selected].playerLevel]; // updates char max value of EXP slider in menu data to required EXP to next level
+                statusXPSlider.value = playerStats[selected].currentEXP; // updates char current value of EXP slider in menu data
+                statusXPSlider.gameObject.SetActive(true); // shows XP slider
             }
 
             if (playerStats[selected].isMaxAPLevel) // checks if player is max AP level
             {
                 statusNextAbility.text = "MAX"; // sets "MAX" test on ap to next level
+                statusAPSlider.gameObject.SetActive(false); // hides AP slider
             }
             else // executes if player is not max AP level
             {
                 statusNextAbility.text = (playerStats[selected].apToNextLevel[playerStats[selected].playerAPLevel] - playerStats[selected].currentAP).ToString(); // sets AP to next level text
+                statusAPSlider.maxValue = playerStats[selected].apToNextLevel[playerStats[selected].playerAPLevel]; // updates char max value of AP slider in menu data to required AP to next level
+                statusAPSlider.value = playerStats[selected].currentAP; // updates char current value of AP slider in menu data
+                statusAPSlider.gameObject.SetActive(true); // shows AP slider
             }
 
             // updates main stats of selected character in status window
@@ -493,16 +529,99 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-    public void SaveGame() // creates function to handle button on menu to save all game data
+    public void ShowSaveWindow() // creates function to handle showing save menu
+    {       
+        for(int i = 0; i < 3; i++) // iterates through all 3 possible player prefs slots
+        {
+            Debug.Log("*** SLOT " + i + " ***"); // prints save slot notice to debug log
+            
+            List<string> portraitNames = new List<string>(); // creates new list to handle list of active player portraits
+
+            if (PlayerPrefs.HasKey(i + "_Current_Scene")) // checks if save slot exists by checking for current scene key
+            {
+                savePanels[i].SetActive(true); // shows save panel
+
+                Debug.Log("Current_Scene[" + i + "] = " + PlayerPrefs.GetString(i + "_Current_Scene")); // prints current scene value to debug log
+
+                // grabs save game info from player prefs and updates text
+                saveLeader[i].text = PlayerPrefs.GetString(i + "_LeaderName");
+                saveLV[i].text = PlayerPrefs.GetString(i + "_LeaderLV");
+                saveAreaName[i].text = PlayerPrefs.GetString(i + "_Current_Scene");
+                saveGold[i].text = PlayerPrefs.GetInt(i + "_CurrentGold") + "g";
+                saveTime[i].text = "" + PlayerPrefs.GetInt(i + "_Hours").ToString("00") + ":" + PlayerPrefs.GetInt(i + "_Minutes").ToString("00") + ":" + PlayerPrefs.GetInt(i + "_Seconds").ToString("00");
+
+                // code below handles setting correct player portraits
+                // builds a list of active players
+                for (int j = 0; j < playerStats.Length; j++) // iterates through all elements of player stats array
+                {
+                    if(PlayerPrefs.GetInt(i + "_Player_" + playerStats[j].charName + "_active") != 0) // checks if player active status is not zero
+                    {
+                        Debug.Log(playerStats[j].charName + " is active in the party."); // prints player active notice                        
+                        portraitNames.Add(playerStats[j].charName); // adds active player name to portrait names list
+                    }
+                    else // executes if player is inactive
+                    {
+                        Debug.Log(playerStats[j].charName + " is not active in the party."); // prints player not active notice
+                    }                    
+                }
+
+                // ensures that portrait names list always contains 3 elements
+                while(portraitNames.Count < 3) // while loop executes until portrait names list contains 3 elements
+                {
+                    portraitNames.Add(""); // adds an empty element to list
+                }
+
+                // pulls portraits from referenced sprites based on name and assigns to portrait sprite
+                for (int j = 0; j < 3; j++) // iterates through 3 times
+                {
+                    if (portraitNames[j] != "") // checks if list item is not blank
+                    {
+                        switch (portraitNames[j]) // checks portrait names against known list of players
+                        {
+                            case "Tim":
+                                savePortraits[i].portrait[j].sprite = timPortrait;
+                                //Debug.Log("Found Tim.");
+                                break;
+                            case "Woody":
+                                savePortraits[i].portrait[j].sprite = woodyPortrait;
+                                //Debug.Log("Found Woody.");
+                                break; 
+                            case "Sleepy":
+                                savePortraits[i].portrait[j].sprite = sleepyPortrait;
+                                //Debug.Log("Found Sleepy.");
+                                break;
+                            default:
+                                break;
+                        }                        
+                    }
+                    else // executes if list item is empty
+                    {
+                        savePortraits[i].portrait[j].sprite = emptyPortrait;
+                        //Debug.Log("Empty slot.");
+                    }
+                }
+            }
+            else // executes if save slot does not exist
+            {
+                savePanels[i].SetActive(false); // hides save panel
+            }
+
+            portraitNames.Clear(); // clears portrait names list
+        }
+    }
+
+    public void SaveGame(int saveSlot) // creates function to handle button on menu to save all game data
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
         {
             // calls functions to save player data and quest data
-            GameManager.instance.SaveData();
-            QuestManager.instance.SaveQuestData();
+            GameManager.instance.SaveData(saveSlot);
+            QuestManager.instance.SaveQuestData(saveSlot);
+
+            ShowSaveWindow(); // calls show save window function to update stats
 
             // sets game notification next and shows panel
-            GameMenu.instance.notificationText.text = "Game saved.";
+            notificationText.text = "Game saved.";
             StartCoroutine(ShowGameNotification());
         }
     }
@@ -593,7 +712,7 @@ public class GameMenu : MonoBehaviour
     public void UpdateTimerUI() // creates function to track game time and update timer UI
     {
         secondsCount += Time.deltaTime;
-        timerText.text = hourCount.ToString("000") + ":" + minuteCount.ToString("00") + ":" + ((int)secondsCount).ToString("00");
+        timerText.text = hourCount.ToString("00") + ":" + minuteCount.ToString("00") + ":" + ((int)secondsCount).ToString("00");
         if (secondsCount >= 60)
         {
             minuteCount++;
@@ -604,6 +723,44 @@ public class GameMenu : MonoBehaviour
             hourCount++;
             minuteCount = 0;
         }
+    }
+
+    public void DialogNoButton() // creates function to handle no button press in dialog menu
+    {
+        yesNoButtons.SetActive(false); // hides yes/no buttons
+        DialogManager.instance.waitForButtons = false; // resets wait for buttons tag to resume dialog
+    }
+
+    public void DialogYesButton() // creates function to handle yes button press in dialog menu
+    {
+        if (isRunning == false) // checks if coroutine is already running
+        {
+            StartCoroutine(RestAtInn()); // calls rest at inn coroutine
+        }
+    }
+
+    public IEnumerator RestAtInn() // creates function to rest at inn
+    {
+        isRunning = true; // sets coroutine true to prevent duplicate calls
+        
+        // hides yes/no buttons and dialog boxes
+        yesNoButtons.SetActive(false);
+        DialogManager.instance.dialogBox.SetActive(false);
+        DialogManager.instance.nameBox.SetActive(false);
+        
+        UIFade.instance.FadeToBlack(); // fades screen to black
+
+        GameManager.instance.RestoreHPSP(); // restores party HP/SP
+        
+        yield return new WaitForSeconds(2f); // waits for 2 seconds
+        
+        UIFade.instance.FadeFromBlack(); // fades screen from black
+        
+        // resets dialog-related game tags to resume play
+        DialogManager.instance.waitForButtons = false;
+        GameManager.instance.dialogActive = false;
+
+        isRunning = false; // sets coroutine false to allow later calls
     }
 }
 

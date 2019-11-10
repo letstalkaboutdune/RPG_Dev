@@ -9,16 +9,14 @@ Annoying
 
 MINOR
 ********
-UI: implement small sliders on HP/MP in main menu and battle menu
-Game: add an inn to the town
-Game: add quest item audio stinger
-Sound: add item unsuccessful sound
-Sound: prevent re-starting same music when entering main menu from game over (replace game over music?)
+Game: add load from multiple slots functionality, add load game button to game menu and main menu
+Game: add delete save slot function
 Game: add ability to change order of party
-Game: add multiple save slots
 Map: add zoom function with mouse wheel
 Game: add SMB3-style overworld
-
+Sound: add quest item audio stinger
+Sound: add item unsuccessful sound
+Sound: prevent re-starting same music when entering main menu from game over (replace game over music?)
 
 MAJOR
 *****

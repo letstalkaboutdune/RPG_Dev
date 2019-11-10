@@ -29,7 +29,6 @@ public class DamageNumber : MonoBehaviour
 
     public void SetDamage(int damageAmount) // creates function to set number of damage text
     {
-        // WIP
         if (BattleManager.instance.attackCrit)
         {
             damageText.text = "Crit!\n" + damageAmount.ToString(); // assigns crit message and damage number to damage text
@@ -38,13 +37,11 @@ public class DamageNumber : MonoBehaviour
         {
             damageText.text = damageAmount.ToString(); // assigns damage number to damage text
         }
-        // END WIP        
-
+        
         // sets some amount of jitter on damage text position
         transform.position += new Vector3(Random.Range(-placementJitter, placementJitter), Random.Range(-placementJitter, placementJitter), 0);
     }
     
-    // WIP
     public void SetText(string textToSet) // creates function to set string of damage text, for miss/evade/block
     {
         damageText.text = textToSet; // assigns damage text based on passed string
@@ -52,5 +49,4 @@ public class DamageNumber : MonoBehaviour
         // sets some amount of jitter on damage text position
         transform.position += new Vector3(Random.Range(-placementJitter, placementJitter), Random.Range(-placementJitter, placementJitter), 0);
     }
-    // END WIP
 }

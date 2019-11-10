@@ -159,6 +159,9 @@ public class Tooltip : MonoBehaviour
         // *** NEED TO GENERATE EVENTS ON MOUSEOVER IN STATUS MENU ***
         switch (stat)
         {
+            case "Row Label":
+                tooltipText = "Front row gives/takes full melee damage.\nBack row gives/takes half melee damage.\nRanged and Tech damage ignores row.";
+                break;
             case "Strength":
                 tooltipText = "Multiplies melee damage\nMulti = Strength/2\nAffects Block%";
                 break;

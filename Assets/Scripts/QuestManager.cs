@@ -79,13 +79,26 @@ public class QuestManager : MonoBehaviour
         {
             case "Town_gold_chest": // executes when Town_gold_chest quest marked complete
                 Debug.Log("Awarded 100 gold."); // prints notice to debug log
-                GameMenu.instance.notificationText.text = "Received 100 gold!"; // sets item notification text to show Dwarven Sword
+                GameMenu.instance.notificationText.text = "Received 100 gold!"; // sets item notification text
                 GameManager.instance.currentGold += 100; // adds 100 gold reward to inventory
                 StartCoroutine(ShowGameNotification(1)); // calls game notification coroutine to show notice and block dialog
                 break; // ends case
 
-            case "Town_end": // executes when Town_end quest marked complete
+            case "Town_ring_of_freeze": // executes when Town_gold_chest quest marked complete
+                Debug.Log("Awarded Ring of Freeze."); // prints notice to debug log
+                GameMenu.instance.notificationText.text = "Found a " + GameManager.instance.GetItemTier("Ring of Freeze") + "!"; // sets item notification text
+                GameManager.instance.AddItem("Ring of Freeze"); // adds revive potion to inventory
+                StartCoroutine(ShowGameNotification(2)); // calls game notification coroutine to show notice and block dialog
+                break; // ends case
 
+            case "Town_revive_potion": // executes when Town_hidden_item quest marked complete
+                Debug.Log("Awarded Revive Potion."); // prints notice to debug log
+                GameMenu.instance.notificationText.text = "Found a Revive Potion!"; // sets item notification text to show Revive Potion
+                GameManager.instance.AddItem("Revive Potion"); // adds revive potion to inventory
+                StartCoroutine(ShowGameNotification(1)); // calls game notification coroutine to show notice and block dialog
+                break; // ends case
+
+            case "Town_end": // executes when Town_end quest marked complete
                 Debug.Log("Awarded Dwarven Sword."); // prints notice to debug log                
                 GameMenu.instance.notificationText.text = "Received a " + GameManager.instance.GetItemTier("Dwarven Sword") + "!"; // sets item notification text to show Dwarven Sword
                 GameManager.instance.AddItem("Dwarven Sword"); // adds Dwarven Sword reward to inventory
@@ -117,30 +130,31 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void SaveQuestData() // creates function to save quest data
+    // WIP - ADDING SAVE SLOT FUNCTIONALITY
+    public void SaveQuestData(int saveSlot) // creates function to save quest data
     {
         for(int i = 0; i < questMarkerNames.Length; i++) // iterates through all quest marker names
         {
             if (questMarkersComplete[i]) // checks if quest markers in array are complete
             {
-                PlayerPrefs.SetInt("QuestMarker_" + questMarkerNames[i], 1); // uses built-in Unity tool for PlayerPrefs to save quest data
+                PlayerPrefs.SetInt(saveSlot + "_QuestMarker_" + questMarkerNames[i], 1); // uses built-in Unity tool for PlayerPrefs to save quest data
                                                                              // only supports int, float, or string, so using int 1 or 0 as a bool
             }
             else // executes if quest markers in array are incomplete
             {
-                PlayerPrefs.SetInt("QuestMarker_" + questMarkerNames[i], 0); // uses built-in Unity tool for PlayerPrefs to load quest data
+                PlayerPrefs.SetInt(saveSlot + "_QuestMarker_" + questMarkerNames[i], 0); // uses built-in Unity tool for PlayerPrefs to load quest data
             }
         }
     }
 
-    public void LoadQuestData() // creates function to load quest data
+    public void LoadQuestData(int saveSlot) // creates function to load quest data
     {
         for(int i = 0; i < questMarkerNames.Length; i++) // iterates through all quest marker names
         {
             int valueToSet = 0; // assumes we have a 0 default value for any quest marker names that are unset
-            if(PlayerPrefs.HasKey("QuestMarker_" + questMarkerNames[i])) // checks if key in player prefs exists for each quest marker name
+            if(PlayerPrefs.HasKey(saveSlot + "_QuestMarker_" + questMarkerNames[i])) // checks if key in player prefs exists for each quest marker name
             {
-                valueToSet = PlayerPrefs.GetInt("QuestMarker_" + questMarkerNames[i]); // writes any available quest marker key to valueToSet
+                valueToSet = PlayerPrefs.GetInt(saveSlot + "_QuestMarker_" + questMarkerNames[i]); // writes any available quest marker key to valueToSet
             }
 
             if (valueToSet == 0) // checks if valueToSet is zero, meaning no quest marker saved
@@ -153,6 +167,7 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
+    // END WIP
 
     public IEnumerator ShowGameNotification(int displayTime) // creates IEnumerator coroutine to show quest reward notification
     {

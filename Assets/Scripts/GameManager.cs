@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public int currentGold; // creates int variable to handle current gold
 
+    public int saveSlot; // creates int to manage save slot
+
     // Start is called before the first frame update
     void Start()
     {
@@ -220,109 +222,123 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SaveData() // creates function to handle saving all game data
+    // WIP - ADDING SAVE SLOT FUNCTIONALITY
+    public void SaveData(int saveSlot) // creates function to handle saving all game data
     {
         // saves player scene and position
-        PlayerPrefs.SetString("Current_Scene", SceneManager.GetActiveScene().name); // pulls active scene name from scene manager, stores to player prefs
-        PlayerPrefs.SetFloat("Player_Position_x", PlayerController.instance.transform.position.x); // pulls player x-position from player controller, stores to player prefs
-        PlayerPrefs.SetFloat("Player_Position_y", PlayerController.instance.transform.position.y); // pulls player y-position from player controller, stores to player prefs
-        PlayerPrefs.SetFloat("Player_Position_z", PlayerController.instance.transform.position.z); // pulls player z-position from player controller, stores to player prefs
+        PlayerPrefs.SetString(saveSlot + "_Current_Scene", SceneManager.GetActiveScene().name); // pulls active scene name from scene manager, stores to player prefs
+        PlayerPrefs.SetFloat(saveSlot + "_Player_Position_x", PlayerController.instance.transform.position.x); // pulls player x-position from player controller, stores to player prefs
+        PlayerPrefs.SetFloat(saveSlot + "_Player_Position_y", PlayerController.instance.transform.position.y); // pulls player y-position from player controller, stores to player prefs
+        PlayerPrefs.SetFloat(saveSlot + "_Player_Position_z", PlayerController.instance.transform.position.z); // pulls player z-position from player controller, stores to player prefs
 
         // saves character info and stats
         for (int i = 0; i < playerStats.Length; i++) // iterates through all player stats locations
         {
             if (playerStats[i].gameObject.activeInHierarchy) // checks if player character is active in the scene
             {
-                PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_active", 1); // saves player active tag to player prefs
+                PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_active", 1); // saves player active tag to player prefs
             }
             else 
             {
-                PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_active", 0); // saves player inactive tag to player prefs
+                PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_active", 0); // saves player inactive tag to player prefs
             }
 
             if (playerStats[i].inFrontRow) // checks if player character is in the front row
             {
-                PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_InFrontRow", 1); // saves player front row tag to player prefs
+                PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_InFrontRow", 1); // saves player front row tag to player prefs
             }
             else // executes if player character is in the back row
             {
-                PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_InFrontRow", 0); // saves player back row tag to player prefs
+                PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_InFrontRow", 0); // saves player back row tag to player prefs
             }
 
             // saves all player stats to player prefs based on char name
-            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_Status", playerStats[i].statusEffect);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Level", playerStats[i].playerLevel);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CurrentExp", playerStats[i].currentEXP);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_APLevel", playerStats[i].playerAPLevel);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CurrentAP", playerStats[i].currentAP);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CurrentHP", playerStats[i].currentHP);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_MaxHP", playerStats[i].maxHP);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CurrentSP", playerStats[i].currentSP);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_MaxSP", playerStats[i].maxSP);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Strength", playerStats[i].strength);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Tech", playerStats[i].tech);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Endurance", playerStats[i].endurance);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Agility", playerStats[i].agility);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Luck", playerStats[i].luck);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_Speed", playerStats[i].speed);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DmgWeapon", playerStats[i].dmgWeapon);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_HitChance", playerStats[i].hitChance);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CritWeapon", playerStats[i].critWeapon);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_CritChance", playerStats[i].critChance);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_EvadeArmor", playerStats[i].evadeArmor);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_EvadeChance", playerStats[i].evadeChance);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_BlockShield", playerStats[i].blockShield);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_BlockChance", playerStats[i].blockChance);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DefWeapon", playerStats[i].defWeapon);
-            PlayerPrefs.SetInt("Player_" + playerStats[i].charName + "_DefTech", playerStats[i].defTech);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResHeat", playerStats[i].resistances[0]);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResFreeze", playerStats[i].resistances[1]);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResShock", playerStats[i].resistances[2]);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResVirus", playerStats[i].resistances[3]);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResChem", playerStats[i].resistances[4]);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResKinetic", playerStats[i].resistances[5]);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResWater", playerStats[i].resistances[6]);
-            PlayerPrefs.SetFloat("Player_" + playerStats[i].charName + "_ResQuantum", playerStats[i].resistances[7]);
-            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedWpn", playerStats[i].equippedWpn);
-            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedOff", playerStats[i].equippedOff);
-            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedArmr", playerStats[i].equippedArmr);
-            PlayerPrefs.SetString("Player_" + playerStats[i].charName + "_EquippedAccy", playerStats[i].equippedAccy);
+            //PlayerPrefs.SetString(saveSlot + "_Player_" + playerStats[i].charName + "_Name", playerStats[i].charName); 
+            PlayerPrefs.SetString(saveSlot + "_Player_" + playerStats[i].charName + "_Status", playerStats[i].statusEffect);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Level", playerStats[i].playerLevel);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentExp", playerStats[i].currentEXP);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_APLevel", playerStats[i].playerAPLevel);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentAP", playerStats[i].currentAP);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentHP", playerStats[i].currentHP);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_MaxHP", playerStats[i].maxHP);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentSP", playerStats[i].currentSP);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_MaxSP", playerStats[i].maxSP);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Strength", playerStats[i].strength);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Tech", playerStats[i].tech);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Endurance", playerStats[i].endurance);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Agility", playerStats[i].agility);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Luck", playerStats[i].luck);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Speed", playerStats[i].speed);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_DmgWeapon", playerStats[i].dmgWeapon);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_HitChance", playerStats[i].hitChance);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CritWeapon", playerStats[i].critWeapon);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CritChance", playerStats[i].critChance);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_EvadeArmor", playerStats[i].evadeArmor);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_EvadeChance", playerStats[i].evadeChance);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_BlockShield", playerStats[i].blockShield);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_BlockChance", playerStats[i].blockChance);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_DefWeapon", playerStats[i].defWeapon);
+            PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_DefTech", playerStats[i].defTech);
+            PlayerPrefs.SetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResHeat", playerStats[i].resistances[0]);
+            PlayerPrefs.SetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResFreeze", playerStats[i].resistances[1]);
+            PlayerPrefs.SetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResShock", playerStats[i].resistances[2]);
+            PlayerPrefs.SetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResVirus", playerStats[i].resistances[3]);
+            PlayerPrefs.SetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResChem", playerStats[i].resistances[4]);
+            PlayerPrefs.SetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResKinetic", playerStats[i].resistances[5]);
+            PlayerPrefs.SetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResWater", playerStats[i].resistances[6]);
+            PlayerPrefs.SetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResQuantum", playerStats[i].resistances[7]);
+            PlayerPrefs.SetString(saveSlot + "_Player_" + playerStats[i].charName + "_EquippedWpn", playerStats[i].equippedWpn);
+            PlayerPrefs.SetString(saveSlot + "_Player_" + playerStats[i].charName + "_EquippedOff", playerStats[i].equippedOff);
+            PlayerPrefs.SetString(saveSlot + "_Player_" + playerStats[i].charName + "_EquippedArmr", playerStats[i].equippedArmr);
+            PlayerPrefs.SetString(saveSlot + "_Player_" + playerStats[i].charName + "_EquippedAccy", playerStats[i].equippedAccy);
+        }
+
+        // saves party leader name and level to player prefs
+        for(int i = 0; i < playerStats.Length; i++) // iterates through all player stats
+        {
+            if (playerStats[i].gameObject.activeInHierarchy) // finds first active player in hierarchy
+            {
+                // stores first active player name and level, then breaks loop
+                PlayerPrefs.SetString(saveSlot + "_LeaderName", playerStats[i].charName);
+                PlayerPrefs.SetString(saveSlot + "_LeaderLV", playerStats[i].playerLevel.ToString());
+                break;
+            }
         }
 
         // saves gold to player prefs
-        PlayerPrefs.SetInt("CurrentGold", currentGold);
+        PlayerPrefs.SetInt(saveSlot + "_CurrentGold", currentGold);
 
         // saves inventory data to player prefs based on array location
         for (int i = 0; i < itemsHeld.Length; i++) // iterates through all items held locations
         {
-            PlayerPrefs.SetString("ItemInInventory_" + i, itemsHeld[i]);
-            PlayerPrefs.SetInt("ItemAmount_" + i, numberOfItems[i]);
+            PlayerPrefs.SetString(saveSlot + "_ItemInInventory_" + i, itemsHeld[i]);
+            PlayerPrefs.SetInt(saveSlot + "_ItemAmount_" + i, numberOfItems[i]);
         }
         
         // saves tooltip option selection
         if (GameMenu.instance.showStatusTooltip.isOn)
         {
-            PlayerPrefs.SetInt("ShowTooltips", 1);
+            PlayerPrefs.SetInt(saveSlot + "_ShowTooltips", 1);
         }
         else
         {
-            PlayerPrefs.SetInt("ShowTooltips", 0);
+            PlayerPrefs.SetInt(saveSlot + "_ShowTooltips", 0);
         }
 
         // saves game timer
-        PlayerPrefs.SetInt("Hours", GameMenu.instance.hourCount);
-        PlayerPrefs.SetInt("Minutes", GameMenu.instance.minuteCount);
-        PlayerPrefs.SetInt("Seconds", (int)GameMenu.instance.secondsCount);
+        PlayerPrefs.SetInt(saveSlot + "_Hours", GameMenu.instance.hourCount);
+        PlayerPrefs.SetInt(saveSlot + "_Minutes", GameMenu.instance.minuteCount);
+        PlayerPrefs.SetInt(saveSlot + "_Seconds", (int)GameMenu.instance.secondsCount);
     }
 
-    public void LoadData() // creates function to handle loading all game data
+    public void LoadData(int saveSlot) // creates function to handle loading all game data
     {
         // pulls player position x-y-z from player prefs and loads to player controller transform position
-        PlayerController.instance.transform.position = new Vector3(PlayerPrefs.GetFloat("Player_Position_x"), PlayerPrefs.GetFloat("Player_Position_y"), PlayerPrefs.GetFloat("Player_Position_z"));
+        PlayerController.instance.transform.position = new Vector3(PlayerPrefs.GetFloat(saveSlot + "_Player_Position_x"), PlayerPrefs.GetFloat(saveSlot + "_Player_Position_y"), PlayerPrefs.GetFloat(saveSlot + "_Player_Position_z"));
 
         for(int i = 0; i < playerStats.Length; i++) // iterates through all player stats locations
         {
-            if(PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_active") == 0) // checks player character is not active in the scene
+            if(PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_active") == 0) // checks player character is not active in the scene
             {
                 playerStats[i].gameObject.SetActive(false); // deactivates player character object 
             }
@@ -331,7 +347,7 @@ public class GameManager : MonoBehaviour
                 playerStats[i].gameObject.SetActive(true); // activates player character object 
             }
 
-            if (PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_InFrontRow") == 0) // checks if player character is not in the front row
+            if (PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_InFrontRow") == 0) // checks if player character is not in the front row
             {
                 playerStats[i].inFrontRow = false; // sets player front row status to false
             }
@@ -341,57 +357,58 @@ public class GameManager : MonoBehaviour
             }
 
             // loads all player stats from player prefs based on char name
-            playerStats[i].statusEffect = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_Status");
-            playerStats[i].playerLevel = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Level");
-            playerStats[i].currentEXP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CurrentExp");
-            playerStats[i].playerAPLevel = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_APLevel");
-            playerStats[i].currentAP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CurrentAP");
-            playerStats[i].currentHP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CurrentHP");
-            playerStats[i].maxHP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_MaxHP");
-            playerStats[i].currentSP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CurrentSP");
-            playerStats[i].maxSP = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_MaxSP");
-            playerStats[i].strength = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Strength");
-            playerStats[i].tech = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Tech");
-            playerStats[i].endurance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Endurance");
-            playerStats[i].agility = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Agility");
-            playerStats[i].luck = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Luck");
-            playerStats[i].speed = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_Speed");
-            playerStats[i].dmgWeapon = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DmgWeapon");
-            playerStats[i].hitChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_HitChance");
-            playerStats[i].critWeapon = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CritWeapon");
-            playerStats[i].critChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_CritChance");
-            playerStats[i].evadeArmor = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_EvadeArmor");
-            playerStats[i].evadeChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_EvadeChance");
-            playerStats[i].blockShield = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_BlockShield");
-            playerStats[i].blockChance = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_BlockChance");
-            playerStats[i].defWeapon = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DefWeapon");
-            playerStats[i].defTech = PlayerPrefs.GetInt("Player_" + playerStats[i].charName + "_DefTech");
-            playerStats[i].resistances[0] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResHeat");
-            playerStats[i].resistances[1] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResFreeze");
-            playerStats[i].resistances[2] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResShock");
-            playerStats[i].resistances[3] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResVirus");
-            playerStats[i].resistances[4] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResChem");
-            playerStats[i].resistances[5] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResKinetic");
-            playerStats[i].resistances[6] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResWater");
-            playerStats[i].resistances[7] = PlayerPrefs.GetFloat("Player_" + playerStats[i].charName + "_ResQuantum");
-            playerStats[i].equippedWpn = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedWpn");
-            playerStats[i].equippedOff = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedOff");
-            playerStats[i].equippedArmr = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedArmr");
-            playerStats[i].equippedAccy = PlayerPrefs.GetString("Player_" + playerStats[i].charName + "_EquippedAccy");
+            //playerStats[i].charName = PlayerPrefs.GetString(saveSlot + "_Player_" + playerStats[i].charName + "_Name");
+            playerStats[i].statusEffect = PlayerPrefs.GetString(saveSlot + "_Player_" + playerStats[i].charName + "_Status");
+            playerStats[i].playerLevel = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Level");
+            playerStats[i].currentEXP = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentExp");
+            playerStats[i].playerAPLevel = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_APLevel");
+            playerStats[i].currentAP = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentAP");
+            playerStats[i].currentHP = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentHP");
+            playerStats[i].maxHP = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_MaxHP");
+            playerStats[i].currentSP = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentSP");
+            playerStats[i].maxSP = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_MaxSP");
+            playerStats[i].strength = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Strength");
+            playerStats[i].tech = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Tech");
+            playerStats[i].endurance = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Endurance");
+            playerStats[i].agility = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Agility");
+            playerStats[i].luck = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Luck");
+            playerStats[i].speed = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Speed");
+            playerStats[i].dmgWeapon = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_DmgWeapon");
+            playerStats[i].hitChance = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_HitChance");
+            playerStats[i].critWeapon = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CritWeapon");
+            playerStats[i].critChance = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CritChance");
+            playerStats[i].evadeArmor = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_EvadeArmor");
+            playerStats[i].evadeChance = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_EvadeChance");
+            playerStats[i].blockShield = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_BlockShield");
+            playerStats[i].blockChance = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_BlockChance");
+            playerStats[i].defWeapon = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_DefWeapon");
+            playerStats[i].defTech = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_DefTech");
+            playerStats[i].resistances[0] = PlayerPrefs.GetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResHeat");
+            playerStats[i].resistances[1] = PlayerPrefs.GetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResFreeze");
+            playerStats[i].resistances[2] = PlayerPrefs.GetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResShock");
+            playerStats[i].resistances[3] = PlayerPrefs.GetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResVirus");
+            playerStats[i].resistances[4] = PlayerPrefs.GetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResChem");
+            playerStats[i].resistances[5] = PlayerPrefs.GetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResKinetic");
+            playerStats[i].resistances[6] = PlayerPrefs.GetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResWater");
+            playerStats[i].resistances[7] = PlayerPrefs.GetFloat(saveSlot + "_Player_" + playerStats[i].charName + "_ResQuantum");
+            playerStats[i].equippedWpn = PlayerPrefs.GetString(saveSlot + "_Player_" + playerStats[i].charName + "_EquippedWpn");
+            playerStats[i].equippedOff = PlayerPrefs.GetString(saveSlot + "_Player_" + playerStats[i].charName + "_EquippedOff");
+            playerStats[i].equippedArmr = PlayerPrefs.GetString(saveSlot + "_Player_" + playerStats[i].charName + "_EquippedArmr");
+            playerStats[i].equippedAccy = PlayerPrefs.GetString(saveSlot + "_Player_" + playerStats[i].charName + "_EquippedAccy");
         }
 
         // loads gold from player prefs
-        currentGold = PlayerPrefs.GetInt("CurrentGold");
+        currentGold = PlayerPrefs.GetInt(saveSlot + "_CurrentGold");
 
         // loads inventory data to player prefs based on array location
         for (int i = 0; i < itemsHeld.Length; i++) // iterates through all items held locations
         {
-            itemsHeld[i] = PlayerPrefs.GetString("ItemInInventory_" + i);
-            numberOfItems[i] = PlayerPrefs.GetInt("ItemAmount_" + i);
+            itemsHeld[i] = PlayerPrefs.GetString(saveSlot + "_ItemInInventory_" + i);
+            numberOfItems[i] = PlayerPrefs.GetInt(saveSlot + "_ItemAmount_" + i);
         }
 
         // loads tooltip option selection
-        if (PlayerPrefs.GetInt("ShowTooltips") == 1)
+        if (PlayerPrefs.GetInt(saveSlot + "_ShowTooltips") == 1)
         {
             GameMenu.instance.showStatusTooltip.isOn = true;
         }
@@ -401,8 +418,18 @@ public class GameManager : MonoBehaviour
         }
 
         // loads game timer
-        GameMenu.instance.hourCount = PlayerPrefs.GetInt("Hours");
-        GameMenu.instance.minuteCount = PlayerPrefs.GetInt("Minutes");
-        GameMenu.instance.secondsCount = (float)PlayerPrefs.GetInt("Seconds");
+        GameMenu.instance.hourCount = PlayerPrefs.GetInt(saveSlot + "_Hours");
+        GameMenu.instance.minuteCount = PlayerPrefs.GetInt(saveSlot + "_Minutes");
+        GameMenu.instance.secondsCount = (float)PlayerPrefs.GetInt(saveSlot + "_Seconds");
+    }
+    // END WIP
+
+    public void RestoreHPSP() // creates function to fully restore party HP/SP
+    {
+        for(int i = 0; i < playerStats.Length; i++) // iterates through all players
+        {
+            playerStats[i].currentHP = playerStats[i].maxHP; // restores HP to max
+            playerStats[i].currentSP = playerStats[i].maxSP; // restores SP to max
+        }
     }
 }

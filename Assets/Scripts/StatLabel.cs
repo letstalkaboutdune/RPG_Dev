@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// StatLabel
+// handles the mouseover detection to show stat tooltips
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,7 +21,7 @@ public class StatLabel : MonoBehaviour , IPointerEnterHandler, IPointerExitHandl
     {
         if (GameMenu.instance.showStatusTooltip.isOn)
         {
-            tooltip.GenerateTooltip(gameObject.name); // calls function to generate and display tooltip based on name of stat label}
+            tooltip.GenerateTooltip(gameObject.name); // calls function to generate and display tooltip based on name of stat label
         }
     }
 

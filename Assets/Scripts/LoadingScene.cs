@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement; // includes Unity SceneManagement library
 public class LoadingScene : MonoBehaviour
 {
     public float waitToLoad; // creates float to handle time to wait for scene load
+    public int saveSlot; // creates int to manage selected save slot
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +26,11 @@ public class LoadingScene : MonoBehaviour
             
             if(waitToLoad <= 0) // executes once wait to load time reaches zero
             {
-                SceneManager.LoadScene(PlayerPrefs.GetString("Current_Scene")); // loads saved scene from player prefs
+                SceneManager.LoadScene(PlayerPrefs.GetString(saveSlot + "_Current_Scene")); // loads saved scene from player prefs
 
                 // loads game data and quest data
-                GameManager.instance.LoadData();
-                QuestManager.instance.LoadQuestData();
+                GameManager.instance.LoadData(saveSlot);
+                QuestManager.instance.LoadQuestData(saveSlot);
             }
         }
     }

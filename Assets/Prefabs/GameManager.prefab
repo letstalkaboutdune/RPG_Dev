@@ -354,6 +354,8 @@ MonoBehaviour:
   - Tutorial
   - Town_move_rock
   - Town_gold_chest
+  - Town_ring_of_freeze
+  - Town_revive_potion
   - Town_fight_dragon
   - Town_end
   questMarkersComplete: 

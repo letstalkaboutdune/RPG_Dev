@@ -34,6 +34,7 @@ public class BattleManager : MonoBehaviour
     public DamageNumber theDamageNumber; // creates DamageNumber object to handle manipulating damage number
 
     public Text[] playerName, playerHP, playerSP; // creates Text arrays to handle player stats in battle UI
+    public Slider[] playerHPSlider, playerSPSlider; // creates slider arrays to display player stats in battle UI
 
     // creates game objects and BattleTargetButton objects to manage player target menu
     public GameObject targetMenu;
@@ -542,7 +543,11 @@ public class BattleManager : MonoBehaviour
                     // updates player name, HP, and SP on UI, clamps HP and SP to never be < 0
                     playerName[i].text = playerData.charName;
                     playerHP[i].text = Mathf.Clamp(playerData.currentHP, 0, int.MaxValue) + "/" + playerData.maxHP;
+                    playerHPSlider[i].maxValue = playerData.maxHP;
+                    playerHPSlider[i].value = playerData.currentHP;
                     playerSP[i].text = Mathf.Clamp(playerData.currentSP, 0, int.MaxValue) + "/" + playerData.maxSP;
+                    playerSPSlider[i].maxValue = playerData.maxSP;
+                    playerSPSlider[i].value = playerData.currentSP;
                 }
                 else 
                 {

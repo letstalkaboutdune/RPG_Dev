@@ -29,6 +29,7 @@ TextureImporter:
     21300048: ShopKeeper
     21300050: Player_Terra
     21300052: NPC Characters_0
+    21300054: innkeeper
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -179,13 +180,33 @@ TextureImporter:
         width: 12
         height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: edac018ff31c81845a3db801d3976c37
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: innkeeper
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 16
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bf5bc6e75f590c45b9633d28d3e5418
       vertices: []
       indices: 
       edges: []
