@@ -222,7 +222,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // WIP - ADDING SAVE SLOT FUNCTIONALITY
     public void SaveData(int saveSlot) // creates function to handle saving all game data
     {
         // saves player scene and position
@@ -253,7 +252,6 @@ public class GameManager : MonoBehaviour
             }
 
             // saves all player stats to player prefs based on char name
-            //PlayerPrefs.SetString(saveSlot + "_Player_" + playerStats[i].charName + "_Name", playerStats[i].charName); 
             PlayerPrefs.SetString(saveSlot + "_Player_" + playerStats[i].charName + "_Status", playerStats[i].statusEffect);
             PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Level", playerStats[i].playerLevel);
             PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentExp", playerStats[i].currentEXP);
@@ -357,7 +355,6 @@ public class GameManager : MonoBehaviour
             }
 
             // loads all player stats from player prefs based on char name
-            //playerStats[i].charName = PlayerPrefs.GetString(saveSlot + "_Player_" + playerStats[i].charName + "_Name");
             playerStats[i].statusEffect = PlayerPrefs.GetString(saveSlot + "_Player_" + playerStats[i].charName + "_Status");
             playerStats[i].playerLevel = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_Level");
             playerStats[i].currentEXP = PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_CurrentExp");
@@ -422,7 +419,6 @@ public class GameManager : MonoBehaviour
         GameMenu.instance.minuteCount = PlayerPrefs.GetInt(saveSlot + "_Minutes");
         GameMenu.instance.secondsCount = (float)PlayerPrefs.GetInt(saveSlot + "_Seconds");
     }
-    // END WIP
 
     public void RestoreHPSP() // creates function to fully restore party HP/SP
     {

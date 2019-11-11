@@ -1,6 +1,12 @@
+11/10/19
+********
+Feature: Implemented load and delete save slot functionality
+Feature: Added load game button to game menu and main menu
+Feature: Added party menu and began to implement changing party order 
+
 11/09/19
 ********
-Feature: Implemented saving to multiple save slots and created new save menu
+Feature: Implemented saving to multiple save slots and created new save/load menu
 Feature: Implemented inn functionality and added an inn to the town
 Feature: Created prefabs for hidden items and treasure chests
 Feature: Added two hidden items in town

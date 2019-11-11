@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// SavePortraits
+// defines class for save portraits as an array of images
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;

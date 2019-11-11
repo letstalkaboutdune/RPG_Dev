@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2284573408509007524}
   - component: {fileID: 2284573408509007525}
   m_Layer: 0
-  m_Name: Player3 Stat
+  m_Name: Sleepy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,6 +81,7 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
+  partyOrder: 2
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -122,7 +123,7 @@ GameObject:
   - component: {fileID: 2284573409187258630}
   - component: {fileID: 2284573409187258629}
   m_Layer: 0
-  m_Name: Player1 Stat
+  m_Name: Tim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,6 +193,7 @@ MonoBehaviour:
   maxHP: 150
   maxSP: 10
   inFrontRow: 1
+  partyOrder: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -337,6 +339,7 @@ MonoBehaviour:
   - {fileID: 916814282435851387, guid: 8fcdcfee9a849284e9d29728149dd101, type: 3}
   - {fileID: 1629811263330596263, guid: 8a958ece484f5ab4e9007aae8e745391, type: 3}
   currentGold: 0
+  saveSlot: 0
 --- !u!114 &458343848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +374,7 @@ GameObject:
   - component: {fileID: 2284573409837618542}
   - component: {fileID: 2284573409837618543}
   m_Layer: 0
-  m_Name: Player2 Stat
+  m_Name: Woody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -441,6 +444,7 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
+  partyOrder: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0

@@ -86,10 +86,14 @@ public class GameMenu : MonoBehaviour
     private bool isRunning = false; // creates private bool to handle if dialog-driven coroutine is running
 
     // creates variables to manage save window
+    public Text saveLoadText;
     public GameObject[] savePanels;
+    public GameObject saveButtons, loadButtons, saveBackButton, saveMenuButton, deleteYesNoButtons;
     public Text[] saveLeader, saveLV, saveAreaName, saveTime, saveGold;
     public SavePortraits[] savePortraits;
     public Sprite emptyPortrait, timPortrait, woodyPortrait, sleepyPortrait;
+    public int slotToLoad, slotToDelete;
+    public bool loadMainMenu = false;
 
     // Start is called before the first frame update
     void Start()
@@ -135,6 +139,50 @@ public class GameMenu : MonoBehaviour
         {
             if (playerStats[i].gameObject.activeInHierarchy)  // checks if player stats object is active in the scene
             {
+                // *** NEED TO CHECK PARTY ORDER VALUE AND REPLACE i WITH PARTYORDER VALUE ***
+                int order = playerStats[i].partyOrder;
+
+                charStatHolder[order].SetActive(true); // activates char info in menu if player is active
+
+                charImage[order].sprite = playerStats[i].charImage; // updates char image in menu data
+
+                nameText[order].text = playerStats[i].charName; // updates char name in menu data
+                itemNameText[order].text = playerStats[i].charName; // updates char name in item menu data
+
+                hpText[order].text = "HP: " + playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in menu data
+                itemHPText[order].text = playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in item menu data
+
+                // updates HP sliders in char info and item window
+                hpSlider[order].maxValue = playerStats[i].maxHP;
+                hpSlider[order].value = playerStats[i].currentHP;
+                itemHPSlider[order].maxValue = playerStats[i].maxHP;
+                itemHPSlider[order].value = playerStats[i].currentHP;
+
+                // updates SP sliders in char info and item window
+                spSlider[order].maxValue = playerStats[i].maxSP;
+                spSlider[order].value = playerStats[i].currentSP;
+                itemSPSlider[order].maxValue = playerStats[i].maxSP;
+                itemSPSlider[order].value = playerStats[i].currentSP;
+
+                spText[order].text = "SP: " + playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in menu data
+                itemSPText[order].text = playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in item menu data
+
+                lvlText[order].text = "Lvl: " + playerStats[i].playerLevel; // updates char LVL in menu data
+                expText[order].text = "" + playerStats[i].currentEXP + "/" + playerStats[i].expToNextLevel[playerStats[i].playerLevel]; // updates char LVL in menu data
+
+                if (!playerStats[i].isMaxLevel) // checks if player is not at max level
+                {
+                    expSlider[order].maxValue = playerStats[i].expToNextLevel[playerStats[i].playerLevel]; // updates char max value of EXP slider in menu data to required EXP to next level
+                    expSlider[order].value = playerStats[i].currentEXP; // updates char current value of EXP slider in menu data
+                }
+                else // executes if player is max level
+                {
+                    expToNextLvl[order].SetActive(false);
+                }
+
+                frontRowToggle[order].isOn = playerStats[i].inFrontRow; // sets front row toggle indicator based on player front row status
+
+                /*
                 charStatHolder[i].SetActive(true); // activates char info in menu if player is active
 
                 charImage[i].sprite = playerStats[i].charImage; // updates char image in menu data
@@ -174,6 +222,7 @@ public class GameMenu : MonoBehaviour
                 }
 
                 frontRowToggle[i].isOn = playerStats[i].inFrontRow; // sets front row toggle indicator based on player front row status
+                */
             }
             else
             {
@@ -202,7 +251,6 @@ public class GameMenu : MonoBehaviour
                     windows[i].SetActive(false); // deactivates current window element
                 }
 
-                // WIP
                 SelectItem(null, 0); // select null item each time when you toggle the menu window
 
                 itemCharChoiceMenu.SetActive(false); // closes character choice menu when menu is closed
@@ -529,19 +577,53 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-    public void ShowSaveWindow() // creates function to handle showing save menu
+    public void ShowSaveWindow(int saveOrLoad) // creates function to handle showing save menu
+                                               // passed int selects whether window is in save mode or load mode
     {       
-        for(int i = 0; i < 3; i++) // iterates through all 3 possible player prefs slots
+        if (saveOrLoad == 0) // checks if save or load = 0 (save)
         {
-            Debug.Log("*** SLOT " + i + " ***"); // prints save slot notice to debug log
-            
+            // configures text and buttons for save mode
+            saveLoadText.text = "Pick a slot to save:";            
+            saveButtons.SetActive(true);
+            loadButtons.SetActive(false);
+            saveBackButton.SetActive(true);
+            saveMenuButton.SetActive(false);
+        }
+        else if (saveOrLoad == 1) // checks if save or load = 1 (load - game menu)
+        {
+            // configures text and buttons for load from game menu mode
+            saveLoadText.text = "Pick a slot to load:";
+            saveButtons.SetActive(false);
+            loadButtons.SetActive(true);
+            saveBackButton.SetActive(true);
+            saveMenuButton.SetActive(false);
+        }
+        else // executes if save or load = 2 (load - main menu)
+        {
+            // configures text and buttons for load from main menu mode
+            saveLoadText.text = "Pick a slot to load:";
+            saveButtons.SetActive(false);
+            loadButtons.SetActive(true);
+            saveBackButton.SetActive(false);
+            saveMenuButton.SetActive(true);
+        }
+
+        UpdateSaveWindow(); // calls function to update save window data
+    }
+
+    public void UpdateSaveWindow() // creates function to update values in save window without touching buttons
+    {
+        for (int i = 0; i < 3; i++) // iterates through all 3 possible player prefs slots
+        {
+            //Debug.Log("*** SLOT " + i + " ***"); // prints save slot notice to debug log
+
             List<string> portraitNames = new List<string>(); // creates new list to handle list of active player portraits
 
             if (PlayerPrefs.HasKey(i + "_Current_Scene")) // checks if save slot exists by checking for current scene key
             {
-                savePanels[i].SetActive(true); // shows save panel
+                savePanels[i].transform.localScale = new Vector3(1, 1, 1); // adjusts scale of panel to 1 to show without affecting grid layout group
 
-                Debug.Log("Current_Scene[" + i + "] = " + PlayerPrefs.GetString(i + "_Current_Scene")); // prints current scene value to debug log
+                //Debug.Log("Current_Scene[" + i + "] = " + PlayerPrefs.GetString(i + "_Current_Scene")); // prints current scene value to debug log
 
                 // grabs save game info from player prefs and updates text
                 saveLeader[i].text = PlayerPrefs.GetString(i + "_LeaderName");
@@ -554,19 +636,19 @@ public class GameMenu : MonoBehaviour
                 // builds a list of active players
                 for (int j = 0; j < playerStats.Length; j++) // iterates through all elements of player stats array
                 {
-                    if(PlayerPrefs.GetInt(i + "_Player_" + playerStats[j].charName + "_active") != 0) // checks if player active status is not zero
+                    if (PlayerPrefs.GetInt(i + "_Player_" + playerStats[j].charName + "_active") != 0) // checks if player active status is not zero
                     {
-                        Debug.Log(playerStats[j].charName + " is active in the party."); // prints player active notice                        
+                        //Debug.Log(playerStats[j].charName + " is active in the party."); // prints player active notice                        
                         portraitNames.Add(playerStats[j].charName); // adds active player name to portrait names list
                     }
                     else // executes if player is inactive
                     {
-                        Debug.Log(playerStats[j].charName + " is not active in the party."); // prints player not active notice
-                    }                    
+                        //Debug.Log(playerStats[j].charName + " is not active in the party."); // prints player not active notice
+                    }
                 }
 
                 // ensures that portrait names list always contains 3 elements
-                while(portraitNames.Count < 3) // while loop executes until portrait names list contains 3 elements
+                while (portraitNames.Count < 3) // while loop executes until portrait names list contains 3 elements
                 {
                     portraitNames.Add(""); // adds an empty element to list
                 }
@@ -576,23 +658,7 @@ public class GameMenu : MonoBehaviour
                 {
                     if (portraitNames[j] != "") // checks if list item is not blank
                     {
-                        switch (portraitNames[j]) // checks portrait names against known list of players
-                        {
-                            case "Tim":
-                                savePortraits[i].portrait[j].sprite = timPortrait;
-                                //Debug.Log("Found Tim.");
-                                break;
-                            case "Woody":
-                                savePortraits[i].portrait[j].sprite = woodyPortrait;
-                                //Debug.Log("Found Woody.");
-                                break; 
-                            case "Sleepy":
-                                savePortraits[i].portrait[j].sprite = sleepyPortrait;
-                                //Debug.Log("Found Sleepy.");
-                                break;
-                            default:
-                                break;
-                        }                        
+                        savePortraits[i].portrait[j].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + portraitNames[j]); // loads correct sprite from resources/sprites/portraits/
                     }
                     else // executes if list item is empty
                     {
@@ -603,7 +669,7 @@ public class GameMenu : MonoBehaviour
             }
             else // executes if save slot does not exist
             {
-                savePanels[i].SetActive(false); // hides save panel
+                savePanels[i].transform.localScale = new Vector3(0, 0, 0); // adjusts scale of panel to 0 to hide without affecting grid layout group
             }
 
             portraitNames.Clear(); // clears portrait names list
@@ -618,12 +684,65 @@ public class GameMenu : MonoBehaviour
             GameManager.instance.SaveData(saveSlot);
             QuestManager.instance.SaveQuestData(saveSlot);
 
-            ShowSaveWindow(); // calls show save window function to update stats
+            UpdateSaveWindow(); // calls function to update save window data
 
             // sets game notification next and shows panel
             notificationText.text = "Game saved.";
             StartCoroutine(ShowGameNotification());
         }
+    }
+
+    public void LoadGame(int saveSlot) // creates function to handle loading game from a selected save slot
+    {
+        if (!GameManager.instance.noticeActive) // checks to see if game notice is active
+        {
+            if (PlayerPrefs.HasKey(saveSlot + "_Current_Scene")) // checks if current save slot is not empty
+            {
+                Debug.Log("Loading slot " + saveSlot); // prints load slot notice to debug log
+                slotToLoad = saveSlot; // assigns selected save slot as slot to load
+                loadMainMenu = false; //  assigns bool to not load main menu
+                SceneManager.LoadScene("LoadingScene"); // loads loading scene
+            }
+            else
+            {
+                Debug.Log("Save slot is empty!"); // prints empty save slot notice to debug log
+                notificationText.text = "Save slot is empty!";
+                StartCoroutine(ShowGameNotification());
+            }
+        }
+    }
+
+    public void DeleteButton(int saveSlot) // creates function to show delete yes/no buttons in game menu
+    {
+        if (PlayerPrefs.HasKey(saveSlot + "_Current_Scene")) // checks if current save slot is not empty
+        {
+            slotToDelete = saveSlot; // assigns passed save slot variable as slot to delete
+                                     //Debug.Log("slotToDelete = " + slotToDelete); // prints delete slot selection to debug log
+
+            gameNotification.SetActive(true); // shows game notification
+            notificationText.text = "Delete this save slot?"; // sets delete warning text
+            deleteYesNoButtons.SetActive(true); // shows delete yes/no buttons
+        }
+        else
+        {
+            Debug.Log("Save slot is empty!"); // prints empty save slot notice to debug log
+            notificationText.text = "Save slot is empty!";
+            StartCoroutine(ShowGameNotification());
+        }
+    }
+    
+    public void HideDeleteNotification() // creates function to hide delete notification
+    {
+        gameNotification.SetActive(false); // hides game notification
+        deleteYesNoButtons.SetActive(false); // hides delete yes/no buttons
+    }
+
+    public void DeleteGame() // creates function to handle deleting game from a selected save slot
+    {
+        Debug.Log("Deleting slot " + slotToDelete); // prints slot delete notice to debug log
+        PlayerPrefs.DeleteKey(slotToDelete + "_Current_Scene"); // deletes current scene value from save slot
+        UpdateSaveWindow(); // calls function to update save window data
+        HideDeleteNotification(); // calls function to hide delete notification
     }
 
     public void PlayButtonSound(int soundToPlay) // creates function to play UI beeps, requires int of sound to play
@@ -638,13 +757,11 @@ public class GameMenu : MonoBehaviour
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
         {
-            SceneManager.LoadScene(mainMenuName); // loads main menu
+            loadMainMenu = true; // assigns bool to load main menu
+            //Debug.Log("loadMainMenu = " + loadMainMenu); // prints state of load main menu to debug log
 
-            // destroys any open objects from currently open scene
-            Destroy(PlayerController.instance.gameObject);
-            Destroy(GameManager.instance.gameObject);
-            Destroy(AudioManager.instance.gameObject);
-            Destroy(gameObject);
+            Destroy(AudioManager.instance.gameObject); // destroys audio manager to prevent lingering BGM
+            SceneManager.LoadScene("LoadingScene"); // loads loading scene
         }
     }
 
@@ -695,11 +812,11 @@ public class GameMenu : MonoBehaviour
     public IEnumerator ShowGameNotification() // creates IEnumerator coroutine to show game notification
     {
         GameManager.instance.noticeActive = true; // sets notice active true to stop player action
-        GameMenu.instance.gameNotification.SetActive(true); // shows game notification panel
+        gameNotification.SetActive(true); // shows game notification panel
 
         yield return new WaitForSeconds(1f); // forces one second wait for notification to display
 
-        GameMenu.instance.gameNotification.SetActive(false); // hides game notification panel      
+        gameNotification.SetActive(false); // hides game notification panel      
         GameManager.instance.noticeActive = false; // sets notice active false to allow player action
     }
     

@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Main Menu.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: d22b9a925c721354394976c6fb3f2f9d
+  - enabled: 1
+    path: Assets/Scenes/LoadGame.unity
+    guid: c7dfbf83625207946bb68d3ebd8e3605
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: ac824d1d806a1ab4dbb825ca7cc87c93
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: a2cf831344d31524ea667dcd017d5c59
   - enabled: 1
     path: Assets/Scenes/Countryside.unity
     guid: ee85b5d2a9d7fab4bbe297419a1172c1
@@ -18,15 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Shop.unity
     guid: fc4978d8884b727429d324ea44720be0
   - enabled: 1
-    path: Assets/Scenes/LoadingScene.unity
-    guid: ac824d1d806a1ab4dbb825ca7cc87c93
+    path: Assets/Scenes/Inn.unity
+    guid: 964df181e26a94b478de72c1e1b15bf8
   - enabled: 1
     path: Assets/Scenes/Cave.unity
     guid: 7adef70c62bf32c4cae4c93db7b8cee0
-  - enabled: 1
-    path: Assets/Scenes/GameOver.unity
-    guid: a2cf831344d31524ea667dcd017d5c59
-  - enabled: 1
-    path: Assets/Scenes/Inn.unity
-    guid: 964df181e26a94b478de72c1e1b15bf8
   m_configObjects: {}

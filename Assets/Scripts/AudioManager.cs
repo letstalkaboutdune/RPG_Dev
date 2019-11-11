@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     // create AudioSource arrays for sound effects and background music
     public AudioSource[] sfx;
     public AudioSource[] bgm;
+    
+    public bool loadNewGame; // creates bool to handle whether to load new game
 
     public static AudioManager instance; // creates static instance of AudioSource class/script
 

@@ -9,9 +9,16 @@ Annoying
 
 MINOR
 ********
-Game: add load from multiple slots functionality, add load game button to game menu and main menu
-Game: add delete save slot function
 Game: add ability to change order of party
+	*** show selected party on left, available party on right *DONE*
+	*** use drag-and-drop system from inventory tutorial
+		*** NEED TO DEEP COPY IMAGE - HOW?
+	*** set active party order values appropriately
+		*** USE MOUSE CLICK DETECTION FUNCTIONS
+	*** set unused party inactive
+	*** icon needs to contain portrait, name, and reference to playerstats
+	*** *** for party leader/level save, just check who has order = 0
+Game: add ability to change party members
 Map: add zoom function with mouse wheel
 Game: add SMB3-style overworld
 Sound: add quest item audio stinger
@@ -29,7 +36,7 @@ UI: equip screen in menu (include elem. resist/status immunities)
 Game: implement stat restrictions on items
 
 HUGE (new game only)
-****
+****    
 Game Design: create all new spells and effects
 Game Design: create all new enemies and stats
 Game Design: create all new items
@@ -56,9 +63,11 @@ UI: add options menu from main menu
 Game: show equipped armor/weapon on char sprites
 Input: add controller/keyboard functionality
 Code: rethink all databases, replace discrete variables with dictionaries
+Code: use json/xml/txt instead of playerprefs for save slots
 Levels: add more detail to the tilemaps
 Levels: add animations to the background
 Battle: set sprites pivot point to bottom center
+Battle: create minimal battle UI
 Battle: change battle perspective
 Battle: add ability to see targeted enemy before attacking in battle
 Battle: add encounter transition effect

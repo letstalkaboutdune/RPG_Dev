@@ -6,28 +6,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; // includes Unity SceneManagement library
 
-
-
 public class MainMenu : MonoBehaviour
 {
-    public string newGameScene; // creates string to handle name of scene when starting new game
+    public string loadGameScene, newGameScene; // creates string to handle name of load game and new game scenes
 
-    public string loadGameScene; // creates string to handle name of load game scene
-
-    public GameObject continueButton; // creates game object to handle activation of continue button
+    public GameObject loadButton; // creates game object to handle load button
 
     public int soundToPlay; // creates int to handle button sound selection
 
     // Start is called before the first frame update
     void Start()
     {
-        if(PlayerPrefs.HasKey("Current_Scene")) // checks if player prefs has key for current scene, some game data has been saved
+        for (int i = 0; i < 3; i++) // iterates through all 3 possible player prefs slots
         {
-            continueButton.SetActive(true); // sets continue button to active
-        }
-        else
-        {
-            continueButton.SetActive(false); // sets continue button to inactive
+            if (PlayerPrefs.HasKey(i + "_Current_Scene")) // checks if player prefs has key for current scene, some game data has been saved
+            {
+                loadButton.SetActive(true); // sets continue button to active
+                break; // break loop as soon as an active save slot is found
+            }
+            else
+            {
+                loadButton.SetActive(false); // sets continue button to inactive
+            }
         }
     }
 
@@ -36,10 +36,10 @@ public class MainMenu : MonoBehaviour
     {
         
     }
-
-    public void Continue()
+  
+    public void LoadGame()
     {
-        SceneManager.LoadScene(loadGameScene); // loads continued game at saved scene
+        SceneManager.LoadScene(loadGameScene); // loads load game scene
     }
 
     public void NewGame() // creates function to load new game at first scene
