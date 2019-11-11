@@ -31,17 +31,12 @@ public class EssentialsLoader : MonoBehaviour
             BattleManager.instance = Instantiate(battleMan).GetComponent<BattleManager>(); // instantiates instance of AudioManager
         }
 
-        // WIP
-        // WHY DOES THIS THROW ERRORS WHEN I DELETE UNUSED PARTY SCRIPTS?
         if (UIFade.instance == null) // checks if UIFade object has been created
-        //if (GameMenu.instance == null)
         {
-            //GameMenu.instance = Instantiate(UIScreen).GetComponent<GameMenu>();
             UIFade.instance = Instantiate(UIScreen).GetComponent<UIFade>(); // uses GetComponent to find UIFade script
                                                                             // instantiates static instance of UIFade
         }
-        // END WIP
-
+        
         if (AudioManager.instance == null) // checks if AudioManager has been created
         {
             AudioManager.instance = Instantiate(audioMan).GetComponent<AudioManager>(); // instantiates instance of AudioManager

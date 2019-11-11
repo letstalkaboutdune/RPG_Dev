@@ -25,6 +25,7 @@ public class CharStats : MonoBehaviour
     public int maxHP = 100, maxSP = 30;
     public bool inFrontRow;
     public int partyOrder;
+    public bool inParty;
     
     // creates various variables to handle player level and experience
     public int playerLevel = 1, playerAPLevel = 1;

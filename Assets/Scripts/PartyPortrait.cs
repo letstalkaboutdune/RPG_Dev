@@ -13,11 +13,10 @@ public class PartyPortrait : MonoBehaviour, IPointerClickHandler
     {
         playerImage = GetComponent<Image>(); // finds Image associated with this script
         selectedPlayer.color = Color.clear; // nulls selected player sprite
-        //selectedPlayer = GameObject.Find("Selected Player").GetComponent<Image>(); // gets reference to selected player image
 
         // prints image found notices to debug log
-        Debug.Log("Found image = " + playerImage); // prints image found to debug log
-        Debug.Log("Selected player = " + selectedPlayer);
+        //Debug.Log("Found image = " + playerImage); // prints image found to debug log
+        //Debug.Log("Selected player = " + selectedPlayer);
     }
 
     // executes when an object with this script is clicked
@@ -27,11 +26,9 @@ public class PartyPortrait : MonoBehaviour, IPointerClickHandler
         {
             if(selectedPlayer.color != Color.clear) // checks if selected player is visible
             {
-                // NEED TO CREATE DEEP COPY OF SELECTED PLAYER IMAGE
-                Image clone = selectedPlayer; // clones selected player to store for image swap
-
+                PartyObject clone = new PartyObject(selectedPlayer.sprite); // clones selected player to store for image swap
                 selectedPlayer.sprite = playerImage.sprite; // sets selected player sprite to player slot sprite
-                playerImage.sprite = clone.sprite; // sets player slot sprite to cloned sprite
+                playerImage.sprite = clone.portrait; // sets player slot sprite to cloned sprite
             }
             else // executes if selected item was empty
             {

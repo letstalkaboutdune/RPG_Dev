@@ -82,6 +82,7 @@ MonoBehaviour:
   maxSP: 20
   inFrontRow: 1
   partyOrder: 2
+  inParty: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -194,6 +195,7 @@ MonoBehaviour:
   maxSP: 10
   inFrontRow: 1
   partyOrder: 0
+  inParty: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -256,6 +258,11 @@ Transform:
   - {fileID: 2284573409187258630}
   - {fileID: 2284573409837618542}
   - {fileID: 2284573408509007524}
+  - {fileID: 1027241019262762097}
+  - {fileID: 4950167923304117791}
+  - {fileID: 8070394681597449943}
+  - {fileID: 386037421482233432}
+  - {fileID: 9038844246873097288}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -275,6 +282,11 @@ MonoBehaviour:
   - {fileID: 2284573409187258629}
   - {fileID: 2284573409837618543}
   - {fileID: 2284573408509007525}
+  - {fileID: 2856631101674178848}
+  - {fileID: 474551890168704679}
+  - {fileID: 4948567734240889112}
+  - {fileID: 7112327364263518647}
+  - {fileID: 1157081078402658463}
   gameMenuOpen: 0
   dialogActive: 0
   fadingBetweenAreas: 0
@@ -445,6 +457,7 @@ MonoBehaviour:
   maxSP: 20
   inFrontRow: 1
   partyOrder: 1
+  inParty: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -471,6 +484,571 @@ MonoBehaviour:
   - Freeze
   - Virus
   charImage: {fileID: 21300000, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
+  isMaxLevel: 0
+  isMaxAPLevel: 0
+  leveledUp: 0
+  apLeveledUp: 0
+--- !u!1 &4451004616942653056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1027241019262762097}
+  - component: {fileID: 2856631101674178848}
+  m_Layer: 0
+  m_Name: Alf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1027241019262762097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4451004616942653056}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2284573409583545542}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2856631101674178848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4451004616942653056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39bc5a2db43225740ab9d7d4687fa038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charName: Alf
+  statusEffect: 
+  equippedWpn: 
+  equippedOff: 
+  equippedArmr: 
+  equippedAccy: 
+  currentHP: 120
+  currentSP: 20
+  strength: 8
+  tech: 12
+  endurance: 10
+  agility: 11
+  luck: 12
+  speed: 6
+  dmgWeapon: 0
+  hitChance: 90
+  critChance: 0
+  evadeChance: 0
+  blockChance: 0
+  defWeapon: 0
+  defTech: 0
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
+  resistances:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  baseHP: 85
+  baseSP: 20
+  maxHP: 120
+  maxSP: 20
+  inFrontRow: 1
+  partyOrder: 3
+  inParty: 1
+  playerLevel: 1
+  playerAPLevel: 0
+  currentEXP: 0
+  currentAP: 0
+  expToNextLevel: 
+  apToNextLevel: 
+  maxLevel: 100
+  maxAPLevel: 2
+  statGain:
+  - 0.8
+  - 1
+  - 0.75
+  - 1.1
+  - 1.2
+  - 0.6
+  floatStats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  abilities:
+  - Freeze
+  - Virus
+  charImage: {fileID: 21300032, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
+  isMaxLevel: 0
+  isMaxAPLevel: 0
+  leveledUp: 0
+  apLeveledUp: 0
+--- !u!1 &4584623775192869218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4950167923304117791}
+  - component: {fileID: 474551890168704679}
+  m_Layer: 0
+  m_Name: Bari
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4950167923304117791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4584623775192869218}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2284573409583545542}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &474551890168704679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4584623775192869218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39bc5a2db43225740ab9d7d4687fa038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charName: Bari
+  statusEffect: 
+  equippedWpn: 
+  equippedOff: 
+  equippedArmr: 
+  equippedAccy: 
+  currentHP: 120
+  currentSP: 20
+  strength: 8
+  tech: 12
+  endurance: 10
+  agility: 11
+  luck: 12
+  speed: 6
+  dmgWeapon: 0
+  hitChance: 90
+  critChance: 0
+  evadeChance: 0
+  blockChance: 0
+  defWeapon: 0
+  defTech: 0
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
+  resistances:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  baseHP: 85
+  baseSP: 20
+  maxHP: 120
+  maxSP: 20
+  inFrontRow: 1
+  partyOrder: 4
+  inParty: 1
+  playerLevel: 1
+  playerAPLevel: 0
+  currentEXP: 0
+  currentAP: 0
+  expToNextLevel: 
+  apToNextLevel: 
+  maxLevel: 100
+  maxAPLevel: 2
+  statGain:
+  - 0.8
+  - 1
+  - 0.75
+  - 1.1
+  - 1.2
+  - 0.6
+  floatStats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  abilities:
+  - Freeze
+  - Virus
+  charImage: {fileID: 21300032, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
+  isMaxLevel: 0
+  isMaxAPLevel: 0
+  leveledUp: 0
+  apLeveledUp: 0
+--- !u!1 &5905485325704808915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9038844246873097288}
+  - component: {fileID: 1157081078402658463}
+  m_Layer: 0
+  m_Name: Zephyr
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &9038844246873097288
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5905485325704808915}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2284573409583545542}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1157081078402658463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5905485325704808915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39bc5a2db43225740ab9d7d4687fa038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charName: Zephyr
+  statusEffect: 
+  equippedWpn: 
+  equippedOff: 
+  equippedArmr: 
+  equippedAccy: 
+  currentHP: 120
+  currentSP: 20
+  strength: 8
+  tech: 12
+  endurance: 10
+  agility: 11
+  luck: 12
+  speed: 6
+  dmgWeapon: 0
+  hitChance: 90
+  critChance: 0
+  evadeChance: 0
+  blockChance: 0
+  defWeapon: 0
+  defTech: 0
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
+  resistances:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  baseHP: 85
+  baseSP: 20
+  maxHP: 120
+  maxSP: 20
+  inFrontRow: 1
+  partyOrder: 7
+  inParty: 1
+  playerLevel: 1
+  playerAPLevel: 0
+  currentEXP: 0
+  currentAP: 0
+  expToNextLevel: 
+  apToNextLevel: 
+  maxLevel: 100
+  maxAPLevel: 2
+  statGain:
+  - 0.8
+  - 1
+  - 0.75
+  - 1.1
+  - 1.2
+  - 0.6
+  floatStats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  abilities:
+  - Freeze
+  - Virus
+  charImage: {fileID: 21300032, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
+  isMaxLevel: 0
+  isMaxAPLevel: 0
+  leveledUp: 0
+  apLeveledUp: 0
+--- !u!1 &7660049784831836311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8070394681597449943}
+  - component: {fileID: 4948567734240889112}
+  m_Layer: 0
+  m_Name: Fari
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8070394681597449943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660049784831836311}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2284573409583545542}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4948567734240889112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660049784831836311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39bc5a2db43225740ab9d7d4687fa038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charName: Fari
+  statusEffect: 
+  equippedWpn: 
+  equippedOff: 
+  equippedArmr: 
+  equippedAccy: 
+  currentHP: 120
+  currentSP: 20
+  strength: 8
+  tech: 12
+  endurance: 10
+  agility: 11
+  luck: 12
+  speed: 6
+  dmgWeapon: 0
+  hitChance: 90
+  critChance: 0
+  evadeChance: 0
+  blockChance: 0
+  defWeapon: 0
+  defTech: 0
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
+  resistances:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  baseHP: 85
+  baseSP: 20
+  maxHP: 120
+  maxSP: 20
+  inFrontRow: 1
+  partyOrder: 5
+  inParty: 1
+  playerLevel: 1
+  playerAPLevel: 0
+  currentEXP: 0
+  currentAP: 0
+  expToNextLevel: 
+  apToNextLevel: 
+  maxLevel: 100
+  maxAPLevel: 2
+  statGain:
+  - 0.8
+  - 1
+  - 0.75
+  - 1.1
+  - 1.2
+  - 0.6
+  floatStats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  abilities:
+  - Freeze
+  - Virus
+  charImage: {fileID: 21300032, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
+  isMaxLevel: 0
+  isMaxAPLevel: 0
+  leveledUp: 0
+  apLeveledUp: 0
+--- !u!1 &9009978132191843754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 386037421482233432}
+  - component: {fileID: 7112327364263518647}
+  m_Layer: 0
+  m_Name: Lari
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &386037421482233432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9009978132191843754}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2284573409583545542}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7112327364263518647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9009978132191843754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39bc5a2db43225740ab9d7d4687fa038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charName: Lari
+  statusEffect: 
+  equippedWpn: 
+  equippedOff: 
+  equippedArmr: 
+  equippedAccy: 
+  currentHP: 120
+  currentSP: 20
+  strength: 8
+  tech: 12
+  endurance: 10
+  agility: 11
+  luck: 12
+  speed: 6
+  dmgWeapon: 0
+  hitChance: 90
+  critChance: 0
+  evadeChance: 0
+  blockChance: 0
+  defWeapon: 0
+  defTech: 0
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
+  resistances:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  baseHP: 85
+  baseSP: 20
+  maxHP: 120
+  maxSP: 20
+  inFrontRow: 1
+  partyOrder: 6
+  inParty: 1
+  playerLevel: 1
+  playerAPLevel: 0
+  currentEXP: 0
+  currentAP: 0
+  expToNextLevel: 
+  apToNextLevel: 
+  maxLevel: 100
+  maxAPLevel: 2
+  statGain:
+  - 0.8
+  - 1
+  - 0.75
+  - 1.1
+  - 1.2
+  - 0.6
+  floatStats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  abilities:
+  - Freeze
+  - Virus
+  charImage: {fileID: 21300032, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
   isMaxLevel: 0
   isMaxAPLevel: 0
   leveledUp: 0

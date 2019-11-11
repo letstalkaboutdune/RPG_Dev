@@ -1,3 +1,7 @@
+11/11/19
+********
+Feature: Completed party drag-and-drop system, made progress on party order management
+
 11/10/19
 ********
 Feature: Implemented load and delete save slot functionality

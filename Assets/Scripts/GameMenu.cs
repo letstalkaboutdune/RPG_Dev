@@ -95,6 +95,9 @@ public class GameMenu : MonoBehaviour
     public int slotToLoad, slotToDelete;
     public bool loadMainMenu = false;
 
+    // creates variables to manage party window
+    public Image[] activeParty, inactiveParty;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -137,11 +140,12 @@ public class GameMenu : MonoBehaviour
 
         for (int i = 0; i < playerStats.Length; i++) // creates for loop to iterate through all elements of playerStats array
         {
+            // *** NEED TO CHECK PARTY ORDER VALUE AND REPLACE i WITH PARTYORDER VALUE ***
+            int order = playerStats[i].partyOrder;
+            
+            // WIP
             if (playerStats[i].gameObject.activeInHierarchy)  // checks if player stats object is active in the scene
-            {
-                // *** NEED TO CHECK PARTY ORDER VALUE AND REPLACE i WITH PARTYORDER VALUE ***
-                int order = playerStats[i].partyOrder;
-
+            {                
                 charStatHolder[order].SetActive(true); // activates char info in menu if player is active
 
                 charImage[order].sprite = playerStats[i].charImage; // updates char image in menu data
@@ -224,10 +228,13 @@ public class GameMenu : MonoBehaviour
                 frontRowToggle[i].isOn = playerStats[i].inFrontRow; // sets front row toggle indicator based on player front row status
                 */
             }
-            else
+            // WIP - NEED TO HANDLE ALL 8 CHAR STATS BUT ONLY 3 STAT HOLDERS
+            //else
+            else if (!playerStats[i].gameObject.activeInHierarchy && order < 3) // checks if player is inactive but party order is less than 3
             {
-                charStatHolder[i].SetActive(false); // deactivates char info in menu if player is inactive
+                charStatHolder[order].SetActive(false); // deactivates char info in menu if player is inactive
             }
+            // END WIP
         }
 
         goldText.text = GameManager.instance.currentGold.ToString() + "g"; // updates current gold on game menu
@@ -879,5 +886,30 @@ public class GameMenu : MonoBehaviour
 
         isRunning = false; // sets coroutine false to allow later calls
     }
+
+    // WIP
+    public void UpdatePartyMenu() // creates function to update characters shown in party menu
+    {
+        for(int i = 0; i < playerStats.Length; i++) // iterates through all players
+        {
+            if (playerStats[i].gameObject.activeInHierarchy) // checks if player is active
+            {
+                Debug.Log("Adding " + playerStats[i].charName + " to active slot " + playerStats[i].partyOrder); // prints active slot assignment to debug log
+                activeParty[playerStats[i].partyOrder].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + playerStats[i].charName); // assigns appropriate portrait to active player in the correct slot
+            }
+            else if (playerStats[i].inParty) // executes if player is inactive but in party
+            {
+                Debug.Log("Adding " + playerStats[i].charName + " to inactive slot " + (playerStats[i].partyOrder - 3)); // prints inactive slot assignment to debug log
+                inactiveParty[(playerStats[i].partyOrder - 3)].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + playerStats[i].charName); // assigns appropriate portrait to active player in the correct slot
+                                                                                                                                                // adds an offset of 3 to subtract out the active party order
+            }
+            else // executes if player is inactive and not in party
+            {
+                Debug.Log(playerStats[i].charName + " is not in party, setting slot " + playerStats[i].partyOrder + " empty"); // prints empty slot assignment to debug log
+                activeParty[playerStats[i].partyOrder].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty portrait to player in the current slot
+            }
+        }
+    }
+    // END WIP
 }
 

@@ -9,16 +9,16 @@ Annoying
 
 MINOR
 ********
-Game: add ability to change order of party
+Game: add ability to change order of party and swap party members
 	*** show selected party on left, available party on right *DONE*
-	*** use drag-and-drop system from inventory tutorial
-		*** NEED TO DEEP COPY IMAGE - HOW?
-	*** set active party order values appropriately
+	*** use drag-and-drop system from inventory tutorial *DONE*
+	*** load party portraits from active playerstats based on order *DONE*
+	*** load inactive  portraits from inactive playerstats based on order *DONE*
+	*** handle characters in order but not in party ***
+	*** set all party active/inactive and order values appropriately
 		*** USE MOUSE CLICK DETECTION FUNCTIONS
-	*** set unused party inactive
-	*** icon needs to contain portrait, name, and reference to playerstats
+	???*** icon needs to contain portrait, name, and reference to playerstats
 	*** *** for party leader/level save, just check who has order = 0
-Game: add ability to change party members
 Map: add zoom function with mouse wheel
 Game: add SMB3-style overworld
 Sound: add quest item audio stinger
