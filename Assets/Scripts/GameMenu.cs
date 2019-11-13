@@ -91,150 +91,117 @@ public class GameMenu : MonoBehaviour
     public GameObject saveButtons, loadButtons, saveBackButton, saveMenuButton, deleteYesNoButtons;
     public Text[] saveLeader, saveLV, saveAreaName, saveTime, saveGold;
     public SavePortraits[] savePortraits;
-    public Sprite emptyPortrait, timPortrait, woodyPortrait, sleepyPortrait;
     public int slotToLoad, slotToDelete;
     public bool loadMainMenu = false;
 
     // creates variables to manage party window
     public Image[] activeParty, inactiveParty;
+    public bool playerSelected = false, partyContainsPlayer = true;
+    public string[] activePartyList;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this; // sets GameMenu instance to this instance
                          // "this" keyword refers to current instance of the class
+        CheckPartyForPlayer();
     }
-
+    
     // Update is called once per frame
+    // WIP
     void Update()
     {
-        if (Input.GetButtonDown("Fire2") && !GameManager.instance.battleActive && !GameManager.instance.shopActive && !GameManager.instance.dialogActive && !GameManager.instance.noticeActive && !GameManager.instance.fadingBetweenAreas) // checks for user to press Fire2 (RMB by default), and various game states not active
+        // checks for user to press Fire2 (RMB by default), and various game states active/inactive
+        if (Input.GetButtonDown("Fire2") && !GameManager.instance.battleActive && !GameManager.instance.shopActive && !GameManager.instance.dialogActive && !GameManager.instance.noticeActive && !GameManager.instance.fadingBetweenAreas && !playerSelected)
         {
-            if (theMenu.activeInHierarchy) // checks if the menu is active
+            if (partyContainsPlayer) // checks if party contains a player
             {
-                // theMenu.SetActive(false); // *disabled* hides menu if already active
-                // GameManager.instance.gameMenuOpen = false; // *disabled* sets gameMenuOpen tag to false to allow player movement
+                if (theMenu.activeInHierarchy) // checks if the menu is active
+                {
+                    // theMenu.SetActive(false); // *disabled* hides menu if already active
+                    // GameManager.instance.gameMenuOpen = false; // *disabled* sets gameMenuOpen tag to false to allow player movement
 
-                CloseMenu(); // calls CloseMenu function to close menu
+                    CloseMenu(); // calls CloseMenu function to close menu
+                }
+                else
+                {
+                    theMenu.SetActive(true); // displays menu if not already active
+
+                    UpdateMainStats(); // updates stats in menu
+
+                    activeItem = null; // sets null active item when menu opens
+
+                    GameManager.instance.gameMenuOpen = true; // sets gameMenuOpen tag to true to prevent player movement
+                }
+
+                AudioManager.instance.PlaySFX(5); // plays UI beep 2 from audio manager
             }
-            else
+            else // executes if party doesn't contain a player
             {
-                theMenu.SetActive(true); // displays menu if not already active
-
-                UpdateMainStats(); // updates stats in menu
-
-                activeItem = null; // sets null active item when menu opens
-
-                GameManager.instance.gameMenuOpen = true; // sets gameMenuOpen tag to true to prevent player movement
-            }
-
-            AudioManager.instance.PlaySFX(5); // plays UI beep 2 from audio manager
+                notificationText.text = "Party does not contain a player!"; // sets error text that party does not contain a player
+                StartCoroutine(ShowGameNotification()); // shows game notification
+            }           
         }
-
+        
         UpdateTimerUI(); // calls function to update game timer in menu
     }
 
     public void UpdateMainStats() // creates function to update basic stats in main menu
-    {
-        playerStats = GameManager.instance.playerStats; // sets playerStats in game menu equal to player stats in game manager
+    {        
+        playerStats = GameManager.instance.playerStats; // pulls reference to player stats in game manager
+        CharStats currentPlayerStats;
 
-        for (int i = 0; i < playerStats.Length; i++) // creates for loop to iterate through all elements of playerStats array
+        for (int i = 0; i < activePartyList.Length; i++) // iterates through all active party list
         {
-            // *** NEED TO CHECK PARTY ORDER VALUE AND REPLACE i WITH PARTYORDER VALUE ***
-            int order = playerStats[i].partyOrder;
-            
-            // WIP
-            if (playerStats[i].gameObject.activeInHierarchy)  // checks if player stats object is active in the scene
-            {                
-                charStatHolder[order].SetActive(true); // activates char info in menu if player is active
+            if (activePartyList[i] != "Empty") // checks if name in list is not empty
+            {
+                charStatHolder[i].SetActive(true); // show char stats at that index
 
-                charImage[order].sprite = playerStats[i].charImage; // updates char image in menu data
+                currentPlayerStats = FindPlayerStats(activePartyList[i]); // calls function to find player stats in that location
+                //Debug.Log("Found player = " + currentPlayerStats.charName);
 
-                nameText[order].text = playerStats[i].charName; // updates char name in menu data
-                itemNameText[order].text = playerStats[i].charName; // updates char name in item menu data
+                charImage[i].sprite = currentPlayerStats.charImage; // updates char image in menu data
 
-                hpText[order].text = "HP: " + playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in menu data
-                itemHPText[order].text = playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in item menu data
+                nameText[i].text = currentPlayerStats.charName; // updates char name in menu data
+                itemNameText[i].text = currentPlayerStats.charName; // updates char name in item menu data
 
-                // updates HP sliders in char info and item window
-                hpSlider[order].maxValue = playerStats[i].maxHP;
-                hpSlider[order].value = playerStats[i].currentHP;
-                itemHPSlider[order].maxValue = playerStats[i].maxHP;
-                itemHPSlider[order].value = playerStats[i].currentHP;
-
-                // updates SP sliders in char info and item window
-                spSlider[order].maxValue = playerStats[i].maxSP;
-                spSlider[order].value = playerStats[i].currentSP;
-                itemSPSlider[order].maxValue = playerStats[i].maxSP;
-                itemSPSlider[order].value = playerStats[i].currentSP;
-
-                spText[order].text = "SP: " + playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in menu data
-                itemSPText[order].text = playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in item menu data
-
-                lvlText[order].text = "Lvl: " + playerStats[i].playerLevel; // updates char LVL in menu data
-                expText[order].text = "" + playerStats[i].currentEXP + "/" + playerStats[i].expToNextLevel[playerStats[i].playerLevel]; // updates char LVL in menu data
-
-                if (!playerStats[i].isMaxLevel) // checks if player is not at max level
-                {
-                    expSlider[order].maxValue = playerStats[i].expToNextLevel[playerStats[i].playerLevel]; // updates char max value of EXP slider in menu data to required EXP to next level
-                    expSlider[order].value = playerStats[i].currentEXP; // updates char current value of EXP slider in menu data
-                }
-                else // executes if player is max level
-                {
-                    expToNextLvl[order].SetActive(false);
-                }
-
-                frontRowToggle[order].isOn = playerStats[i].inFrontRow; // sets front row toggle indicator based on player front row status
-
-                /*
-                charStatHolder[i].SetActive(true); // activates char info in menu if player is active
-
-                charImage[i].sprite = playerStats[i].charImage; // updates char image in menu data
-
-                nameText[i].text = playerStats[i].charName; // updates char name in menu data
-                itemNameText[i].text = playerStats[i].charName; // updates char name in item menu data
-
-                hpText[i].text = "HP: " + playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in menu data
-                itemHPText[i].text = playerStats[i].currentHP + "/" + playerStats[i].maxHP; // updates char HP in item menu data
+                hpText[i].text = "HP: " + currentPlayerStats.currentHP + "/" + currentPlayerStats.maxHP; // updates char HP in menu data
+                itemHPText[i].text = currentPlayerStats.currentHP + "/" + currentPlayerStats.maxHP; // updates char HP in item menu data
 
                 // updates HP sliders in char info and item window
-                hpSlider[i].maxValue = playerStats[i].maxHP;
-                hpSlider[i].value = playerStats[i].currentHP;
-                itemHPSlider[i].maxValue = playerStats[i].maxHP;
-                itemHPSlider[i].value = playerStats[i].currentHP;
+                hpSlider[i].maxValue = currentPlayerStats.maxHP;
+                hpSlider[i].value = currentPlayerStats.currentHP;
+                itemHPSlider[i].maxValue = currentPlayerStats.maxHP;
+                itemHPSlider[i].value = currentPlayerStats.currentHP;
 
                 // updates SP sliders in char info and item window
-                spSlider[i].maxValue = playerStats[i].maxSP;
-                spSlider[i].value = playerStats[i].currentSP;
-                itemSPSlider[i].maxValue = playerStats[i].maxSP;
-                itemSPSlider[i].value = playerStats[i].currentSP;
+                spSlider[i].maxValue = currentPlayerStats.maxSP;
+                spSlider[i].value = currentPlayerStats.currentSP;
+                itemSPSlider[i].maxValue = currentPlayerStats.maxSP;
+                itemSPSlider[i].value = currentPlayerStats.currentSP;
 
-                spText[i].text = "SP: " + playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in menu data
-                itemSPText[i].text = playerStats[i].currentSP + "/" + playerStats[i].maxSP; // updates char SP in item menu data
+                spText[i].text = "SP: " + currentPlayerStats.currentSP + "/" + currentPlayerStats.maxSP; // updates char SP in menu data
+                itemSPText[i].text = currentPlayerStats.currentSP + "/" + currentPlayerStats.maxSP; // updates char SP in item menu data
 
-                lvlText[i].text = "Lvl: " + playerStats[i].playerLevel; // updates char LVL in menu data
-                expText[i].text = "" + playerStats[i].currentEXP + "/" + playerStats[i].expToNextLevel[playerStats[i].playerLevel]; // updates char LVL in menu data
+                lvlText[i].text = "Lvl: " + currentPlayerStats.playerLevel; // updates char LVL in menu data
+                expText[i].text = "" + currentPlayerStats.currentEXP + "/" + currentPlayerStats.expToNextLevel[currentPlayerStats.playerLevel]; // updates char LVL in menu data
 
-                if (!playerStats[i].isMaxLevel) // checks if player is not at max level
+                if (!currentPlayerStats.isMaxLevel) // checks if player is not at max level
                 {
-                    expSlider[i].maxValue = playerStats[i].expToNextLevel[playerStats[i].playerLevel]; // updates char max value of EXP slider in menu data to required EXP to next level
-                    expSlider[i].value = playerStats[i].currentEXP; // updates char current value of EXP slider in menu data
+                    expSlider[i].maxValue = currentPlayerStats.expToNextLevel[currentPlayerStats.playerLevel]; // updates char max value of EXP slider in menu data to required EXP to next level
+                    expSlider[i].value = currentPlayerStats.currentEXP; // updates char current value of EXP slider in menu data
                 }
                 else // executes if player is max level
                 {
                     expToNextLvl[i].SetActive(false);
                 }
 
-                frontRowToggle[i].isOn = playerStats[i].inFrontRow; // sets front row toggle indicator based on player front row status
-                */
+                frontRowToggle[i].isOn = currentPlayerStats.inFrontRow; // sets front row toggle indicator based on player front row status
             }
-            // WIP - NEED TO HANDLE ALL 8 CHAR STATS BUT ONLY 3 STAT HOLDERS
-            //else
-            else if (!playerStats[i].gameObject.activeInHierarchy && order < 3) // checks if player is inactive but party order is less than 3
+            else // executes if item in list is empty
             {
-                charStatHolder[order].SetActive(false); // deactivates char info in menu if player is inactive
+                charStatHolder[i].SetActive(false); // hide char stats at that index
             }
-            // END WIP
         }
 
         goldText.text = GameManager.instance.currentGold.ToString() + "g"; // updates current gold on game menu
@@ -245,25 +212,34 @@ public class GameMenu : MonoBehaviour
     {
         UpdateMainStats(); // updates stats in menu
         
-        if (!GameManager.instance.noticeActive) // checks to see if game notice is active
+        if (!GameManager.instance.noticeActive && !playerSelected) // checks to see if game notice is not active and player is not selected in party menu
         {
-            for (int i = 0; i < windows.Length; i++) // iterates through all elements in the windows array
+            if (partyContainsPlayer) // checks if party contains a player
             {
-                if (i == windowNumber) // checks if i is equal to the passed window number
+                for (int i = 0; i < windows.Length; i++) // iterates through all elements in the windows array
                 {
-                    windows[i].SetActive(!windows[i].activeInHierarchy); // sets current window element to its opposite state of active/inactive
-                }
-                else // executes if i is not equal to the passed window number
-                {
-                    windows[i].SetActive(false); // deactivates current window element
-                }
+                    if (i == windowNumber) // checks if i is equal to the passed window number
+                    {
+                        windows[i].SetActive(!windows[i].activeInHierarchy); // sets current window element to its opposite state of active/inactive
+                    }
+                    else // executes if i is not equal to the passed window number
+                    {
+                        windows[i].SetActive(false); // deactivates current window element
+                    }
 
-                SelectItem(null, 0); // select null item each time when you toggle the menu window
+                    SelectItem(null, 0); // select null item each time when you toggle the menu window
 
-                itemCharChoiceMenu.SetActive(false); // closes character choice menu when menu is closed
+                    itemCharChoiceMenu.SetActive(false); // closes character choice menu when menu is closed
+                }
+            }
+            else // executes if party doesn't contain a player
+            {
+                notificationText.text = "Party does not contain a player!"; // sets error text that party does not contain a player
+                StartCoroutine(ShowGameNotification()); // shows game notification
             }
         }
     }
+    // END WIP
 
     public void CloseMenu() // creates function to close menu
     {
@@ -669,7 +645,7 @@ public class GameMenu : MonoBehaviour
                     }
                     else // executes if list item is empty
                     {
-                        savePortraits[i].portrait[j].sprite = emptyPortrait;
+                        savePortraits[i].portrait[j].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // loads empty portrait
                         //Debug.Log("Empty slot.");
                     }
                 }
@@ -890,23 +866,143 @@ public class GameMenu : MonoBehaviour
     // WIP
     public void UpdatePartyMenu() // creates function to update characters shown in party menu
     {
-        for(int i = 0; i < playerStats.Length; i++) // iterates through all players
+        for (int i = 0; i < playerStats.Length; i++) // iterates through all players
         {
             if (playerStats[i].gameObject.activeInHierarchy) // checks if player is active
             {
-                Debug.Log("Adding " + playerStats[i].charName + " to active slot " + playerStats[i].partyOrder); // prints active slot assignment to debug log
-                activeParty[playerStats[i].partyOrder].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + playerStats[i].charName); // assigns appropriate portrait to active player in the correct slot
+                if (playerStats[i].inParty) // checks if player is in party
+                {
+                    //Debug.Log("Adding " + playerStats[i].charName + " to active slot " + playerStats[i].partyOrder); // prints active slot assignment to debug log
+                    activeParty[playerStats[i].partyOrder].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + playerStats[i].charName); // assigns appropriate portrait to active player in the correct slot
+                }
+                else // executes if player is active but not in party
+                {
+                    //Debug.Log(playerStats[i].charName + " is active but not in party, setting party slot " + playerStats[i].partyOrder + " empty"); // prints empty slot assignment to debug log
+                    activeParty[playerStats[i].partyOrder].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty portrait to player in the current active slot
+                }
             }
-            else if (playerStats[i].inParty) // executes if player is inactive but in party
+            else // executes if player is inactive
             {
-                Debug.Log("Adding " + playerStats[i].charName + " to inactive slot " + (playerStats[i].partyOrder - 3)); // prints inactive slot assignment to debug log
-                inactiveParty[(playerStats[i].partyOrder - 3)].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + playerStats[i].charName); // assigns appropriate portrait to active player in the correct slot
-                                                                                                                                                // adds an offset of 3 to subtract out the active party order
+                if (playerStats[i].inParty) // checks if player is in party
+                {
+                    //Debug.Log("Adding " + playerStats[i].charName + " to inactive slot " + (playerStats[i].partyOrder)); // prints inactive slot assignment to debug log
+                    inactiveParty[(playerStats[i].partyOrder)].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + playerStats[i].charName); // assigns appropriate portrait to inactive player in the correct slot
+                }
+                else // executes if player is inactive and not in party
+                {
+                    // *DISABLED* - OVERRIDES inParty SETTINGS
+                    //Debug.Log(playerStats[i].charName + " is inactive and not in party, setting inactive slot " + (playerStats[i].partyOrder) + " empty"); // prints inactive slot assignment to debug log
+                    //inactiveParty[(playerStats[i].partyOrder)].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty portrait to player in the correct inactive slot
+                }
             }
-            else // executes if player is inactive and not in party
+        }
+    }
+
+    public void UpdatePartyOrder() // creates function to update party order based on portrait placement
+    {
+        for (int i = 0; i < activeParty.Length; i++) // iterates through all active party
+        {
+            string activeName = activeParty[i].sprite.name; // pulls name of active party slot sprite
+            //Debug.Log("Active player name = " + activeName); // prints active player name to debug log
+            
+            if (activeParty[i].sprite.name == "Empty") // checks if sprite is empty
             {
-                Debug.Log(playerStats[i].charName + " is not in party, setting slot " + playerStats[i].partyOrder + " empty"); // prints empty slot assignment to debug log
-                activeParty[playerStats[i].partyOrder].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty portrait to player in the current slot
+                //Debug.Log("Active slot " + i + " = empty"); // prints party order move to debug log
+                activePartyList[i] = "Empty"; // sets empty to current index in active party list
+            }
+            else // executes if sprite is not empty
+            {
+                for (int j = 0; j < playerStats.Length; j++) // iterates through all elements of player stats array
+                {
+                    if (playerStats[j].charName == activeName) // checks if player stats name matches found sprite name
+                    {
+                        playerStats[j].gameObject.SetActive(true); // sets player active
+                        playerStats[j].inParty = true; // sets player in party tag true
+                        playerStats[j].partyOrder = i; // sets player party order to current index i
+                        //Debug.Log("Active slot " + i + " = " + activeName); // prints party order move to debug log
+                        activePartyList[i] = activeName; // sets player name to current index in active party list
+                    }
+                }
+            }
+        }
+
+        CheckPartyForPlayer(); // calls function to check party for at least one active player
+
+        for (int i = 0; i < inactiveParty.Length; i++) // iterates through all inactive party
+        {
+            string inactiveName = inactiveParty[i].sprite.name; // pulls name of inactive party slot sprite
+                                                                //Debug.Log("Active player name = " + activeName); // prints inactive player name to debug log
+
+            if (inactiveParty[i].sprite.name == "Empty") // checks if sprite is empty
+            {
+                //Debug.Log("Inactive slot " + i + " = empty"); // prints party order move to debug log
+                // *** NEED TO HANDLE THIS CASE ***
+            }
+            else // executes if sprite is not empty
+            {
+                for (int j = 0; j < playerStats.Length; j++) // iterates through all elements of player stats array
+                {
+                    if (playerStats[j].charName == inactiveName) // checks if player stats name matches found sprite name
+                    {
+                        playerStats[j].gameObject.SetActive(false); // sets player inactive
+                        playerStats[j].inParty = true; // sets player in party tag true
+                        playerStats[j].partyOrder = i; // sets player party order to current index i
+                        //Debug.Log("inactive slot " + i + " = " + inactiveName); // prints party order move to debug log
+                    }
+                }
+            }
+        }
+
+        UpdateMainStats(); // calls function to update main stats and show active party slots
+    }
+
+    public CharStats FindPlayerStats(string playerName) // calls function to find player in playerstats array based on name
+    {
+        // assigns variables to assist with search function
+        int index = 0;
+        bool found = false;
+
+        for (int i = 0; i < playerStats.Length; i++) // iterates through all elements of player stats array
+        {
+            if (playerName == playerStats[i].charName) // checks if passed player name matches any char name in stats
+            {
+                index = i; // sets index equal to current index
+                found = true; // sets found tag true
+                //Debug.Log("Player found."); // prints player found notice to debug log
+                break; // breaks loop to stop execution
+            }
+            else // executes if no player names match
+            {
+                found = false; // sets found flag false
+            }
+        }
+
+        if (found) // checks if a player match was found
+        {
+            //Debug.Log("Returning player = " + playerStats[index].charName); // prints player return notice to debug log
+            return playerStats[index]; // returns the player at that index
+        }
+        else // executes if a player  match was not found
+        {
+            //Debug.Log("Player not found!"); // prints player not found notice to debug log
+            return null; // returns null
+        }
+    }
+    
+    public void CheckPartyForPlayer() // creates function to check if party contains at least one player
+    {
+        for(int i = 0; i < activePartyList.Length; i++) // iterates through all active party list
+        {
+            if (activePartyList[i] != "Empty") // checks if player in index is not empty
+            {
+                partyContainsPlayer = true; // sets party contains player flag to true
+                //Debug.Log("Party contains a player."); // prints player in party notice to debug log
+                break; // breaks loop execution
+            }
+            else // executes if player in index is empty
+            {
+                partyContainsPlayer = false; // sets party contains player flag to false
+                //Debug.Log("Party doesn't contain a player."); // prints player not in party notice to debug log
             }
         }
     }

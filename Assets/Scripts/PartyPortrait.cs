@@ -6,43 +6,60 @@ using UnityEngine.EventSystems;
 
 public class PartyPortrait : MonoBehaviour, IPointerClickHandler
 {
-    private Image playerImage;
+    // assigns needed variables for party portrait class
     public Image selectedPlayer;
+    private Image playerImage;
+    private Sprite emptySprite;
 
     private void Awake()
     {
+        emptySprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty portrait to empty sprite
         playerImage = GetComponent<Image>(); // finds Image associated with this script
-        selectedPlayer.color = Color.clear; // nulls selected player sprite
+        selectedPlayer.sprite = emptySprite; // initializes selected player sprite to empty portrait
 
         // prints image found notices to debug log
         //Debug.Log("Found image = " + playerImage); // prints image found to debug log
         //Debug.Log("Selected player = " + selectedPlayer);
     }
 
+    private void Update() // executes once per frame
+    {
+        if(selectedPlayer.sprite.name == "Empty") // checks if selected player is empty
+        {
+            GameMenu.instance.playerSelected = false; // sets player selected to false to allow party menu open/close
+        }
+        else // executes otherwise
+        {
+            GameMenu.instance.playerSelected = true; // sets player selected to true to prevent party menu open/close
+        }
+    }
+
     // executes when an object with this script is clicked
     public void OnPointerClick(PointerEventData eventData) 
     {
-        if (playerImage.color != Color.clear) // checks if player slot is visible
+        if (playerImage.sprite != emptySprite) // checks if player slot sprite is not empty
         {
-            if(selectedPlayer.color != Color.clear) // checks if selected player is visible
+            if (selectedPlayer.sprite != emptySprite) // checks if select player sprite is not empty
             {
                 PartyObject clone = new PartyObject(selectedPlayer.sprite); // clones selected player to store for image swap
                 selectedPlayer.sprite = playerImage.sprite; // sets selected player sprite to player slot sprite
                 playerImage.sprite = clone.portrait; // sets player slot sprite to cloned sprite
+                GameMenu.instance.UpdatePartyOrder(); // calls function to update party order
             }
-            else // executes if selected item was empty
+            else // executes if selected player sprite is empty
             {
                 selectedPlayer.sprite = playerImage.sprite; // sets selected player sprite to player slot sprite
-                selectedPlayer.color = Color.white; // sets selected player to opaque
-                playerImage.color = Color.clear; // sets player slot to clear
+                playerImage.sprite = emptySprite; // sets player slot sprite to empty
             }
         }
-        else if (selectedPlayer.color != Color.clear) // executes if no player in slot and player selected
+        else if (selectedPlayer.sprite != emptySprite) // executes if no player in slot and player selected
         {
             playerImage.sprite = selectedPlayer.sprite; // sets player slot sprite to selected player sprite
-            playerImage.color = Color.white; // sets player slot to opaque
-            selectedPlayer.color = Color.clear; // sets player slot to clear
+            selectedPlayer.sprite = emptySprite; //  sets selected player sprite to empty
+            GameMenu.instance.UpdatePartyOrder(); // calls function to update party order
         }
     }
+
+
 
 }

@@ -1,3 +1,7 @@
+11/13/19
+********
+Feature: Finished first pass of party management system, still needs more checks in place
+
 11/11/19
 ********
 Feature: Completed party drag-and-drop system, made progress on party order management

@@ -6,19 +6,18 @@ Gamebreaking
 ************
 Annoying
 ************
+PARTY MANAGEMENT:
+. players active in party = active in hierarchy, inParty = true, order 0-2, 
+. players active in party, but unavail. = active in hierarchy, inParty = false, order 0-2
+. players inactive in party, but available = inactive in hierarchy, inParty = true, order 0-4
+. players inactive in party, and unavailable = inactive in hierarchy, inParty = false,  order *don't care* 
 
 MINOR
 ********
 Game: add ability to change order of party and swap party members
-	*** show selected party on left, available party on right *DONE*
-	*** use drag-and-drop system from inventory tutorial *DONE*
-	*** load party portraits from active playerstats based on order *DONE*
-	*** load inactive  portraits from inactive playerstats based on order *DONE*
-	*** handle characters in order but not in party ***
-	*** set all party active/inactive and order values appropriately
-		*** USE MOUSE CLICK DETECTION FUNCTIONS
-	???*** icon needs to contain portrait, name, and reference to playerstats
-	*** *** for party leader/level save, just check who has order = 0
+	*** NEED TO UPDATE PARTY LEADER/LEVEL CHECK ON GAME SAVE
+	*** NEED TO UPDATE ACTIVE BATTLER PULL
+	*** NEED TO UPDATE ALL OTHER PARTY-RELATED FUNCTIONS
 Map: add zoom function with mouse wheel
 Game: add SMB3-style overworld
 Sound: add quest item audio stinger

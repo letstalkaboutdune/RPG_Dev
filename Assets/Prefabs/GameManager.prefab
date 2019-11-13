@@ -569,8 +569,8 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 3
-  inParty: 1
+  partyOrder: 0
+  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -682,8 +682,8 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 4
-  inParty: 1
+  partyOrder: 1
+  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -795,8 +795,8 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 7
-  inParty: 1
+  partyOrder: 4
+  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -908,8 +908,8 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 5
-  inParty: 1
+  partyOrder: 2
+  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -1021,8 +1021,8 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 6
-  inParty: 1
+  partyOrder: 3
+  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0

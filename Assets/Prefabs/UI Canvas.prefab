@@ -29203,10 +29203,6 @@ MonoBehaviour:
     - {fileID: 7103721348678134551}
     - {fileID: 9014092966099567361}
     - {fileID: 4904384580145493677}
-  emptyPortrait: {fileID: 21300000, guid: b5f92d3bf8b933c4c9de517525caadf9, type: 3}
-  timPortrait: {fileID: 21300000, guid: 12d58326d43cefd4db4c3544b493811c, type: 3}
-  woodyPortrait: {fileID: 21300000, guid: c72bb36162a860c4bb8a54eb5085806c, type: 3}
-  sleepyPortrait: {fileID: 21300000, guid: 5a563d0fba8cff54e93c92e09321acd5, type: 3}
   slotToLoad: 0
   slotToDelete: 0
   loadMainMenu: 0
@@ -29221,6 +29217,11 @@ MonoBehaviour:
   - {fileID: 2760056357140620898}
   - {fileID: 665280333899986265}
   - {fileID: 60087420414952228}
+  playerSelected: 0
+  activePartyList:
+  - Tim
+  - Woody
+  - Sleepy
 --- !u!114 &926317058
 MonoBehaviour:
   m_ObjectHideFlags: 0
