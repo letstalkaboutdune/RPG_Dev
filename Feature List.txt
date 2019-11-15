@@ -4,21 +4,24 @@ Minor
 ******
 Gamebreaking
 ************
+
 Annoying
 ************
-PARTY MANAGEMENT:
-. players active in party = active in hierarchy, inParty = true, order 0-2, 
-. players active in party, but unavail. = active in hierarchy, inParty = false, order 0-2
-. players inactive in party, but available = inactive in hierarchy, inParty = true, order 0-4
-. players inactive in party, and unavailable = inactive in hierarchy, inParty = false,  order *don't care* 
 
 MINOR
 ********
 Game: add ability to change order of party and swap party members
-	*** NEED TO UPDATE PARTY LEADER/LEVEL CHECK ON GAME SAVE
-	*** NEED TO UPDATE ACTIVE BATTLER PULL
-	*** NEED TO UPDATE ALL OTHER PARTY-RELATED FUNCTIONS
+	*** remove inparty/partyorder, base everything on active/inactivepartylist *DONE*
+	*** fix status menu *DONE*
+	*** fix game save/load *DONE*
+	*** fix active battler pull *DONE*
+	*** fix game manager update after battle *DONE*
+	*** fix battle rewards *DONE*
+	*** fix items *DONE*
+	*** fix battle items *DONE*
+	*** add tooltips (name, lv, hp/sp) to party menu
 Map: add zoom function with mouse wheel
+Battle: add harder chance to flee with successful flee
 Game: add SMB3-style overworld
 Sound: add quest item audio stinger
 Sound: add item unsuccessful sound

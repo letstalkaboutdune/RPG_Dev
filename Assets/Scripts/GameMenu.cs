@@ -97,7 +97,7 @@ public class GameMenu : MonoBehaviour
     // creates variables to manage party window
     public Image[] activeParty, inactiveParty;
     public bool playerSelected = false, partyContainsPlayer = true;
-    public string[] activePartyList;
+    public string[] activePartyList, inactivePartyList;
 
     // Start is called before the first frame update
     void Start()
@@ -108,7 +108,6 @@ public class GameMenu : MonoBehaviour
     }
     
     // Update is called once per frame
-    // WIP
     void Update()
     {
         // checks for user to press Fire2 (RMB by default), and various game states active/inactive
@@ -155,12 +154,14 @@ public class GameMenu : MonoBehaviour
         {
             if (activePartyList[i] != "Empty") // checks if name in list is not empty
             {
-                charStatHolder[i].SetActive(true); // show char stats at that index
+                charStatHolder[i].transform.localScale = new Vector3(1.333333f, 1.333333f, 1.333333f); // adjusts scale of charStatHolder to 1 to show without affecting layout group
+                //charStatHolder[i].SetActive(true); // show char stats at that index
 
                 currentPlayerStats = FindPlayerStats(activePartyList[i]); // calls function to find player stats in that location
                 //Debug.Log("Found player = " + currentPlayerStats.charName);
 
-                charImage[i].sprite = currentPlayerStats.charImage; // updates char image in menu data
+                charImage[i].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + currentPlayerStats.charName);
+                //charImage[i].sprite = currentPlayerStats.charImage; // updates char image in menu data
 
                 nameText[i].text = currentPlayerStats.charName; // updates char name in menu data
                 itemNameText[i].text = currentPlayerStats.charName; // updates char name in item menu data
@@ -200,7 +201,8 @@ public class GameMenu : MonoBehaviour
             }
             else // executes if item in list is empty
             {
-                charStatHolder[i].SetActive(false); // hide char stats at that index
+                charStatHolder[i].transform.localScale = new Vector3(0, 0, 0); // adjusts scale of charStatHolder to 0 to hide without affecting layout group
+                //charStatHolder[i].SetActive(false); // hide char stats at that index
             }
         }
 
@@ -239,7 +241,6 @@ public class GameMenu : MonoBehaviour
             }
         }
     }
-    // END WIP
 
     public void CloseMenu() // creates function to close menu
     {
@@ -265,14 +266,20 @@ public class GameMenu : MonoBehaviour
         {
             UpdateMainStats(); // updates stats in menu
 
-            StatusChar(0); // updates the information shown in the stats window
+            StatusChar(FindPlayerIndex(activePartyList[0])); // updates the information shown in the stats window for the first player in active party list
 
             for (int i = 0; i < statusButtons.Length; i++) // updates the information shown in the stats window
             {
-                statusButtons[i].SetActive(playerStats[i].gameObject.activeInHierarchy); // activates button if player object is active in the hierarchy
-
-                statusButtons[i].GetComponentInChildren<Text>().text = playerStats[i].charName; // gets Text child component of all buttons in statusButtons array
-                                                                                                // updates button text with name of players
+                if(activePartyList[i] != "Empty") // checks if slot in active party list is not empty
+                {
+                    statusButtons[i].transform.localScale = new Vector3(1f, 1f, 1f); // adjusts scale of statusButton to 1 to show without affecting layout group
+                    statusButtons[i].GetComponentInChildren<Text>().text = activePartyList[i]; // gets Text child component of all buttons in statusButtons array
+                                                                                               // updates button text with name of players
+                }
+                else // executes if slot is empty
+                {
+                    statusButtons[i].transform.localScale = new Vector3(0f, 0f, 0f); // adjusts scale of statusButton to 0 to hide without affecting layout group
+                }
             }
         }
     }
@@ -292,7 +299,7 @@ public class GameMenu : MonoBehaviour
             }
 
             // updates basic stats of selected char in status window
-            statusImage.sprite = playerStats[selected].charImage;
+            statusImage.sprite = Resources.Load<Sprite>("Sprites/Portraits/" + playerStats[selected].charName);
             statusName.text = playerStats[selected].charName;
             statusLV.text = playerStats[selected].playerLevel.ToString();
             statusHP.text = "" + playerStats[selected].currentHP + "/" + playerStats[selected].maxHP;
@@ -496,6 +503,7 @@ public class GameMenu : MonoBehaviour
         }
     }
 
+    // WIP
     public void OpenItemCharChoice() // creates function to open item character choice menu and update names
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
@@ -504,21 +512,20 @@ public class GameMenu : MonoBehaviour
             {
                 itemCharChoiceMenu.SetActive(true); // activates item character choice menu
 
-                for (int i = 0; i < itemCharChoiceNames.Length; i++) // iterates through all character names
+                for (int i = 0; i < activePartyList.Length; i++) // iterates through active party
                 {
-                    itemCharChoiceNames[i].text = GameManager.instance.playerStats[i].charName; // replaces text of character buttons with player names from player stats objects array
-
-                    itemCharChoiceNames[i].transform.parent.gameObject.SetActive(GameManager.instance.playerStats[i].gameObject.activeInHierarchy); // sets character button active/inactive based on whether character is active in hierarchy
+                    if(activePartyList[i] != "Empty") // checks if slot is not empty
+                    {
+                        itemCharChoiceNames[i].text = activePartyList[i]; // sets character button based on active party list
+                        itemCharChoiceNames[i].transform.parent.gameObject.SetActive(true); // shows char choice button 
+                    }
+                    else // executes if slot is empty
+                    {
+                        itemCharChoiceNames[i].text = "Empty"; // sets character button to Empty
+                        itemCharChoiceNames[i].transform.parent.gameObject.SetActive(true); // hides char choice button 
+                    }
                 }
             }
-        }
-    }
-
-    public void CloseItemCharChoice() // creates function to close item character choice menu
-    {
-        if (!GameManager.instance.noticeActive) // checks to see if game notice is active
-        {
-            itemCharChoiceMenu.SetActive(false); // de-activates item character choice menu
         }
     }
 
@@ -527,10 +534,12 @@ public class GameMenu : MonoBehaviour
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
         {
             itemNoticeActive = false; // resets item notice active to false
-            
+
+            string charName = activePartyList[selectChar]; // pulls name of selected char from active party list
+                       
             //Debug.Log("Game.Use passed item = " + activeItem.name); // prints passed item name to debug log
 
-            activeItem.Use(selectChar); // calls Use function to handle use of item on selected char
+            activeItem.Use(charName); // calls Use function to handle use of item on selected char
 
             if (itemNoticeActive) // checks if item notice is sent back true from Item.cs script
             {
@@ -557,6 +566,15 @@ public class GameMenu : MonoBehaviour
                 CloseItemCharChoice(); // de-activates item character choice menu
                 UpdateMainStats(); // updates character stats
             }
+        }
+    }
+    // END WIP
+
+    public void CloseItemCharChoice() // creates function to close item character choice menu
+    {
+        if (!GameManager.instance.noticeActive) // checks to see if game notice is active
+        {
+            itemCharChoiceMenu.SetActive(false); // de-activates item character choice menu
         }
     }
 
@@ -600,8 +618,6 @@ public class GameMenu : MonoBehaviour
         {
             //Debug.Log("*** SLOT " + i + " ***"); // prints save slot notice to debug log
 
-            List<string> portraitNames = new List<string>(); // creates new list to handle list of active player portraits
-
             if (PlayerPrefs.HasKey(i + "_Current_Scene")) // checks if save slot exists by checking for current scene key
             {
                 savePanels[i].transform.localScale = new Vector3(1, 1, 1); // adjusts scale of panel to 1 to show without affecting grid layout group
@@ -615,47 +631,16 @@ public class GameMenu : MonoBehaviour
                 saveGold[i].text = PlayerPrefs.GetInt(i + "_CurrentGold") + "g";
                 saveTime[i].text = "" + PlayerPrefs.GetInt(i + "_Hours").ToString("00") + ":" + PlayerPrefs.GetInt(i + "_Minutes").ToString("00") + ":" + PlayerPrefs.GetInt(i + "_Seconds").ToString("00");
 
-                // code below handles setting correct player portraits
-                // builds a list of active players
-                for (int j = 0; j < playerStats.Length; j++) // iterates through all elements of player stats array
+                for (int j = 0; j < activePartyList.Length; j++) // iterates through active party list
                 {
-                    if (PlayerPrefs.GetInt(i + "_Player_" + playerStats[j].charName + "_active") != 0) // checks if player active status is not zero
-                    {
-                        //Debug.Log(playerStats[j].charName + " is active in the party."); // prints player active notice                        
-                        portraitNames.Add(playerStats[j].charName); // adds active player name to portrait names list
-                    }
-                    else // executes if player is inactive
-                    {
-                        //Debug.Log(playerStats[j].charName + " is not active in the party."); // prints player not active notice
-                    }
-                }
-
-                // ensures that portrait names list always contains 3 elements
-                while (portraitNames.Count < 3) // while loop executes until portrait names list contains 3 elements
-                {
-                    portraitNames.Add(""); // adds an empty element to list
-                }
-
-                // pulls portraits from referenced sprites based on name and assigns to portrait sprite
-                for (int j = 0; j < 3; j++) // iterates through 3 times
-                {
-                    if (portraitNames[j] != "") // checks if list item is not blank
-                    {
-                        savePortraits[i].portrait[j].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + portraitNames[j]); // loads correct sprite from resources/sprites/portraits/
-                    }
-                    else // executes if list item is empty
-                    {
-                        savePortraits[i].portrait[j].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // loads empty portrait
-                        //Debug.Log("Empty slot.");
-                    }
+                    string name = PlayerPrefs.GetString(i + "_ActiveParty_" + j); // finds name of each active party member saved
+                    savePortraits[i].portrait[j].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + name); // loads correct sprite to portraits based on player name
                 }
             }
             else // executes if save slot does not exist
             {
                 savePanels[i].transform.localScale = new Vector3(0, 0, 0); // adjusts scale of panel to 0 to hide without affecting grid layout group
             }
-
-            portraitNames.Clear(); // clears portrait names list
         }
     }
 
@@ -863,42 +848,35 @@ public class GameMenu : MonoBehaviour
         isRunning = false; // sets coroutine false to allow later calls
     }
 
-    // WIP
     public void UpdatePartyMenu() // creates function to update characters shown in party menu
     {
-        for (int i = 0; i < playerStats.Length; i++) // iterates through all players
+        for (int i = 0; i < activePartyList.Length; i++) // iterates through active party list
         {
-            if (playerStats[i].gameObject.activeInHierarchy) // checks if player is active
+            if (activePartyList[i] != "Empty") // checks if name in list slot is not empty
             {
-                if (playerStats[i].inParty) // checks if player is in party
-                {
-                    //Debug.Log("Adding " + playerStats[i].charName + " to active slot " + playerStats[i].partyOrder); // prints active slot assignment to debug log
-                    activeParty[playerStats[i].partyOrder].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + playerStats[i].charName); // assigns appropriate portrait to active player in the correct slot
-                }
-                else // executes if player is active but not in party
-                {
-                    //Debug.Log(playerStats[i].charName + " is active but not in party, setting party slot " + playerStats[i].partyOrder + " empty"); // prints empty slot assignment to debug log
-                    activeParty[playerStats[i].partyOrder].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty portrait to player in the current active slot
-                }
+                activeParty[i].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + activePartyList[i]); // assigns active party sprite based on name in active party list
             }
-            else // executes if player is inactive
+            else // executes if name is list is empty
             {
-                if (playerStats[i].inParty) // checks if player is in party
-                {
-                    //Debug.Log("Adding " + playerStats[i].charName + " to inactive slot " + (playerStats[i].partyOrder)); // prints inactive slot assignment to debug log
-                    inactiveParty[(playerStats[i].partyOrder)].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + playerStats[i].charName); // assigns appropriate portrait to inactive player in the correct slot
-                }
-                else // executes if player is inactive and not in party
-                {
-                    // *DISABLED* - OVERRIDES inParty SETTINGS
-                    //Debug.Log(playerStats[i].charName + " is inactive and not in party, setting inactive slot " + (playerStats[i].partyOrder) + " empty"); // prints inactive slot assignment to debug log
-                    //inactiveParty[(playerStats[i].partyOrder)].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty portrait to player in the correct inactive slot
-                }
+                activeParty[i].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty sprite
+            }
+        }
+
+        for (int i = 0; i < inactivePartyList.Length; i++) // iterates through inactive party list
+        {
+            if (inactivePartyList[i] != "Empty") // checks if name in list slot is not empty
+            {
+                inactiveParty[i].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + inactivePartyList[i]); // assigns inactive party sprite based on name in inactive party list
+            }
+            else // executes if name is list is empty
+            {
+                inactiveParty[i].sprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty sprite
             }
         }
     }
 
     public void UpdatePartyOrder() // creates function to update party order based on portrait placement
+                                   // does this by building string[] for active/inactive party list 
     {
         for (int i = 0; i < activeParty.Length; i++) // iterates through all active party
         {
@@ -916,10 +894,7 @@ public class GameMenu : MonoBehaviour
                 {
                     if (playerStats[j].charName == activeName) // checks if player stats name matches found sprite name
                     {
-                        playerStats[j].gameObject.SetActive(true); // sets player active
-                        playerStats[j].inParty = true; // sets player in party tag true
-                        playerStats[j].partyOrder = i; // sets player party order to current index i
-                        //Debug.Log("Active slot " + i + " = " + activeName); // prints party order move to debug log
+                        //Debug.Log("Active slot " + i + " = " + activeName); // prints active slot assignment to debug log
                         activePartyList[i] = activeName; // sets player name to current index in active party list
                     }
                 }
@@ -936,7 +911,8 @@ public class GameMenu : MonoBehaviour
             if (inactiveParty[i].sprite.name == "Empty") // checks if sprite is empty
             {
                 //Debug.Log("Inactive slot " + i + " = empty"); // prints party order move to debug log
-                // *** NEED TO HANDLE THIS CASE ***
+                inactivePartyList[i] = "Empty"; // sets empty to current index in inactive party list        
+
             }
             else // executes if sprite is not empty
             {
@@ -944,10 +920,8 @@ public class GameMenu : MonoBehaviour
                 {
                     if (playerStats[j].charName == inactiveName) // checks if player stats name matches found sprite name
                     {
-                        playerStats[j].gameObject.SetActive(false); // sets player inactive
-                        playerStats[j].inParty = true; // sets player in party tag true
-                        playerStats[j].partyOrder = i; // sets player party order to current index i
-                        //Debug.Log("inactive slot " + i + " = " + inactiveName); // prints party order move to debug log
+                        //Debug.Log("inactive slot " + i + " = " + inactiveName); // prints inactive slot assignment to debug log
+                        inactivePartyList[i] = inactiveName; // sets player name to current index in inactive party list
                     }
                 }
             }
@@ -956,7 +930,7 @@ public class GameMenu : MonoBehaviour
         UpdateMainStats(); // calls function to update main stats and show active party slots
     }
 
-    public CharStats FindPlayerStats(string playerName) // calls function to find player in playerstats array based on name
+    public CharStats FindPlayerStats(string playerName) // creates function to find player in playerstats array based on name
     {
         // assigns variables to assist with search function
         int index = 0;
@@ -988,6 +962,40 @@ public class GameMenu : MonoBehaviour
             return null; // returns null
         }
     }
+
+    public int FindPlayerIndex(string playerName) // creates function to find player index in playerstats array based on name
+    {
+        // assigns variables to assist with search function
+        int index = -1;
+        bool found = false;
+
+        for (int i = 0; i < playerStats.Length; i++) // iterates through all elements of player stats array
+        {
+            if (playerName == playerStats[i].charName) // checks if passed player name matches any char name in stats
+            {
+                index = i; // sets index equal to current index
+                found = true; // sets found tag true
+                //Debug.Log("Player found."); // prints player found notice to debug log
+                break; // breaks loop to stop execution
+            }
+            else // executes if no player names match
+            {
+                found = false; // sets found flag false
+            }
+        }
+
+        if (found) // checks if a player match was found
+        {
+            //Debug.Log("Returning player = " + playerStats[index].charName); // prints player return notice to debug log
+
+        }
+        else // executes if a player  match was not found
+        {
+            //Debug.Log("Player not found!"); // prints player not found notice to debug log
+        }
+
+        return index; // returns the index of found player
+    }
     
     public void CheckPartyForPlayer() // creates function to check if party contains at least one player
     {
@@ -1006,6 +1014,5 @@ public class GameMenu : MonoBehaviour
             }
         }
     }
-    // END WIP
 }
 

@@ -24,8 +24,6 @@ public class CharStats : MonoBehaviour
     public int baseHP, baseSP;
     public int maxHP = 100, maxSP = 30;
     public bool inFrontRow;
-    public int partyOrder;
-    public bool inParty;
     
     // creates various variables to handle player level and experience
     public int playerLevel = 1, playerAPLevel = 1;
@@ -39,7 +37,7 @@ public class CharStats : MonoBehaviour
 
     public string[] abilities; // creates string array to handle abilities available to character
     
-    public Sprite charImage; // creates Sprite to handle character image
+    //public Sprite charImage; // creates Sprite to handle character image
 
     public bool isMaxLevel, isMaxAPLevel; // creates bool to handle if player is at max level or max AP level
     public bool leveledUp = false; // creates bool to handle if player leveled up after XP award    

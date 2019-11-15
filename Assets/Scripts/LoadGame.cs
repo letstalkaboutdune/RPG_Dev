@@ -27,10 +27,17 @@ public class LoadGame : MonoBehaviour
     void LoadGameWindow() // creates function to show load game window
     {
         sceneLoaded = false;
-        GameMenu.instance.theMenu.SetActive(true); // displays menu if not already active
-        GameManager.instance.gameMenuOpen = true; // sets gameMenuOpen tag to true to prevent player movement
-        GameMenu.instance.UpdateMainStats(); // updates stats in menu
-        GameMenu.instance.ToggleWindow(3); // calls function to open save/load window
-        GameMenu.instance.ShowSaveWindow(2); // calls function to open save/load window in load from main menu mode
+        if(GameMenu.instance.gameObject != null) // checks if game menu has not been destroyed
+        {
+            GameMenu.instance.theMenu.SetActive(true); // displays menu if not already active
+            GameMenu.instance.UpdateMainStats(); // updates stats in menu
+            GameMenu.instance.ToggleWindow(3); // calls function to open save/load window
+            GameMenu.instance.ShowSaveWindow(2); // calls function to open save/load window in load from main menu mode
+        }
+        
+        if(GameManager.instance.gameObject != null) // checks if game manager has not been destroyed
+        {
+            GameManager.instance.gameMenuOpen = true; // sets gameMenuOpen tag to true to prevent player movement
+        }
     }
 }

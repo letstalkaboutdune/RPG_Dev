@@ -7607,7 +7607,7 @@ GameObject:
   - component: {fileID: 3646489225410953805}
   - component: {fileID: 1829319228899966299}
   m_Layer: 5
-  m_Name: Available Members Panel
+  m_Name: Inactive Party Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25839,6 +25839,7 @@ GameObject:
   - component: {fileID: 2495912049274916188}
   - component: {fileID: 2354015222161931433}
   - component: {fileID: 6980368836953144787}
+  - component: {fileID: 4921617248624053653}
   m_Layer: 5
   m_Name: P2 Button
   m_TagString: Untagged
@@ -25942,17 +25943,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7114424641038291174}
-        m_MethodName: StatusChar
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7114424641038291174}
         m_MethodName: PlayButtonSound
         m_Mode: 3
         m_Arguments:
@@ -25963,6 +25953,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4921617248624053653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3166594398411983827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b384cf270cf55a141858d6e7ddd6672a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3174104651153286526
 GameObject:
   m_ObjectHideFlags: 0
@@ -29218,10 +29220,18 @@ MonoBehaviour:
   - {fileID: 665280333899986265}
   - {fileID: 60087420414952228}
   playerSelected: 0
+  partyContainsPlayer: 1
   activePartyList:
   - Tim
   - Woody
   - Sleepy
+  inactivePartyList:
+  - Alf
+  - Bari
+  - Empty
+  - Empty
+  - Empty
+  - Empty
 --- !u!114 &926317058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48133,6 +48143,7 @@ GameObject:
   - component: {fileID: 8278483749234584833}
   - component: {fileID: 7691539951144831163}
   - component: {fileID: 7608583200587986573}
+  - component: {fileID: 4744933954750490474}
   m_Layer: 5
   m_Name: P3 Button
   m_TagString: Untagged
@@ -48236,17 +48247,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7114424641038291174}
-        m_MethodName: StatusChar
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7114424641038291174}
         m_MethodName: PlayButtonSound
         m_Mode: 3
         m_Arguments:
@@ -48257,6 +48257,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4744933954750490474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969475988145610838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b384cf270cf55a141858d6e7ddd6672a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5974103472635935139
 GameObject:
   m_ObjectHideFlags: 0
@@ -49845,6 +49857,7 @@ GameObject:
   - component: {fileID: 1894990472148889134}
   - component: {fileID: 1265643309860688064}
   - component: {fileID: 32103657009581669}
+  - component: {fileID: 3648630117787919586}
   m_Layer: 5
   m_Name: P1 Button
   m_TagString: Untagged
@@ -49948,17 +49961,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7114424641038291174}
-        m_MethodName: StatusChar
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7114424641038291174}
         m_MethodName: PlayButtonSound
         m_Mode: 3
         m_Arguments:
@@ -49969,6 +49971,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3648630117787919586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6203035877629200122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b384cf270cf55a141858d6e7ddd6672a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6208894209751761707
 GameObject:
   m_ObjectHideFlags: 0
@@ -64655,7 +64669,7 @@ GameObject:
   - component: {fileID: 3828725238701516015}
   - component: {fileID: 2640842371119701954}
   m_Layer: 5
-  m_Name: Current Party Panel
+  m_Name: Active Party Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

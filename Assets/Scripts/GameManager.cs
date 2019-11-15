@@ -230,18 +230,20 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetFloat(saveSlot + "_Player_Position_y", PlayerController.instance.transform.position.y); // pulls player y-position from player controller, stores to player prefs
         PlayerPrefs.SetFloat(saveSlot + "_Player_Position_z", PlayerController.instance.transform.position.z); // pulls player z-position from player controller, stores to player prefs
 
+        // saves active party list
+        for (int i = 0; i < GameMenu.instance.activePartyList.Length; i++) // iterates through active party list
+        {
+            PlayerPrefs.SetString(saveSlot + "_ActiveParty_" + i, GameMenu.instance.activePartyList[i]); // saves each element of active party list to player prefs
+        }
+        // saves inactive party list
+        for (int i = 0; i < GameMenu.instance.inactivePartyList.Length; i++) // iterates through inactive party list
+        {
+            PlayerPrefs.SetString(saveSlot + "_InactiveParty_" + i, GameMenu.instance.inactivePartyList[i]); // saves each element of inactive party list to player prefs
+        }
+
         // saves character info and stats
         for (int i = 0; i < playerStats.Length; i++) // iterates through all player stats locations
         {
-            if (playerStats[i].gameObject.activeInHierarchy) // checks if player character is active in the scene
-            {
-                PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_active", 1); // saves player active tag to player prefs
-            }
-            else 
-            {
-                PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_active", 0); // saves player inactive tag to player prefs
-            }
-
             if (playerStats[i].inFrontRow) // checks if player character is in the front row
             {
                 PlayerPrefs.SetInt(saveSlot + "_Player_" + playerStats[i].charName + "_InFrontRow", 1); // saves player front row tag to player prefs
@@ -292,14 +294,13 @@ public class GameManager : MonoBehaviour
         }
 
         // saves party leader name and level to player prefs
-        for(int i = 0; i < playerStats.Length; i++) // iterates through all player stats
+        for (int i = 0; i < GameMenu.instance.activePartyList.Length; i++) // iterates through active party list
         {
-            if (playerStats[i].gameObject.activeInHierarchy) // finds first active player in hierarchy
+            if (GameMenu.instance.activePartyList[i] != "Empty") // checks if name in list is not empty
             {
-                // stores first active player name and level, then breaks loop
-                PlayerPrefs.SetString(saveSlot + "_LeaderName", playerStats[i].charName);
-                PlayerPrefs.SetString(saveSlot + "_LeaderLV", playerStats[i].playerLevel.ToString());
-                break;
+                PlayerPrefs.SetString(saveSlot + "_LeaderName", GameMenu.instance.activePartyList[i]); // saves leader name
+                PlayerPrefs.SetString(saveSlot + "_LeaderLV", GameMenu.instance.FindPlayerStats(GameMenu.instance.activePartyList[i]).playerLevel.ToString());  // saves leader level after finding player stats by name
+                break; // breaks loop after first non-empty name is found
             }
         }
 
@@ -334,17 +335,19 @@ public class GameManager : MonoBehaviour
         // pulls player position x-y-z from player prefs and loads to player controller transform position
         PlayerController.instance.transform.position = new Vector3(PlayerPrefs.GetFloat(saveSlot + "_Player_Position_x"), PlayerPrefs.GetFloat(saveSlot + "_Player_Position_y"), PlayerPrefs.GetFloat(saveSlot + "_Player_Position_z"));
 
-        for(int i = 0; i < playerStats.Length; i++) // iterates through all player stats locations
+        // loads active party list
+        for (int i = 0; i < GameMenu.instance.activePartyList.Length; i++) // iterates through active party list
         {
-            if(PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_active") == 0) // checks player character is not active in the scene
-            {
-                playerStats[i].gameObject.SetActive(false); // deactivates player character object 
-            }
-            else // executes if player is active in the scene
-            {
-                playerStats[i].gameObject.SetActive(true); // activates player character object 
-            }
+            GameMenu.instance.activePartyList[i] = PlayerPrefs.GetString(saveSlot + "_ActiveParty_" + i); // loads each element of active party list from player prefs
+        }
+        // loads inactive party list
+        for (int i = 0; i < GameMenu.instance.inactivePartyList.Length; i++) // iterates through inactive party list
+        {
+            GameMenu.instance.inactivePartyList[i] = PlayerPrefs.GetString(saveSlot + "_InactiveParty_" + i); // loads each element of inactive party list from player prefs
+        }
 
+        for (int i = 0; i < playerStats.Length; i++) // iterates through all player stats locations
+        {
             if (PlayerPrefs.GetInt(saveSlot + "_Player_" + playerStats[i].charName + "_InFrontRow") == 0) // checks if player character is not in the front row
             {
                 playerStats[i].inFrontRow = false; // sets player front row status to false

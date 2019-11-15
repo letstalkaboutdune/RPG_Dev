@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// PartyPortrait
+// handles drag-and-drop interface of portraits on party menu
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;

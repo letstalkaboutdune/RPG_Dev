@@ -1,3 +1,10 @@
+11/14/19
+********
+Feature: Added ability to swap characters in/out of party with party menu
+Feature: Added five new party characters to test out party management functionality
+Polish: Continued implementation of party management system and handling of party active/inactive states
+Bug: Fixed issues with game over screen caused by new save/load slot functions
+
 11/13/19
 ********
 Feature: Finished first pass of party management system, still needs more checks in place

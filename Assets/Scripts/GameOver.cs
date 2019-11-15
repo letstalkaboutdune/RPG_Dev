@@ -12,25 +12,28 @@ public class GameOver : MonoBehaviour
 
     public int soundToPlay; // creates int to handle button sound selection
 
-    public GameObject loadLastSaveButton; // creates game object to control state of load last save button
+    public GameObject loadGameButton; // creates game object to control state of load last save button
 
     // Start is called before the first frame update
     void Start()
     {
         AudioManager.instance.PlayBGM(4); // calls audio manager to play game over music
 
-        // deactivates certain script functions to prevent unwanted action
-        //GameMenu.instance.gameObject.SetActive(false);
-        //BattleManager.instance.gameObject.SetActive(false);       
-        PlayerController.instance.gameObject.SetActive(false);
+        PlayerController.instance.gameObject.SetActive(false); // deactivates player controll to prevent unwanted action
 
-        if (PlayerPrefs.HasKey("Current_Scene")) // checks if player prefs has key for current scene, some game data has been saved
+        for (int i = 0; i < 3; i++) // iterates 3 times (number of save slots)
         {
-            loadLastSaveButton.SetActive(true); // sets continue button to active
-        }
-        else
-        {
-            loadLastSaveButton.SetActive(false); // sets continue button to inactive
+            if (PlayerPrefs.HasKey(i + "_Current_Scene")) // checks if player prefs has key for current scene, some game data has been saved
+            {
+                Debug.Log("Save slot found."); // prints save slot found notice to debug log
+                loadGameButton.SetActive(true); // sets load game button to active
+                break; // breaks loop once a save slot is found
+            }
+            else // executes if no save slot has data
+            {
+                Debug.Log("No save slot found."); // prints save slot not found notice to debug log
+                loadGameButton.SetActive(false); // sets load game button to inactive
+            }
         }
     }
 
@@ -52,16 +55,16 @@ public class GameOver : MonoBehaviour
         SceneManager.LoadScene(mainMenuScene); // calls scene manager to load main menu
     }
 
-    public void LoadLastSave() // creates function to handle loading last save
+    public void LoadGame() // creates function to handle loading load game screen
     {
         // destroys all loaded essential objects
         Destroy(GameManager.instance.gameObject);
         Destroy(PlayerController.instance.gameObject);
         Destroy(GameMenu.instance.gameObject);
-        // Destroy(AudioManager.instance.gameObject); // preserves audio manager
+        //Destroy(AudioManager.instance.gameObject); // preserves audio manager
         Destroy(BattleManager.instance.gameObject);
 
-        SceneManager.LoadScene(loadGameScene); // calls scene manager to load main menu
+        SceneManager.LoadScene(loadGameScene); // calls scene manager to load load game scene
     }
 
     public void PlayButtonSound(int soundToPlay) // creates function to play UI beeps, requires int of sound to play

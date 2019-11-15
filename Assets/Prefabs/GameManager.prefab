@@ -81,8 +81,6 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 2
-  inParty: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -194,8 +192,6 @@ MonoBehaviour:
   maxHP: 150
   maxSP: 10
   inFrontRow: 1
-  partyOrder: 0
-  inParty: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -456,8 +452,6 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 1
-  inParty: 1
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -504,7 +498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1027241019262762097
 Transform:
   m_ObjectHideFlags: 0
@@ -569,8 +563,6 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 0
-  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -617,7 +609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4950167923304117791
 Transform:
   m_ObjectHideFlags: 0
@@ -682,8 +674,6 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 1
-  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -730,7 +720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9038844246873097288
 Transform:
   m_ObjectHideFlags: 0
@@ -795,8 +785,6 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 4
-  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -843,7 +831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8070394681597449943
 Transform:
   m_ObjectHideFlags: 0
@@ -908,8 +896,6 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 2
-  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0
@@ -956,7 +942,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &386037421482233432
 Transform:
   m_ObjectHideFlags: 0
@@ -1021,8 +1007,6 @@ MonoBehaviour:
   maxHP: 120
   maxSP: 20
   inFrontRow: 1
-  partyOrder: 3
-  inParty: 0
   playerLevel: 1
   playerAPLevel: 0
   currentEXP: 0

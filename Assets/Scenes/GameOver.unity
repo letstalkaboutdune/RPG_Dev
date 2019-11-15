@@ -305,7 +305,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Load Last Save
+  m_Text: Load Game
 --- !u!222 &236643924
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -430,10 +430,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d80ae90e10de9c4f90d58e2c4bb04c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuScene: Main Menu
-  loadGameScene: LoadingScene
+  mainMenuScene: MainMenu
+  loadGameScene: LoadGame
   soundToPlay: 0
-  loadLastSaveButton: {fileID: 904257703}
+  loadGameButton: {fileID: 904257703}
 --- !u!114 &787773712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 904257706}
   - component: {fileID: 904257705}
   m_Layer: 5
-  m_Name: Load Last Save Button
+  m_Name: Load Game Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -559,7 +559,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 787773711}
-        m_MethodName: LoadLastSave
+        m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

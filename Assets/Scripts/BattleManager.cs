@@ -187,16 +187,25 @@ public class BattleManager : MonoBehaviour
 
             AudioManager.instance.PlayBGM(musicToPlay); // starts battle music based on passed int
 
-            // instantiates players as active battlers
-            for (int i = 0; i < GameManager.instance.playerStats.Length; i++) // iterates through all elements of player positions array
+            for (int i = 0; i < GameMenu.instance.activePartyList.Length; i++) // iterates through all active party list
             {
-                if (GameManager.instance.playerStats[i].gameObject.activeInHierarchy) // checks if player at that position is active in hierarchy by checking player stats in game manager
+                if (GameMenu.instance.activePartyList[i] != "Empty") // checks if player slot is not empty
                 {
-                    for(int j = 0; j < playerPrefabs.Length; j++) // iterates through all elements of player prefabs array
+                    CharStats activePlayer = GameMenu.instance.FindPlayerStats(GameMenu.instance.activePartyList[i]); // pulls reference to active player stats by name
+                    if(activePlayer != null) // checks if activePlayer returned is not null
                     {
-                        if(playerPrefabs[j].charName == GameManager.instance.playerStats[i].charName) // checks if active player name matches any player prefab name
+                        Debug.Log("Found player stats for " + GameMenu.instance.activePartyList[i]); // prints player found notice to debug log
+                    }
+                    else // executes if active player is null
+                    {
+                        Debug.Log("Player not found!"); // prints player not found notice to debug log
+                    }
+
+                    for (int j = 0; j < playerPrefabs.Length; j++) // iterates through all elements of player prefabs array
+                    {
+                        if(playerPrefabs[j].charName == GameMenu.instance.activePartyList[i]) // checks if active player matches a player prefab
                         {
-                            if (GameManager.instance.playerStats[i].inFrontRow) // checks if player is in front row
+                            if (activePlayer.inFrontRow) // checks if player is in front row
                             {
                                 BattleChar newPlayer = Instantiate(playerPrefabs[j], playerPositions[i].position, playerPositions[i].rotation); // instantiates new player at set position
                                 newPlayer.transform.parent = playerPositions[i]; // sets new player instance as a child of player positions array
@@ -204,50 +213,48 @@ public class BattleManager : MonoBehaviour
                             }
                             else // executes if player is in the back row
                             {
-                                BattleChar newPlayer = Instantiate(playerPrefabs[j], playerPositions[i+3].position, playerPositions[i+3].rotation); // instantiates new player at set position in back row
-                                newPlayer.transform.parent = playerPositions[i+3]; // sets new player instance as a child of player positions array in back row
+                                BattleChar newPlayer = Instantiate(playerPrefabs[j], playerPositions[i + 3].position, playerPositions[i + 3].rotation); // instantiates new player at set position in back row
+                                newPlayer.transform.parent = playerPositions[i + 3]; // sets new player instance as a child of player positions array in back row
                                 activeBattlers.Add(newPlayer); // adds new player element to active battlers list using built-in Add function
                             }
 
-                            CharStats thePlayer = GameManager.instance.playerStats[i]; // stores information from player stats index for easy assignment
-
                             // assigns all player stats for the player                            
-                            activeBattlers[i].inFrontRow = thePlayer.inFrontRow;
-                            activeBattlers[i].currentHP = thePlayer.currentHP;
-                            activeBattlers[i].maxHP = thePlayer.maxHP;
-                            activeBattlers[i].currentSP = thePlayer.currentSP;
-                            activeBattlers[i].maxSP = thePlayer.maxSP;
-                            activeBattlers[i].strength = thePlayer.strength;
-                            activeBattlers[i].tech = thePlayer.tech;
-                            activeBattlers[i].endurance = thePlayer.endurance;
-                            activeBattlers[i].agility = thePlayer.agility;
-                            activeBattlers[i].luck = thePlayer.luck;
-                            activeBattlers[i].speed = thePlayer.speed;
-                            activeBattlers[i].dmgWeapon = thePlayer.dmgWeapon;
-                            activeBattlers[i].hitChance = thePlayer.hitChance;
-                            activeBattlers[i].critWeapon = thePlayer.critWeapon;
-                            activeBattlers[i].critChance = thePlayer.critChance;
-                            activeBattlers[i].evadeArmor = thePlayer.evadeArmor;
-                            activeBattlers[i].evadeChance = thePlayer.evadeChance;
-                            activeBattlers[i].blockShield = thePlayer.blockShield;
-                            activeBattlers[i].blockChance = thePlayer.blockChance;
-                            activeBattlers[i].defWeapon = thePlayer.defWeapon;
-                            activeBattlers[i].defTech = thePlayer.defTech;
-                            activeBattlers[i].equippedWpn = thePlayer.equippedWpn;
-                            activeBattlers[i].equippedOff = thePlayer.equippedOff;
-                            activeBattlers[i].equippedArmr = thePlayer.equippedArmr;
-                            activeBattlers[i].equippedAccy = thePlayer.equippedAccy;
-                            
-                            for(int k = 0; k < thePlayer.resistances.Length; k++) // iterates through all elements of player resistances array
+                            activeBattlers[i].inFrontRow = activePlayer.inFrontRow;
+                            activeBattlers[i].currentHP = activePlayer.currentHP;
+                            activeBattlers[i].maxHP = activePlayer.maxHP;
+                            activeBattlers[i].currentSP = activePlayer.currentSP;
+                            activeBattlers[i].maxSP = activePlayer.maxSP;
+                            activeBattlers[i].strength = activePlayer.strength;
+                            activeBattlers[i].tech = activePlayer.tech;
+                            activeBattlers[i].endurance = activePlayer.endurance;
+                            activeBattlers[i].agility = activePlayer.agility;
+                            activeBattlers[i].luck = activePlayer.luck;
+                            activeBattlers[i].speed = activePlayer.speed;
+                            activeBattlers[i].dmgWeapon = activePlayer.dmgWeapon;
+                            activeBattlers[i].hitChance = activePlayer.hitChance;
+                            activeBattlers[i].critWeapon = activePlayer.critWeapon;
+                            activeBattlers[i].critChance = activePlayer.critChance;
+                            activeBattlers[i].evadeArmor = activePlayer.evadeArmor;
+                            activeBattlers[i].evadeChance = activePlayer.evadeChance;
+                            activeBattlers[i].blockShield = activePlayer.blockShield;
+                            activeBattlers[i].blockChance = activePlayer.blockChance;
+                            activeBattlers[i].defWeapon = activePlayer.defWeapon;
+                            activeBattlers[i].defTech = activePlayer.defTech;
+                            activeBattlers[i].equippedWpn = activePlayer.equippedWpn;
+                            activeBattlers[i].equippedOff = activePlayer.equippedOff;
+                            activeBattlers[i].equippedArmr = activePlayer.equippedArmr;
+                            activeBattlers[i].equippedAccy = activePlayer.equippedAccy;
+
+                            for (int k = 0; k < activePlayer.resistances.Length; k++) // iterates through all elements of player resistances array
                             {
-                                activeBattlers[i].resistances[k] = thePlayer.resistances[k]; // assigns resistances from player stats to active battler
+                                activeBattlers[i].resistances[k] = activePlayer.resistances[k]; // assigns resistances from player stats to active battler
                             }
 
-                            activeBattlers[i].movesAvailable = new string[thePlayer.playerAPLevel]; // initializes active battler moves list array to size equal to player AP level
+                            activeBattlers[i].movesAvailable = new string[activePlayer.playerAPLevel]; // initializes active battler moves list array to size equal to player AP level
 
-                            for (int k = 0; k < thePlayer.playerAPLevel; k++) // iterates as many times as the player ability level
+                            for (int k = 0; k < activePlayer.playerAPLevel; k++) // iterates as many times as the player ability level
                             {
-                                activeBattlers[i].movesAvailable[k] = thePlayer.abilities[k]; // builds the player's move list based on the abilities unlocked for that ability level
+                                activeBattlers[i].movesAvailable[k] = activePlayer.abilities[k]; // builds the player's move list based on the abilities unlocked for that ability level
                             }
 
                             activeBattlers[i].tickRate = Mathf.RoundToInt((0.2f * activeBattlers[i].speed) + 5f); // assigns player tick rate based on speed
@@ -255,6 +262,8 @@ public class BattleManager : MonoBehaviour
                     }
                 }
             }
+
+            //Debug.Log("Players instantiated successfully."); // prints players instantiated notice to debug log
 
             // instantiates enemies as active battlers
             for (int i = 0; i < enemiesToSpawn.Length; i++) // iterates through all elements of enemies to spawn array
@@ -319,46 +328,30 @@ public class BattleManager : MonoBehaviour
         {
             if (activeBattlers[i].isPlayer) // checks if active battler is player
             {
+                CharStats activePlayer = GameMenu.instance.FindPlayerStats(activeBattlers[i].charName); // pulls reference to player stats
+                activePlayer.currentHP = activeBattlers[i].currentHP;
+                activePlayer.maxHP = activeBattlers[i].maxHP;
+                activePlayer.currentSP = activeBattlers[i].currentSP;
+                activePlayer.maxSP = activeBattlers[i].maxSP;
+
+                /*
                 for (int j = 0; j < GameManager.instance.playerStats.Length; j++) // iterates through all elements of playerStats array in GameManager
                 {
                     if (activeBattlers[i].charName == GameManager.instance.playerStats[j].charName) // checks if active battler name matches char name in game manager
                     {
                         // updates current player stats index in game manager with active battler
-                        GameManager.instance.playerStats[i].currentHP = activeBattlers[i].currentHP;
-                        GameManager.instance.playerStats[i].maxHP = activeBattlers[i].maxHP;
-                        GameManager.instance.playerStats[i].currentSP = activeBattlers[i].currentSP;
-                        GameManager.instance.playerStats[i].maxSP = activeBattlers[i].maxSP;
-                        
-                        /*
-                        // DISABLED - THESE SHOULD NOT CARRY OVER AFTER BATTLE
-                        // DERIVED STATS SHOULD BE KEPT UP-TO-DATE BY GAME MANAGER / CHAR STATS SCRIPTS
-                        GameManager.instance.playerStats[i].strength = activeBattlers[i].strength;
-                        GameManager.instance.playerStats[i].tech = activeBattlers[i].tech;
-                        GameManager.instance.playerStats[i].endurance = activeBattlers[i].endurance;
-                        GameManager.instance.playerStats[i].agility = activeBattlers[i].agility;
-                        GameManager.instance.playerStats[i].luck = activeBattlers[i].luck;
-                        GameManager.instance.playerStats[i].speed = activeBattlers[i].speed;
-                        GameManager.instance.playerStats[i].dmgWeapon = activeBattlers[i].dmgWeapon;
-                        GameManager.instance.playerStats[i].hitChance = activeBattlers[i].hitChance;
-                        GameManager.instance.playerStats[i].critChance = activeBattlers[i].critChance;
-                        GameManager.instance.playerStats[i].evadeChance = activeBattlers[i].evadeChance;
-                        GameManager.instance.playerStats[i].blockChance = activeBattlers[i].blockChance;
-                        GameManager.instance.playerStats[i].defWeapon = activeBattlers[i].defWeapon;
-                        GameManager.instance.playerStats[i].defTech = activeBattlers[i].defTech;
-                        GameManager.instance.playerStats[i].inFrontRow = activeBattlers[i].inFrontRow;
-
-                        for (int k = 0; k < activeBattlers[i].resistances.Length; k++) // iterates through all elements of player resistances array
-                        {
-                            GameManager.instance.playerStats[i].resistances[k] = activeBattlers[i].resistances[k]; // assigns resistances from active battler to player in game manager
-                        }
-                        */
+                        GameManager.instance.playerStats[j].currentHP = activeBattlers[i].currentHP;
+                        GameManager.instance.playerStats[j].maxHP = activeBattlers[i].maxHP;
+                        GameManager.instance.playerStats[j].currentSP = activeBattlers[i].currentSP;
+                        GameManager.instance.playerStats[j].maxSP = activeBattlers[i].maxSP;                        
                     }
                 }
+                */
             }
         }
     }
 
-    public void UpdateBattle() // creates function to handle updating information in battle, including from game manager to battle stats
+    public void UpdateBattle() // creates function to handle updating information in battle
     {
         // creates bools to handle checks if players or enemies are dead, sets default of true
         bool allEnemiesDead = true;
@@ -781,27 +774,31 @@ public class BattleManager : MonoBehaviour
         {
             battleItemCharChoiceMenu.SetActive(true); // activates item character choice menu
 
-            for (int i = 0; i < battleItemCharChoiceNames.Length; i++) // iterates through all character names
+            for (int i = 0; i < GameMenu.instance.activePartyList.Length; i++) // iterates through active party
             {
-                battleItemCharChoiceNames[i].text = GameManager.instance.playerStats[i].charName; // replaces text of character buttons with player names from player stats objects array
-
-                battleItemCharChoiceNames[i].transform.parent.gameObject.SetActive(GameManager.instance.playerStats[i].gameObject.activeInHierarchy); // sets character button active/inactive based on whether character is active in hierarchy
+                if (GameMenu.instance.activePartyList[i] != "Empty") // checks if slot is not empty
+                {
+                    battleItemCharChoiceNames[i].text = GameMenu.instance.activePartyList[i]; // sets character button based on active party list
+                    battleItemCharChoiceNames[i].transform.parent.gameObject.SetActive(true); // shows char choice button 
+                }
+                else // executes if slot is empty
+                {
+                    battleItemCharChoiceNames[i].text = "Empty"; // sets character button to Empty
+                    battleItemCharChoiceNames[i].transform.parent.gameObject.SetActive(true); // hides char choice button 
+                }
             }
         }
     }
-
-    public void CloseBattleItemCharChoice() // creates function to close item character choice menu
-    {
-        battleItemCharChoiceMenu.SetActive(false); // de-activates item character choice menu
-    }
-
+    
     public void UseBattleItem(int selectChar) // creates function to handle use of item character choice menu buttons
     {
         battleNoticeActive = false; // resets battle notice active to false
-        
+
+        string charName = GameMenu.instance.activePartyList[selectChar]; // pulls name of selected char from active party list
+
         //Debug.Log("Batt.Use passed item = " + battleActiveItem.itemName); // prints item name to debug log
 
-        battleActiveItem.Use(selectChar); // calls Use function to handle use of item on selected char
+        battleActiveItem.Use(charName); // calls Use function to handle use of item on selected char
 
         if (battleNoticeActive)
         {
@@ -811,6 +808,7 @@ public class BattleManager : MonoBehaviour
         else
         {
             Debug.Log(battleActiveItem.itemName + " was used."); // prints debug text to notify on item use
+            battlerCounter[currentTurn] = Mathf.RoundToInt(100 * Random.Range(0.9f, 1.1f)); // resets counter on current battler to 100 ±10% RNG
 
             CloseItemsMenu(); // calls function to close items menu
             CloseActionButtons(); // closes item action panel
@@ -822,8 +820,15 @@ public class BattleManager : MonoBehaviour
             battleItemDescription.text = "";
 
             UpdateBattle(); // calls extra battle stats update, since item acts on game manager
+            //Debug.Log("Calling next turn function.");
+            turnWaiting = false; // sets turn waiting false to allow next turn to tick
             NextTurn(); // moves to next turn in battle
         }
+    }
+
+    public void CloseBattleItemCharChoice() // creates function to close item character choice menu
+    {
+        battleItemCharChoiceMenu.SetActive(false); // de-activates item character choice menu
     }
 
     public IEnumerator EndBattleCo() // creates IEnumerator coroutine to end battle in victory
@@ -1309,12 +1314,14 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < activeBattlers.Count; i++) // iterates through all active battlers
         {
+            Debug.Log("Checking active battler " + i);
             if (activeBattlers[i].currentHP > 0) // checks if current battler is alive
             {
                 if (battlerCounter[i] == 0) // checks for the first active battler with a counter = 0
                 {
                     //battlerCounter[i] = Mathf.RoundToInt(100 * Random.Range(0.9f, 1.1f)); // resets counter on current battler to 100 ±10% RNG
                     currentTurn = i; // sets current turn to that battler
+                    Debug.Log("Setting current turn to " + i);
                     return true; // once battler turn found, return true
                 }
             }
@@ -1322,16 +1329,17 @@ public class BattleManager : MonoBehaviour
 
         return false; // if no battlers turn found, return false
     }
+
     public void TickCounter() // creates function to decrement battler counter
     {
         for (int i = 0; i < activeBattlers.Count; i++) // iterates through all active battlers
         {
             if(activeBattlers[i].currentHP > 0) // checks if current battler is alive
             {
-                //Debug.Log("Battler name = " + activeBattlers[i].charName); // prints battler name to debug log
-                //Debug.Log("Battler speed = " + activeBattlers[i].speed); // prints battler speed to debug log
-                //Debug.Log("Battler tick rate = " + activeBattlers[i].tickRate); // prints battler tick rate to debug log
-                //Debug.Log("Battler " + i + " counter = " + battlerCounter[i]); // prints battler counter to debug log
+                Debug.Log("Battler name = " + activeBattlers[i].charName); // prints battler name to debug log
+                Debug.Log("Battler speed = " + activeBattlers[i].speed); // prints battler speed to debug log
+                Debug.Log("Battler tick rate = " + activeBattlers[i].tickRate); // prints battler tick rate to debug log
+                Debug.Log("Battler " + i + " counter = " + battlerCounter[i]); // prints battler counter to debug log
 
                 battlerCounter[i] -= activeBattlers[i].tickRate; // decrements counter by battler tick rate
 
@@ -1341,5 +1349,22 @@ public class BattleManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public int FindPlayerBattlerIndex(string charName) // creates function to find active battler player index by name
+    {
+        int index = -1; // initializes local index to -1
+
+        for (int i = 0; i < activeBattlers.Count; i++) // iterates through active battlers
+        {
+            if (activeBattlers[i].name.Contains(charName)) // checks if active battler name contains passed name
+            {
+                Debug.Log("Found match for " + charName); // prints match found notice to debug log
+                index = i; // sets local index to current iteration
+                break; // breaks for loop once match found
+            }
+        }
+
+        return index; // returns player index once function ends
     }
 }

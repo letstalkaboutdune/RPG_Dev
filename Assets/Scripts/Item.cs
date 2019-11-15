@@ -77,13 +77,14 @@ public class Item : MonoBehaviour
         
     }
 
-    
-    public void Use(int charToUseOn) // creates function to handle item use
+    public void Use(string charName) // creates function to handle item use
                                      // requires int of char index to use item on
     {
         //Debug.Log("Item.Use passed item = " + itemName); // prints passed item name to debug log
 
-        CharStats selectedChar = GameManager.instance.playerStats[charToUseOn]; // creates new CharStats object which references the selected player stats
+        CharStats selectedChar = GameMenu.instance.FindPlayerStats(charName); // pulls reference to selected player stats by name
+        int charToUseOn = BattleManager.instance.FindPlayerBattlerIndex(charName); // pulls reference to active battler player index by name
+        int charToEquip = GameMenu.instance.FindPlayerIndex(charName); // pulls character index in player stats array by name
                        
         if (isItem) // checks if item is of type item
         {
@@ -236,26 +237,27 @@ public class Item : MonoBehaviour
                 ShowWarning(); // shows warning text
             }
 
+            // NEED TO UPDATE CHARTOUSEON REFERENCES WITH CHARTOEQUIP
             else // executes if same weapon is not already equipped
             {
                 if (selectedChar.equippedWpn != "") // checks if equipped weapon slot is not blank
                 {
-                    Unequip(selectedChar.equippedWpn, charToUseOn); // calls function to unequip current weapon
+                    Unequip(selectedChar.equippedWpn, charToEquip); // calls function to unequip current weapon
 
                     if(selectedChar.equippedOff != "" && isTwoHanded) // checks if equipped offhand slot is not blank and weapon to equip is two-handed
                     {
-                        Unequip(selectedChar.equippedOff, charToUseOn); // calls function to unequip current offhand
+                        Unequip(selectedChar.equippedOff, charToEquip); // calls function to unequip current offhand
                     }
                 }
                 else if (selectedChar.equippedOff != "") // checks if equipped weapon is blank but offhand is not blank
                 {
                     if (isTwoHanded) // checks if item to equip is two-handed
                     {
-                        Unequip(selectedChar.equippedOff, charToUseOn); // calls function to unequip current offhand
+                        Unequip(selectedChar.equippedOff, charToEquip); // calls function to unequip current offhand
                     }
                 }
 
-                Equip(itemName, charToUseOn); // calls function to equip new weapon
+                Equip(itemName, charToEquip); // calls function to equip new weapon
 
                 selectedChar.CalculateDerivedStats(); // re-calculates new derived stats on character after equipping new weapon
             }         
@@ -273,14 +275,14 @@ public class Item : MonoBehaviour
             {
                 if(selectedChar.equippedWpn != "" && GameManager.instance.GetItemDetails(selectedChar.equippedWpn).isTwoHanded) // checks if equipped weapon is not blank and is two-handed
                 {
-                    Unequip(selectedChar.equippedWpn, charToUseOn); // calls function to unequip current weapon
+                    Unequip(selectedChar.equippedWpn, charToEquip); // calls function to unequip current weapon
                 }
                 else if (selectedChar.equippedOff != "") // checks if equipped offhand is not blank
                 {
-                    Unequip(selectedChar.equippedOff, charToUseOn); // calls function to unequip current offhand
+                    Unequip(selectedChar.equippedOff, charToEquip); // calls function to unequip current offhand
                 }
 
-                Equip(itemName, charToUseOn); // calls function to equip new offhand
+                Equip(itemName, charToEquip); // calls function to equip new offhand
 
                 selectedChar.CalculateDerivedStats(); // re-calculates new derived stats on character after equipping new offhand
             }
@@ -298,10 +300,10 @@ public class Item : MonoBehaviour
             {
                 if (selectedChar.equippedArmr != "") // checks if equipped armor slot on selected character is blank
                 {
-                    Unequip(selectedChar.equippedArmr, charToUseOn); // calls function to unequip current armor
+                    Unequip(selectedChar.equippedArmr, charToEquip); // calls function to unequip current armor
                 }                
 
-                Equip(itemName, charToUseOn); // calls function to equip new offhand
+                Equip(itemName, charToEquip); // calls function to equip new offhand
 
                 selectedChar.CalculateDerivedStats(); // re-calculates new derived stats on character after equipping new armor
             }
@@ -319,35 +321,23 @@ public class Item : MonoBehaviour
             {
                 if (selectedChar.equippedAccy != "") // checks if equipped accessory slot on selected character is blank
                 {
-                    Unequip(selectedChar.equippedAccy, charToUseOn); // calls function to unequip current accessory
+                    Unequip(selectedChar.equippedAccy, charToEquip); // calls function to unequip current accessory
                 }
 
-                Equip(itemName, charToUseOn); // calls function to equip new accessory
+                Equip(itemName, charToEquip); // calls function to equip new accessory
 
                 selectedChar.CalculateDerivedStats(); // re-calculates new derived stats on character after equipping new accessory
             }
         }        
     }
 
-    public void ShowWarning() // creates function to show warning text
-    {
-        if (BattleManager.instance.battleActive) // checks if battle is active
-        {
-            BattleManager.instance.battleNotice.theText.text = warningText; // sets warning text in battle menu
-            BattleManager.instance.battleNoticeActive = true; // shows warning text in battle menu
-        }
-        else // executes if battle is not active
-        {
-            GameMenu.instance.itemNotificationText.text = warningText; // sets warning text in item menu
-            GameMenu.instance.itemNoticeActive = true; // shows warning text in item menu
-        }
-    }   
-
     public void Equip(string itemToEquip, int charToEquip) // creates function to handle equip of items
     {
         // pulls unequip item properties and selected character stats
         Item equipItem = GameManager.instance.GetItemDetails(itemToEquip); // pulls item details from passed item name
         CharStats selectedChar = GameManager.instance.playerStats[charToEquip]; // creates CharStats object which references the selected playerStats
+        string charName = selectedChar.charName; // pulls reference to char name
+        int charToUseOn = BattleManager.instance.FindPlayerBattlerIndex(charName); // pulls reference to active battler player index by name
 
         // applies all item stat boosts
         selectedChar.dmgWeapon += equipItem.dmgWeapon;
@@ -399,16 +389,17 @@ public class Item : MonoBehaviour
         if (BattleManager.instance.battleActive) // checks if battle is active
         {
             // applies all item stat boosts to active battler
-            BattleManager.instance.activeBattlers[charToEquip].dmgWeapon += equipItem.dmgWeapon;
-            BattleManager.instance.activeBattlers[charToEquip].critWeapon += equipItem.critWeapon;
-            BattleManager.instance.activeBattlers[charToEquip].defWeapon += equipItem.defWeapon;
-            BattleManager.instance.activeBattlers[charToEquip].defTech += equipItem.defTech;
-            BattleManager.instance.activeBattlers[charToEquip].evadeArmor += equipItem.evadeArmor;
-            BattleManager.instance.activeBattlers[charToEquip].blockShield += equipItem.blockShield;
+            // NEED TO UPDATE TO POINT TO CORRECT ACTIVE BATTLER INDEX
+            BattleManager.instance.activeBattlers[charToUseOn].dmgWeapon += equipItem.dmgWeapon;
+            BattleManager.instance.activeBattlers[charToUseOn].critWeapon += equipItem.critWeapon;
+            BattleManager.instance.activeBattlers[charToUseOn].defWeapon += equipItem.defWeapon;
+            BattleManager.instance.activeBattlers[charToUseOn].defTech += equipItem.defTech;
+            BattleManager.instance.activeBattlers[charToUseOn].evadeArmor += equipItem.evadeArmor;
+            BattleManager.instance.activeBattlers[charToUseOn].blockShield += equipItem.blockShield;
 
             if (isWeapon) // checks if equipped item is weapon
             {
-                BattleManager.instance.activeBattlers[charToEquip].hitChance = equipItem.hitChance; // sets active battler hit chance equal to item hit chance
+                BattleManager.instance.activeBattlers[charToUseOn].hitChance = equipItem.hitChance; // sets active battler hit chance equal to item hit chance
             }
 
             // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
@@ -418,31 +409,31 @@ public class Item : MonoBehaviour
             {
                 if (resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
                 {
-                    BattleManager.instance.activeBattlers[charToEquip].resistances[i] = resistances[i]; // sets character resistance equal to item resistance
+                    BattleManager.instance.activeBattlers[charToUseOn].resistances[i] = resistances[i]; // sets character resistance equal to item resistance
                 }
             }
 
             // adds item to appropriate equip slots
             if (equipItem.isWeapon) // checks if item is a weapon
             {
-                BattleManager.instance.activeBattlers[charToEquip].equippedWpn = itemToEquip; // sets item name to weapon equip slot
+                BattleManager.instance.activeBattlers[charToUseOn].equippedWpn = itemToEquip; // sets item name to weapon equip slot
 
                 if (equipItem.isTwoHanded) // checks if weapon is two handed
                 {
-                    BattleManager.instance.activeBattlers[charToEquip].equippedOff = itemToEquip; // sets item name to offhand equip slot
+                    BattleManager.instance.activeBattlers[charToUseOn].equippedOff = itemToEquip; // sets item name to offhand equip slot
                 }
             }
             else if (equipItem.isArmor) // checks if item is an armor
             {
-                BattleManager.instance.activeBattlers[charToEquip].equippedArmr = itemToEquip; // sets item name to armor equip slot
+                BattleManager.instance.activeBattlers[charToUseOn].equippedArmr = itemToEquip; // sets item name to armor equip slot
             }
             else if (equipItem.isOffHand) // checks if item is an offhand
             {
-                BattleManager.instance.activeBattlers[charToEquip].equippedOff = itemToEquip; // sets item name to offhand equip slot
+                BattleManager.instance.activeBattlers[charToUseOn].equippedOff = itemToEquip; // sets item name to offhand equip slot
             }
             else if (equipItem.isAccy) // checks if item is an accessory
             {
-                BattleManager.instance.activeBattlers[charToEquip].equippedAccy = itemToEquip; // sets item name to accessory equip slot
+                BattleManager.instance.activeBattlers[charToUseOn].equippedAccy = itemToEquip; // sets item name to accessory equip slot
             }
         }
 
@@ -454,6 +445,8 @@ public class Item : MonoBehaviour
         // pull unequip item properties and selected character stats
         Item unequipItem = GameManager.instance.GetItemDetails(itemToUnequip); // pulls item details from passed item name
         CharStats selectedChar = GameManager.instance.playerStats[charToUnequip]; // creates CharStats object which references the selected playerStats
+        string charName = selectedChar.charName; // pulls reference to char name
+        int charToUseOn = BattleManager.instance.FindPlayerBattlerIndex(charName); // pulls reference to active battler player index by name
 
         // remove all item stat boosts and resistances
         selectedChar.dmgWeapon -= unequipItem.dmgWeapon;
@@ -469,7 +462,6 @@ public class Item : MonoBehaviour
         }
 
         // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
-
         // *** NEED TO HANDLE IF MULTIPLE ITEMS AFFECT SAME RESISTANCES ***
         // *** RE-EQUIP ALL ITEMS AFTER AN UNEQUIP? ***
         for (int i = 0; i < resistances.Length; i++) // iterates through all elements of item resistances array
@@ -506,16 +498,16 @@ public class Item : MonoBehaviour
         if (BattleManager.instance.battleActive) // checks if battle is active
         {
             // removes all item stat boosts from active battler
-            BattleManager.instance.activeBattlers[charToUnequip].dmgWeapon -= unequipItem.dmgWeapon;
-            BattleManager.instance.activeBattlers[charToUnequip].critWeapon -= unequipItem.critWeapon;
-            BattleManager.instance.activeBattlers[charToUnequip].defWeapon -= unequipItem.defWeapon;
-            BattleManager.instance.activeBattlers[charToUnequip].defTech -= unequipItem.defTech;
-            BattleManager.instance.activeBattlers[charToUnequip].evadeArmor -= unequipItem.evadeArmor;
-            BattleManager.instance.activeBattlers[charToUnequip].blockShield -= unequipItem.blockShield;
+            BattleManager.instance.activeBattlers[charToUseOn].dmgWeapon -= unequipItem.dmgWeapon;
+            BattleManager.instance.activeBattlers[charToUseOn].critWeapon -= unequipItem.critWeapon;
+            BattleManager.instance.activeBattlers[charToUseOn].defWeapon -= unequipItem.defWeapon;
+            BattleManager.instance.activeBattlers[charToUseOn].defTech -= unequipItem.defTech;
+            BattleManager.instance.activeBattlers[charToUseOn].evadeArmor -= unequipItem.evadeArmor;
+            BattleManager.instance.activeBattlers[charToUseOn].blockShield -= unequipItem.blockShield;
 
             if (isWeapon) // checks if equipped item is weapon
             {
-                BattleManager.instance.activeBattlers[charToUnequip].hitChance = 90; // resets active battler hit chance equal to default of 90%
+                BattleManager.instance.activeBattlers[charToUseOn].hitChance = 90; // resets active battler hit chance equal to default of 90%
             }
 
             // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
@@ -525,34 +517,49 @@ public class Item : MonoBehaviour
             {
                 if (resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
                 {
-                    BattleManager.instance.activeBattlers[charToUnequip].resistances[i] = 1f; // sets character resistance to default of 1f, removing item effect
+                    BattleManager.instance.activeBattlers[charToUseOn].resistances[i] = 1f; // sets character resistance to default of 1f, removing item effect
                 }
             }
 
             // removes item from appropriate equip slots
             if (unequipItem.isWeapon) // checks if item is a weapon
             {
-                BattleManager.instance.activeBattlers[charToUnequip].equippedWpn = ""; // sets weapon equip slot to blank
+                BattleManager.instance.activeBattlers[charToUseOn].equippedWpn = ""; // sets weapon equip slot to blank
 
                 if (unequipItem.isTwoHanded) // checks if weapon is two handed
                 {
-                    BattleManager.instance.activeBattlers[charToUnequip].equippedOff = ""; // sets offhand equip slot to blank
+                    BattleManager.instance.activeBattlers[charToUseOn].equippedOff = ""; // sets offhand equip slot to blank
                 }
             }
             else if (unequipItem.isArmor) // checks if item is an armor
             {
-                BattleManager.instance.activeBattlers[charToUnequip].equippedArmr = ""; // sets armor equip slot to blank
+                BattleManager.instance.activeBattlers[charToUseOn].equippedArmr = ""; // sets armor equip slot to blank
             }
             else if (unequipItem.isOffHand) // checks if item is an offhand
             {
-                BattleManager.instance.activeBattlers[charToUnequip].equippedOff = ""; // sets offhand equip slot to blank
+                BattleManager.instance.activeBattlers[charToUseOn].equippedOff = ""; // sets offhand equip slot to blank
             }
             else if (unequipItem.isAccy) // checks if item is an accessory
             {
-                BattleManager.instance.activeBattlers[charToUnequip].equippedAccy = ""; // sets accessory equip slot to blank
+                BattleManager.instance.activeBattlers[charToUseOn].equippedAccy = ""; // sets accessory equip slot to blank
             }
         }
 
         GameManager.instance.AddItem(unequipItem.name); // adds unequipped item back into inventory
     }
+
+    public void ShowWarning() // creates function to show warning text
+    {
+        if (BattleManager.instance.battleActive) // checks if battle is active
+        {
+            BattleManager.instance.battleNotice.theText.text = warningText; // sets warning text in battle menu
+            BattleManager.instance.battleNoticeActive = true; // shows warning text in battle menu
+        }
+        else // executes if battle is not active
+        {
+            GameMenu.instance.itemNotificationText.text = warningText; // sets warning text in item menu
+            GameMenu.instance.itemNoticeActive = true; // shows warning text in item menu
+        }
+    }
+
 }
