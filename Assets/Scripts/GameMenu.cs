@@ -166,7 +166,8 @@ public class GameMenu : MonoBehaviour
                 nameText[i].text = currentPlayerStats.charName; // updates char name in menu data
                 itemNameText[i].text = currentPlayerStats.charName; // updates char name in item menu data
 
-                hpText[i].text = "HP: " + currentPlayerStats.currentHP + "/" + currentPlayerStats.maxHP; // updates char HP in menu data
+                hpText[i].text = "<color=#F4B913FF>HP:</color> " + currentPlayerStats.currentHP + "/" + currentPlayerStats.maxHP; // updates char HP in menu data
+                //hpText[i].text = "<color=#F4B913FF><b>HP:</b></color> " + currentPlayerStats.currentHP + "/" + currentPlayerStats.maxHP; // updates char HP in menu data
                 itemHPText[i].text = currentPlayerStats.currentHP + "/" + currentPlayerStats.maxHP; // updates char HP in item menu data
 
                 // updates HP sliders in char info and item window
@@ -181,10 +182,12 @@ public class GameMenu : MonoBehaviour
                 itemSPSlider[i].maxValue = currentPlayerStats.maxSP;
                 itemSPSlider[i].value = currentPlayerStats.currentSP;
 
-                spText[i].text = "SP: " + currentPlayerStats.currentSP + "/" + currentPlayerStats.maxSP; // updates char SP in menu data
+                spText[i].text = "<color=#F4B913FF>SP:</color> " + currentPlayerStats.currentSP + "/" + currentPlayerStats.maxSP; // updates char SP in menu data
+                //spText[i].text = "<color=#F4B913FF><b>SP:</b></color> " + currentPlayerStats.currentSP + "/" + currentPlayerStats.maxSP; // updates char SP in menu data
                 itemSPText[i].text = currentPlayerStats.currentSP + "/" + currentPlayerStats.maxSP; // updates char SP in item menu data
 
-                lvlText[i].text = "Lvl: " + currentPlayerStats.playerLevel; // updates char LVL in menu data
+                lvlText[i].text = "<color=#F4B913FF>LV:</color> " + currentPlayerStats.playerLevel; // updates char LVL in menu data
+                //lvlText[i].text = "<color=#F4B913FF><b>LV:</b></color> " + currentPlayerStats.playerLevel; // updates char LVL in menu data
                 expText[i].text = "" + currentPlayerStats.currentEXP + "/" + currentPlayerStats.expToNextLevel[currentPlayerStats.playerLevel]; // updates char LVL in menu data
 
                 if (!currentPlayerStats.isMaxLevel) // checks if player is not at max level
@@ -260,13 +263,14 @@ public class GameMenu : MonoBehaviour
         }
     }
 
+    // WIP
     public void OpenStatus() // creates function to open stats window and manage status
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
         {
             UpdateMainStats(); // updates stats in menu
 
-            StatusChar(FindPlayerIndex(activePartyList[0])); // updates the information shown in the stats window for the first player in active party list
+            StatusChar(FindPlayerIndex(FindFirstActivePlayer())); // updates the information shown in the stats window for the first player in active party list
 
             for (int i = 0; i < statusButtons.Length; i++) // updates the information shown in the stats window
             {
@@ -403,6 +407,7 @@ public class GameMenu : MonoBehaviour
             }
         }
     }
+    // END WIP
 
     public void ShowItems()     // creates function to assign item button value
     {
@@ -503,7 +508,6 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-    // WIP
     public void OpenItemCharChoice() // creates function to open item character choice menu and update names
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
@@ -516,13 +520,15 @@ public class GameMenu : MonoBehaviour
                 {
                     if(activePartyList[i] != "Empty") // checks if slot is not empty
                     {
+                        Debug.Log("Player slot = " + activePartyList[i]);
                         itemCharChoiceNames[i].text = activePartyList[i]; // sets character button based on active party list
-                        itemCharChoiceNames[i].transform.parent.gameObject.SetActive(true); // shows char choice button 
+                        itemCharChoiceNames[i].transform.parent.transform.localScale = new Vector3(1, 1, 1); // shows char choice button
                     }
                     else // executes if slot is empty
                     {
+                        Debug.Log("Empty slot.");
                         itemCharChoiceNames[i].text = "Empty"; // sets character button to Empty
-                        itemCharChoiceNames[i].transform.parent.gameObject.SetActive(true); // hides char choice button 
+                        itemCharChoiceNames[i].transform.parent.transform.localScale = new Vector3(0, 0, 0); // adjusts scale of char choice button to 0 to hide without affecting layout group
                     }
                 }
             }
@@ -568,7 +574,6 @@ public class GameMenu : MonoBehaviour
             }
         }
     }
-    // END WIP
 
     public void CloseItemCharChoice() // creates function to close item character choice menu
     {
@@ -1013,6 +1018,22 @@ public class GameMenu : MonoBehaviour
                 //Debug.Log("Party doesn't contain a player."); // prints player not in party notice to debug log
             }
         }
+    }
+
+    public string FindFirstActivePlayer() // creates function to find first active player index in party
+    {
+        string foundChar = ""; // creates local index variable to store found player index
+        
+        for (int i = 0; i < activePartyList.Length; i++) // iterates through active player list
+        {
+            if (activePartyList[i] != "Empty") // checks if slot in list is not empty
+            {
+                foundChar = activePartyList[i]; // sets first active player name to foudnChar
+                Debug.Log("Found first player = " + foundChar); // prints found player notice to debug log
+                break; // breaks loop once active player is found
+            }
+        }
+        return foundChar; // returns found index
     }
 }
 

@@ -21,13 +21,17 @@ public class CameraController : MonoBehaviour
     // creates variables to manage music playback
     public int musicToPlay;
     private bool musicStarted;
-    
+
+    //public float zoomDelta, cameraMin, cameraMax; // creates floats to handle zoom step size, and min/max camera size
         
     // Start is called before the first frame update
     void Start()
-    {   
+    {
+        //Debug.Log("Tilemap bounds = " + theMap.localBounds.size); // prints tilemap size to debug log
+
         target = FindObjectOfType<PlayerController>().transform; // uses FindObjectOfType function to find instance of PlayerController
-                                                                     // sets camera transform target to the transform of the player        
+                                                                 // sets camera transform target to the transform of the player    
+
         halfHeight = Camera.main.orthographicSize; // uses the Camera.main.orthographicSize function to pull the half-height of the camera
 
         halfWidth = halfHeight * Camera.main.aspect; // calculates the half-width using the half-height and the camera aspect ratio
@@ -43,6 +47,20 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()  // LateUpdate is called once per frame after Update, prevents stuttering in camera motion
     {
+        /*
+         * DISABLED*
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // checks for positive scroll input
+        {
+            Camera.main.orthographicSize += zoomDelta; // zooms in by set zoom delta           
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // checks for negative scroll input
+        {
+            Camera.main.orthographicSize -= zoomDelta; // zooms out by set zoom delta
+        }
+
+        ClampCameraZoom(); // calls function to clamp camera zoom        
+        */
+        
         if (GameObject.Find("Player(Clone)") != null) // checks if instance of player controller exists
         {
             transform.position = new Vector3(target.position.x, target.position.y, transform.position.z); // sets the (x, y) transform position of this camera controller to the position of the target/player
@@ -57,4 +75,20 @@ public class CameraController : MonoBehaviour
             AudioManager.instance.PlayBGM(musicToPlay); // calls audio manager function to play music
         }
     }
+
+    /*
+     * DISABLED *
+    public void ClampCameraZoom() // creates function to clamp camera zoom to set max/mins
+    {
+        if (Camera.main.orthographicSize < cameraMin) // checks if camera size is smaller than the allowable min
+        {
+            Camera.main.orthographicSize = cameraMin; // clamps camera to min camera size
+        }
+        
+        if (Camera.main.orthographicSize > cameraMax) // checks if camera size is larger than the allowable max
+        {
+            Camera.main.orthographicSize = cameraMax; // clamps camera to max camera size
+        }
+    }
+    */
 }

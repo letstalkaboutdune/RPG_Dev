@@ -4,34 +4,22 @@ Minor
 ******
 Gamebreaking
 ************
-
 Annoying
 ************
 
 MINOR
 ********
-Game: add ability to change order of party and swap party members
-	*** remove inparty/partyorder, base everything on active/inactivepartylist *DONE*
-	*** fix status menu *DONE*
-	*** fix game save/load *DONE*
-	*** fix active battler pull *DONE*
-	*** fix game manager update after battle *DONE*
-	*** fix battle rewards *DONE*
-	*** fix items *DONE*
-	*** fix battle items *DONE*
-	*** add tooltips (name, lv, hp/sp) to party menu
 Map: add zoom function with mouse wheel
-Battle: add harder chance to flee with successful flee
-Game: add SMB3-style overworld
-Sound: add quest item audio stinger
+Battle: add x% harder chance to flee with each successful flee, resets to 33% on fail
+Sound: add quest reward audio stinger
 Sound: add item unsuccessful sound
-Sound: prevent re-starting same music when entering main menu from game over (replace game over music?)
+Sound: replace game over music
+Game: add SMB3-style overworld
 
 MAJOR
 *****
 Game/Battle: implement more spells and abilities
 	*** Cure ability with player targeting
-UI: magic screen in menu
 UI: equip screen in menu (include elem. resist/status immunities)
 	*** include trade-in function in shops
 	*** include live comparison with current equips
@@ -51,7 +39,8 @@ SFX: create all new sound FX
 
 Polish (new game only)
 ******
-UI: re-design menu to look like FFVII
+UI: abilities/techs screen in menu
+UI: re-design menu to fit theme
 UI: re-design menu to use same item system in/out of battle
 UI: add drag-and-drop to item/equip/spell interface
 UI: add retro overlays

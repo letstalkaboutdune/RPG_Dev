@@ -59,7 +59,6 @@ public class PlayerController : MonoBehaviour
     {
 		if(canMove) // checks if canMove is true
         {
-            // WIP
             float horizontal = 0f, vertical = 0f;
             if ((GetAsyncKeyState(left_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(a_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
             {
@@ -78,7 +77,6 @@ public class PlayerController : MonoBehaviour
                 vertical = -1f; // sets vertical to -1 (down)
             }
             theRB.velocity = new Vector2(horizontal, vertical) * moveSpeed;
-            // END WIP
             
             //theRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed; // assigns value to the velocity (built-in Rigidbody2D) of the player, using Input.GetAxisRaw function in Unity
                                                                                                                     // multiplies velocity vector by moveSpeed, allowing player move speed to be adjusted

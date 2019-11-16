@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// Tooltip
+// Manages generation/display of UI tooltips
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -136,21 +139,6 @@ public class Tooltip : MonoBehaviour
         string tooltipText = string.Format("{0}\n{1}", itemName, statText/*, itemValue*/); // formats string of tooltip text
         tooltip.text = tooltipText; // sets tooltip text equal to formatted string
         gameObject.SetActive(true); // shows tooltip panel
-        
-        /*
-         * IMPLEMENTATION WHEN USING A DICTIONARY BASED ITEM STAT SYSTEM LIKE IN TUTORIAL
-         * CONSIDER IMPLEMENTING IN FUTURE VERSION
-        if(item.stats.Count > 0) // checks if passed item stats > 0
-        {
-            foreach(var stat in item.stats) // iterates through each stat in item.stats list
-            {
-                statText += stat.Key.ToString() + ": " + stat.Value.ToString() + "\n"; // adds item stat keys and text to string
-            }
-        }
-        string tooltipText = string.Format("<b>{0}</b>\n{1}\n\n<b>{2}</b>",
-                                item.title, item.description, statText);
-        tooltip.text = tooltipText;
-        */
     }
 
     public void GenerateTooltip(string stat) // creates a function to generate a tooltip based on string
@@ -208,5 +196,24 @@ public class Tooltip : MonoBehaviour
 
         tooltip.text = tooltipText; // displays tooltip text
         gameObject.SetActive(true); // shows tooltip
+    }
+
+    public void GenerateTooltip(CharStats player) // creates a function to generate a tooltip based on passed player stats
+    {
+        // need name, level, currenthp, maxhp, currentsp, maxsp
+        // creates local variables for player stats
+        string playerName, playerLV, playerCurrentHP, playerMaxHP, playerCurrentSP, playerMaxSP;
+
+        // assigns player stats to relevant strings
+        playerName = player.charName;
+        playerLV = player.playerLevel.ToString();
+        playerCurrentHP = player.currentHP.ToString();
+        playerMaxHP = player.maxHP.ToString();
+        playerCurrentSP = player.currentSP.ToString();
+        playerMaxSP = player.maxSP.ToString();
+
+        string tooltipText = string.Format("{0}\n<color=#F4B913FF>LV:</color> {1}\n<color=#F4B913FF>HP:</color> {2}/{3}\n<color=#F4B913FF>SP:</color> {4}/{5}", playerName, playerLV, playerCurrentHP, playerMaxHP, playerCurrentSP, playerMaxSP); // formats string of tooltip text
+        tooltip.text = tooltipText; // sets tooltip text equal to formatted string
+        gameObject.SetActive(true); // shows tooltip panel
     }
 }

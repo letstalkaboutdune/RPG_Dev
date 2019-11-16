@@ -7,18 +7,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PartyPortrait : MonoBehaviour, IPointerClickHandler
+public class PartyPortrait : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     // assigns needed variables for party portrait class
     public Image selectedPlayer;
     private Image playerImage;
     private Sprite emptySprite;
+    private Tooltip tooltip;
 
     private void Awake()
     {
         emptySprite = Resources.Load<Sprite>("Sprites/Portraits/Empty"); // assigns empty portrait to empty sprite
         playerImage = GetComponent<Image>(); // finds Image associated with this script
         selectedPlayer.sprite = emptySprite; // initializes selected player sprite to empty portrait
+        tooltip = GameObject.Find("Tooltip").GetComponent<Tooltip>(); // gets reference to tooltip
 
         // prints image found notices to debug log
         //Debug.Log("Found image = " + playerImage); // prints image found to debug log
@@ -39,9 +41,11 @@ public class PartyPortrait : MonoBehaviour, IPointerClickHandler
 
     // executes when an object with this script is clicked
     public void OnPointerClick(PointerEventData eventData) 
-    {
+    {        
         if (playerImage.sprite != emptySprite) // checks if player slot sprite is not empty
         {
+            tooltip.gameObject.SetActive(false); // hides tooltip
+           
             if (selectedPlayer.sprite != emptySprite) // checks if select player sprite is not empty
             {
                 PartyObject clone = new PartyObject(selectedPlayer.sprite); // clones selected player to store for image swap
@@ -63,6 +67,19 @@ public class PartyPortrait : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(playerImage.sprite.name != "Empty" && selectedPlayer.sprite.name == "Empty") // checks if sprite portrait is not empty and selected player is empty
+        {
+            CharStats player = GameMenu.instance.FindPlayerStats(playerImage.sprite.name); // pulls reference to player stats based on sprite name
+            //Debug.Log("Generating tooltip for " + player.charName); // prints tooltip notice to debug log
+            tooltip.GenerateTooltip(player); // calls function to generate tooltip based on player stats
+        }
+    }
 
-
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        //Debug.Log("Hiding tooltip"); // prints tooltip hide notice to debug log
+        tooltip.gameObject.SetActive(false); // hides tooltip
+    }
 }
