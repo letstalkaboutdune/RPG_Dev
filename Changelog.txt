@@ -1,3 +1,10 @@
+11/16/19
+********
+Feature: Added chance to flee getting higher/lower upon unsuccessful/successful flee attempts
+Polish: Added handling of battlers healing rather than taking damage from attacks
+Bug: Fixed bug preventing battles from starting if menu hadn't been opened
+Bug: Corrected application of item resistances when equipped/unequipped
+
 11/15/19
 ********
 Feature: Added stat tooltips to party menu

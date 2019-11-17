@@ -355,11 +355,11 @@ public class Item : MonoBehaviour
         // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
 
         // applies all item resistances
-        for (int i = 0; i < resistances.Length; i++) // iterates through all elements of item resistances array
+        for (int i = 0; i < equipItem.resistances.Length; i++) // iterates through all elements of item resistances array
         {
-            if (resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
+            if (equipItem.resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
             {
-                selectedChar.resistances[i] = resistances[i]; // sets character resistance equal to item resistance
+                selectedChar.resistances[i] = equipItem.resistances[i]; // sets character resistance equal to item resistance
             }
         }
 
@@ -389,7 +389,6 @@ public class Item : MonoBehaviour
         if (BattleManager.instance.battleActive) // checks if battle is active
         {
             // applies all item stat boosts to active battler
-            // NEED TO UPDATE TO POINT TO CORRECT ACTIVE BATTLER INDEX
             BattleManager.instance.activeBattlers[charToUseOn].dmgWeapon += equipItem.dmgWeapon;
             BattleManager.instance.activeBattlers[charToUseOn].critWeapon += equipItem.critWeapon;
             BattleManager.instance.activeBattlers[charToUseOn].defWeapon += equipItem.defWeapon;
@@ -405,11 +404,11 @@ public class Item : MonoBehaviour
             // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
 
             // applies all item resistances to active battler
-            for (int i = 0; i < resistances.Length; i++) // iterates through all elements of item resistances array
+            for (int i = 0; i < equipItem.resistances.Length; i++) // iterates through all elements of item resistances array
             {
-                if (resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
+                if (equipItem.resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
                 {
-                    BattleManager.instance.activeBattlers[charToUseOn].resistances[i] = resistances[i]; // sets character resistance equal to item resistance
+                    BattleManager.instance.activeBattlers[charToUseOn].resistances[i] = equipItem.resistances[i]; // sets character resistance equal to item resistance
                 }
             }
 
@@ -462,13 +461,15 @@ public class Item : MonoBehaviour
         }
 
         // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
-        // *** NEED TO HANDLE IF MULTIPLE ITEMS AFFECT SAME RESISTANCES ***
-        // *** RE-EQUIP ALL ITEMS AFTER AN UNEQUIP? ***
-        for (int i = 0; i < resistances.Length; i++) // iterates through all elements of item resistances array
+        // *** NEED TO HANDLE IF MULTIPLE ITEMS AFFECT SAME STATS/RESISTANCES ***
+        // *** RE-EQUIP ALL OTHER ITEMS AFTER AN UNEQUIP? ***
+        
+        // removes item resistance effects
+        for (int i = 0; i < unequipItem.resistances.Length; i++) // iterates through all elements of item resistances array
         {
-            if(resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
+            if(unequipItem.resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
             {
-                selectedChar.resistances[i] = 1f; // sets character resistance to default of 1f, removing item effect
+                selectedChar.resistances[i] = selectedChar.baseResistances[i]; // sets character resistance to base resistance, removing item effect
             }
         }
 
@@ -511,13 +512,15 @@ public class Item : MonoBehaviour
             }
 
             // *** NEED TO HANDLE BASE STATS (ONCE IMPLEMENTED) ***
+            // *** NEED TO HANDLE IF MULTIPLE ITEMS AFFECT SAME STATS/RESISTANCES ***
+            // *** RE-EQUIP ALL OTHER ITEMS AFTER AN UNEQUIP? ***
 
             // removes all item resistances from active battler
-            for (int i = 0; i < resistances.Length; i++) // iterates through all elements of item resistances array
+            for (int i = 0; i < unequipItem.resistances.Length; i++) // iterates through all elements of item resistances array
             {
-                if (resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
+                if (unequipItem.resistances[i] != 0f) // checks if resistance is not 0, meaning item affects that resistance
                 {
-                    BattleManager.instance.activeBattlers[charToUseOn].resistances[i] = 1f; // sets character resistance to default of 1f, removing item effect
+                    BattleManager.instance.activeBattlers[charToUseOn].resistances[i] = selectedChar.baseResistances[i]; // sets character resistance to base resistance, removing item effect
                 }
             }
 

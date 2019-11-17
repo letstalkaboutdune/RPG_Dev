@@ -191,6 +191,7 @@ public class BattleManager : MonoBehaviour
             {
                 if (GameMenu.instance.activePartyList[i] != "Empty") // checks if player slot is not empty
                 {
+                    //Debug.Log("Pulling stats for " + GameMenu.instance.activePartyList[i]);
                     CharStats activePlayer = GameMenu.instance.FindPlayerStats(GameMenu.instance.activePartyList[i]); // pulls reference to active player stats by name
                     if (activePlayer != null) // checks if activePlayer returned is not null
                     {
@@ -273,7 +274,7 @@ public class BattleManager : MonoBehaviour
                 }
             }
 
-            //Debug.Log("Players instantiated successfully."); // prints players instantiated notice to debug log
+            Debug.Log("Players instantiated successfully."); // prints players instantiated notice to debug log
 
             // instantiates enemies as active battlers
             for (int i = 0; i < enemiesToSpawn.Length; i++) // iterates through all elements of enemies to spawn array
@@ -309,6 +310,7 @@ public class BattleManager : MonoBehaviour
                     }
                 }
             }
+            Debug.Log("Enemies instantiated successfully."); // prints enemies instantiated notice to debug log
 
             // initializes and starts battle counter ticking down
             battlerCounter = new int[activeBattlers.Count]; // initializes battleCounter array to empty int equal to number of active battlers
@@ -323,7 +325,7 @@ public class BattleManager : MonoBehaviour
 
     public void NextTurn() // creates function to handle next turn in combat
     {        
-        Debug.Log("*** NEXT TURN ***"); // prints next turn notification to debug log
+        //Debug.Log("*** NEXT TURN ***"); // prints next turn notification to debug log
 
         HideSpriteGlow(currentTurn); // hides sprite glow from current turn battler
         UpdateBattle(); // updates information in battle whenever a turn completes
@@ -520,10 +522,14 @@ public class BattleManager : MonoBehaviour
     public void DealDamage() // creates function to handle applying damage to HP
     {
         // prints damage calculation in debug log
-        Debug.Log(activeBattlers[currentTurn].charName + " is dealing " + damageRoll + " damage to " + activeBattlers[selectedTarget].charName);
+        //Debug.Log(activeBattlers[currentTurn].charName + " is dealing " + damageRoll + " damage to " + activeBattlers[selectedTarget].charName);
 
         // subtracts target's current HP by calculated damage
         activeBattlers[selectedTarget].currentHP -= damageRoll;
+        if (activeBattlers[selectedTarget].currentHP > activeBattlers[selectedTarget].maxHP) // checks if target's HP > max HP due to absorbing an attack
+        {
+            activeBattlers[selectedTarget].currentHP = activeBattlers[selectedTarget].maxHP; // clamps target's HP to max HP
+        }
 
         // instantiates damage number in the battle scene on top of the target
         Instantiate(theDamageNumber, activeBattlers[selectedTarget].transform.position, activeBattlers[selectedTarget].transform.rotation).SetDamage(damageRoll);
@@ -659,15 +665,21 @@ public class BattleManager : MonoBehaviour
         }
         else // executes if party can flee from battle
         {
-            int fleeSuccess = Random.Range(1, 100); // uses RNG from 1 to 100 to determine flee success
+            int fleeSuccess = Random.Range(0, 100); // uses RNG from 0 to 100 to determine flee success
             //Debug.Log("Chance to flee = " + chanceToFlee + "%"); // prints chance to flee to debug log
             //Debug.Log("Flee roll = " + fleeSuccess); // prints flee roll to debug log
 
             if (fleeSuccess < chanceToFlee) // checks if flee success result is lower than threshold set by chance to flee
                                             // flee is successful when fleeSuccess < chanceToFlee
             {
-                Debug.Log("Flee successful."); // prints flee success notice to debug log
+                //Debug.Log("Flee successful."); // prints flee success notice to debug log
                 fleeing = true; // sets fleeing boolean to true
+
+                chanceToFlee -= 25; // increases flee difficulty by 25% on successful flee
+                if(chanceToFlee < 1) // checks if chance to flee has decreased below 1
+                {
+                    chanceToFlee = 1; // clamps chance to flee to 1
+                }
 
                 HideSpriteGlow(currentTurn); // hides sprite glow from current turn active battler
 
@@ -675,8 +687,14 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Flee failed."); // prints flee failure notice to debug log
+                //Debug.Log("Flee failed."); // prints flee failure notice to debug log
 
+                chanceToFlee += 25; // decreases flee difficulty by 25% on unsuccessful flee
+                if (chanceToFlee > 99) // checks if chance to flee has increased above 99
+                {
+                    chanceToFlee = 99; // clamps chance to flee to 99
+                }
+                
                 for (int i = 0; i < activeBattlers.Count; i++) // iterates through all active battlers
                 {
                     if(activeBattlers[i].isPlayer && activeBattlers[i].currentHP > 0) // checks if active battler is a player and alive
@@ -818,7 +836,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(battleActiveItem.itemName + " was used."); // prints debug text to notify on item use
+            //Debug.Log(battleActiveItem.itemName + " was used."); // prints debug text to notify on item use
             battlerCounter[currentTurn] = Mathf.RoundToInt(100 * Random.Range(0.9f, 1.1f)); // resets counter on current battler to 100 ±10% RNG
 
             CloseItemsMenu(); // calls function to close items menu
@@ -1035,7 +1053,7 @@ public class BattleManager : MonoBehaviour
         {
             attackHit = false; // sets attackHit to false if attack missed
             damageRoll = 0; // sets damage roll to 0
-            Debug.Log("Attack misses."); // prints hit failure to debug log
+            //Debug.Log("Attack misses."); // prints hit failure to debug log
         }        
     }
 
@@ -1050,7 +1068,7 @@ public class BattleManager : MonoBehaviour
         {
             attackCrit = true; // sets attackCrit to true if attack crit
             critMulti = 2f; // sets crit multiplier to 2x
-            Debug.Log("Attack crits."); // prints crit success notifier to debug log
+            //Debug.Log("Attack crits."); // prints crit success notifier to debug log
         }
         else // executes if attack does not crit
         {
@@ -1072,7 +1090,7 @@ public class BattleManager : MonoBehaviour
         if (evadeRoll <= evadeChance) // executes if attack is evaded
         {
             attackEvaded = true; // sets attackEvaded to true if attack was evaded
-            Debug.Log("Attack evaded."); // prints evade success notifier to debug log
+            //Debug.Log("Attack evaded."); // prints evade success notifier to debug log
         }
         else // executes if attack was not evaded
         {
@@ -1090,7 +1108,7 @@ public class BattleManager : MonoBehaviour
         if (blockRoll <= blockChance) // executes if attack is blocked
         {
             attackBlocked = true; // sets attackBlocked to true if attack was blocked
-            Debug.Log("Attack blocked."); // prints block success notifier to debug log
+            //Debug.Log("Attack blocked."); // prints block success notifier to debug log
         }
         else // executes if attack was not blocked
         {
@@ -1211,7 +1229,7 @@ public class BattleManager : MonoBehaviour
         if (statusRoll <= activeBattlers[currentTurn].endurance) // executes if status was resisted
         {
             statusResisted = true; // sets statusResisted to true if status was resisted
-            Debug.Log("Status effect resisted."); // prints resist success to debug log
+            //Debug.Log("Status effect resisted."); // prints resist success to debug log
         }
         else // executes if status was not resisted
         {
@@ -1332,7 +1350,7 @@ public class BattleManager : MonoBehaviour
                 {
                     //battlerCounter[i] = Mathf.RoundToInt(100 * Random.Range(0.9f, 1.1f)); // resets counter on current battler to 100 ±10% RNG
                     currentTurn = i; // sets current turn to that battler
-                    Debug.Log("Setting current turn to " + i);
+                    //Debug.Log("Setting current turn to " + i);
                     return true; // once battler turn found, return true
                 }
             }

@@ -117,12 +117,12 @@ MonoBehaviour:
   hitChance: 0
   critWeapon: 0
   resistances:
-  - 1
+  - 0
   - 0.5
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   warningText: 

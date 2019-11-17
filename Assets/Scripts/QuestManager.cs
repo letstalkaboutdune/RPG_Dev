@@ -81,28 +81,33 @@ public class QuestManager : MonoBehaviour
                 Debug.Log("Awarded 100 gold."); // prints notice to debug log
                 GameMenu.instance.notificationText.text = "Received 100 gold!"; // sets item notification text
                 GameManager.instance.currentGold += 100; // adds 100 gold reward to inventory
-                StartCoroutine(ShowGameNotification(1)); // calls game notification coroutine to show notice and block dialog
+                ShowReward(); // calls function to show quest reward
+                //StartCoroutine(ShowGameNotification(1)); // calls game notification coroutine to show notice and block dialog
+                // END WIP
                 break; // ends case
 
             case "Town_ring_of_freeze": // executes when Town_gold_chest quest marked complete
                 Debug.Log("Awarded Ring of Freeze."); // prints notice to debug log
                 GameMenu.instance.notificationText.text = "Found a " + GameManager.instance.GetItemTier("Ring of Freeze") + "!"; // sets item notification text
                 GameManager.instance.AddItem("Ring of Freeze"); // adds revive potion to inventory
-                StartCoroutine(ShowGameNotification(2)); // calls game notification coroutine to show notice and block dialog
+                ShowReward(); // calls function to show quest reward
+                //StartCoroutine(ShowGameNotification(2)); // calls game notification coroutine to show notice and block dialog
                 break; // ends case
 
             case "Town_revive_potion": // executes when Town_hidden_item quest marked complete
                 Debug.Log("Awarded Revive Potion."); // prints notice to debug log
                 GameMenu.instance.notificationText.text = "Found a Revive Potion!"; // sets item notification text to show Revive Potion
                 GameManager.instance.AddItem("Revive Potion"); // adds revive potion to inventory
-                StartCoroutine(ShowGameNotification(1)); // calls game notification coroutine to show notice and block dialog
+                ShowReward(); // calls function to show quest reward
+                //StartCoroutine(ShowGameNotification(1)); // calls game notification coroutine to show notice and block dialog
                 break; // ends case
 
             case "Town_end": // executes when Town_end quest marked complete
                 Debug.Log("Awarded Dwarven Sword."); // prints notice to debug log                
                 GameMenu.instance.notificationText.text = "Received a " + GameManager.instance.GetItemTier("Dwarven Sword") + "!"; // sets item notification text to show Dwarven Sword
                 GameManager.instance.AddItem("Dwarven Sword"); // adds Dwarven Sword reward to inventory
-                StartCoroutine(ShowGameNotification(3)); // calls game notification coroutine to show notice and block dialog
+                ShowReward(); // calls function to show quest reward
+                //StartCoroutine(ShowGameNotification(3)); // calls game notification coroutine to show notice and block dialog
                 break; // ends case
 
             default: // default case executes if no other matches found
@@ -130,7 +135,6 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // WIP - ADDING SAVE SLOT FUNCTIONALITY
     public void SaveQuestData(int saveSlot) // creates function to save quest data
     {
         for(int i = 0; i < questMarkerNames.Length; i++) // iterates through all quest marker names
@@ -167,16 +171,23 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
-    // END WIP
 
-    public IEnumerator ShowGameNotification(int displayTime) // creates IEnumerator coroutine to show quest reward notification
+    public IEnumerator ShowGameNotification(int displayTime) // creates IEnumerator coroutine to show timed quest reward notification
     {
         GameManager.instance.noticeActive = true; // sets dialogActive true to stop player action
+        GameMenu.instance.notificationButton.SetActive(false); // hides game notification button
         GameMenu.instance.gameNotification.SetActive(true); // shows game notification panel
 
         yield return new WaitForSeconds(displayTime); // forces wait for reward notification to display
 
         GameMenu.instance.gameNotification.SetActive(false); // hides game notification panel      
         GameManager.instance.noticeActive = false; // sets dialogActive false to allow player action
+    }
+
+    public void ShowReward() // creates function to manage display of quest rewards
+    {        
+        GameManager.instance.noticeActive = true; // sets dialogActive true to stop player action
+        GameMenu.instance.notificationButton.SetActive(true); // shows game notification button
+        GameMenu.instance.gameNotification.SetActive(true); // shows game notification panel
     }
 }

@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: -486275991
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300070, guid: c16bba35bb023f54f9847cbd9d191f0f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 12d58326d43cefd4db4c3544b493811c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,8 +98,8 @@ MonoBehaviour:
   charName: Tim
   currentHP: 0
   maxHP: 0
-  currentMP: 0
-  maxMP: 0
+  currentSP: 0
+  maxSP: 0
   strength: 0
   tech: 0
   endurance: 0
@@ -114,6 +114,9 @@ MonoBehaviour:
   blockChance: 0
   defWeapon: 0
   defTech: 0
+  critWeapon: 0
+  evadeArmor: 0
+  blockShield: 0
   resistances:
   - 0
   - 0
@@ -124,8 +127,10 @@ MonoBehaviour:
   - 0
   - 0
   equippedWpn: 
+  equippedOff: 
   equippedArmr: 
   equippedAccy: 
+  tickRate: 0
   theSprite: {fileID: 5692799854134222016}
   deadSprite: {fileID: 21300100, guid: c16bba35bb023f54f9847cbd9d191f0f, type: 3}
   aliveSprite: {fileID: 21300070, guid: c16bba35bb023f54f9847cbd9d191f0f, type: 3}

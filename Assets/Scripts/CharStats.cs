@@ -12,7 +12,8 @@ public class CharStats : MonoBehaviour
     public int currentHP, currentSP, strength, tech, endurance, agility, luck, speed;
     public int dmgWeapon, hitChance, critChance, evadeChance, blockChance, defWeapon, defTech;
     public int critWeapon, evadeArmor, blockShield;
-    public float[] resistances = new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }; // creates array of floats to handle elemental resistances and initializes to default of 1
+    public float[] resistances = new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }; // creates array of floats to handle current elemental resistances and initializes to default of 1
+    public float[] baseResistances = new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }; // creates array of floats to handle base elemental resistances and initializes to default of 1
     // [0] = heat
     // [1] = freeze
     // [2] = shock

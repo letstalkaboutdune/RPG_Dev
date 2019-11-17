@@ -71,6 +71,7 @@ public class PartyPortrait : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if(playerImage.sprite.name != "Empty" && selectedPlayer.sprite.name == "Empty") // checks if sprite portrait is not empty and selected player is empty
         {
+            //Debug.Log("playerImage sprite name = " + playerImage.sprite.name); // prints player name notice to debug log
             CharStats player = GameMenu.instance.FindPlayerStats(playerImage.sprite.name); // pulls reference to player stats based on sprite name
             //Debug.Log("Generating tooltip for " + player.charName); // prints tooltip notice to debug log
             tooltip.GenerateTooltip(player); // calls function to generate tooltip based on player stats

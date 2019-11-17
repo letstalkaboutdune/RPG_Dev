@@ -121,7 +121,7 @@ public class Tooltip : MonoBehaviour
             // Accessory properties: resistances[]
             for (int i = 0; i < item.resistances.Length; i++) // iterates through all elements of item resistances array
             {
-                if(item.resistances[i] != 1f) // checks if an element of the array is non-zero
+                if(item.resistances[i] != 0f) // checks if an element of the array is non-zero
                 {
                     statText += elementNames[i] + " vulnerability = " + item.resistances[i] + "x \n"; // adds that resistance to stat text
                 }

@@ -87,7 +87,6 @@ public class BattleReward : MonoBehaviour
         rewardScreen.SetActive(true); // shows reward screen
     }
 
-    // NEED TO REWORK FOR NEW PARTY SYSTEM
     public void CloseRewardScreen() // creates function to handle closing of reward screen and application of rewards
     {
         for (int i = 0; i < leveledUp.Length; i++) // iterates through all elements of leveledUp array
@@ -141,54 +140,12 @@ public class BattleReward : MonoBehaviour
                 }
             }
         }
-        /*
-        for (int i = 0; i < GameManager.instance.playerStats.Length; i++) // iterates through all player objects
-        {
-            if (GameManager.instance.playerStats[i].gameObject.activeInHierarchy) // checks if player is active
-            {
-                if (GameManager.instance.playerStats[i].currentHP > 0) // checks if player is alive after battle
-                {
-                    GameManager.instance.playerStats[i].AddExp(xpEarned); // adds EXP to current player
-
-                    if (GameManager.instance.playerStats[i].leveledUp) // checks if player leveled up
-                    {
-                        leveledUp[i] = true; // sets leveledUp array element to true
-                        //Debug.Log(GameManager.instance.playerStats[i].charName + " leveled up!"); // prints level up notification to debug log
-
-                        if (GameMenu.instance.notificationText.text.Length == 0) // checks if level up notification is empty
-                        {
-                            GameMenu.instance.notificationText.text += GameManager.instance.playerStats[i].charName + " leveled up!"; // sets player level up notification without line break
-                        }
-                        else // executes if level up notification is not empty
-                        {
-                            GameMenu.instance.notificationText.text += "\n" + GameManager.instance.playerStats[i].charName + " leveled up!"; // sets player level up notification with line break
-                        }
-                    }
-
-                    GameManager.instance.playerStats[i].AddAP(apEarned); // adds AP to current player
-
-                    if (GameManager.instance.playerStats[i].apLeveledUp) // checks if player ability leveled up
-                    {
-                        apLeveledUp[i] = true; // sets apLeveledUp array element to true
-                        //Debug.Log(GameManager.instance.playerStats[i].charName + " learned new abilities!"); // prints ability level up notification to debug log
-
-                        if (GameMenu.instance.notificationText.text.Length == 0) // checks if level up notification is empty
-                        {
-                            GameMenu.instance.notificationText.text += GameManager.instance.playerStats[i].charName + " learned new abilities!"; // sets player ability level up notification without line break
-                        }
-                        else // executes if level up notification is not empty
-                        {
-                            GameMenu.instance.notificationText.text += "\n" + GameManager.instance.playerStats[i].charName + " learned new abilities!"; // sets player ability level up notification with line break
-                        }
-                    }
-                }
-            }
-        }
-        */
 
         if (leveledUp[0] || leveledUp[1] || leveledUp[2] || apLeveledUp[0] || apLeveledUp[1] || apLeveledUp[2]) // checks if any characters leveled up (EXP or AP)
         {
-            StartCoroutine(QuestManager.instance.ShowGameNotification(2)); // calls game notification coroutine to show notice for 2 seconds
+
+            //StartCoroutine(QuestManager.instance.ShowGameNotification(2)); // calls game notification coroutine to show notice for 2 seconds
+            QuestManager.instance.ShowReward(); // calls function to show reward game notification
         }
 
         GameManager.instance.currentGold += rewardGold; // adds reward gold to inventory

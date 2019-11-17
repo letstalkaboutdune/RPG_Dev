@@ -118,11 +118,11 @@ MonoBehaviour:
   critWeapon: 0
   resistances:
   - 0.5
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  warningText: Tim already has Ring of Heat equipped!
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  warningText: 

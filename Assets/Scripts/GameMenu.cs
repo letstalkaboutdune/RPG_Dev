@@ -70,6 +70,7 @@ public class GameMenu : MonoBehaviour
     // creates variables to handle game notification dialog box and text
     public GameObject gameNotification;
     public Text notificationText;
+    public GameObject notificationButton;
 
     public Text[] abilityList; // creates Text array to handle list of abilities in status menu
 
@@ -104,7 +105,10 @@ public class GameMenu : MonoBehaviour
     {
         instance = this; // sets GameMenu instance to this instance
                          // "this" keyword refers to current instance of the class
-        CheckPartyForPlayer();
+        
+        playerStats = GameManager.instance.playerStats; // pulls reference to player stats in game manager
+        
+        CheckPartyForPlayer(); // calls function to check party for player
     }
     
     // Update is called once per frame
@@ -147,7 +151,7 @@ public class GameMenu : MonoBehaviour
 
     public void UpdateMainStats() // creates function to update basic stats in main menu
     {        
-        playerStats = GameManager.instance.playerStats; // pulls reference to player stats in game manager
+        //playerStats = GameManager.instance.playerStats; // pulls reference to player stats in game manager
         CharStats currentPlayerStats;
 
         for (int i = 0; i < activePartyList.Length; i++) // iterates through all active party list
@@ -155,19 +159,16 @@ public class GameMenu : MonoBehaviour
             if (activePartyList[i] != "Empty") // checks if name in list is not empty
             {
                 charStatHolder[i].transform.localScale = new Vector3(1.333333f, 1.333333f, 1.333333f); // adjusts scale of charStatHolder to 1 to show without affecting layout group
-                //charStatHolder[i].SetActive(true); // show char stats at that index
 
                 currentPlayerStats = FindPlayerStats(activePartyList[i]); // calls function to find player stats in that location
                 //Debug.Log("Found player = " + currentPlayerStats.charName);
 
                 charImage[i].sprite = Resources.Load<Sprite>("Sprites/Portraits/" + currentPlayerStats.charName);
-                //charImage[i].sprite = currentPlayerStats.charImage; // updates char image in menu data
 
                 nameText[i].text = currentPlayerStats.charName; // updates char name in menu data
                 itemNameText[i].text = currentPlayerStats.charName; // updates char name in item menu data
 
                 hpText[i].text = "<color=#F4B913FF>HP:</color> " + currentPlayerStats.currentHP + "/" + currentPlayerStats.maxHP; // updates char HP in menu data
-                //hpText[i].text = "<color=#F4B913FF><b>HP:</b></color> " + currentPlayerStats.currentHP + "/" + currentPlayerStats.maxHP; // updates char HP in menu data
                 itemHPText[i].text = currentPlayerStats.currentHP + "/" + currentPlayerStats.maxHP; // updates char HP in item menu data
 
                 // updates HP sliders in char info and item window
@@ -183,11 +184,9 @@ public class GameMenu : MonoBehaviour
                 itemSPSlider[i].value = currentPlayerStats.currentSP;
 
                 spText[i].text = "<color=#F4B913FF>SP:</color> " + currentPlayerStats.currentSP + "/" + currentPlayerStats.maxSP; // updates char SP in menu data
-                //spText[i].text = "<color=#F4B913FF><b>SP:</b></color> " + currentPlayerStats.currentSP + "/" + currentPlayerStats.maxSP; // updates char SP in menu data
                 itemSPText[i].text = currentPlayerStats.currentSP + "/" + currentPlayerStats.maxSP; // updates char SP in item menu data
 
                 lvlText[i].text = "<color=#F4B913FF>LV:</color> " + currentPlayerStats.playerLevel; // updates char LVL in menu data
-                //lvlText[i].text = "<color=#F4B913FF><b>LV:</b></color> " + currentPlayerStats.playerLevel; // updates char LVL in menu data
                 expText[i].text = "" + currentPlayerStats.currentEXP + "/" + currentPlayerStats.expToNextLevel[currentPlayerStats.playerLevel]; // updates char LVL in menu data
 
                 if (!currentPlayerStats.isMaxLevel) // checks if player is not at max level
@@ -205,7 +204,6 @@ public class GameMenu : MonoBehaviour
             else // executes if item in list is empty
             {
                 charStatHolder[i].transform.localScale = new Vector3(0, 0, 0); // adjusts scale of charStatHolder to 0 to hide without affecting layout group
-                //charStatHolder[i].SetActive(false); // hide char stats at that index
             }
         }
 
@@ -263,7 +261,6 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-    // WIP
     public void OpenStatus() // creates function to open stats window and manage status
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
@@ -407,7 +404,6 @@ public class GameMenu : MonoBehaviour
             }
         }
     }
-    // END WIP
 
     public void ShowItems()     // creates function to assign item button value
     {
@@ -785,7 +781,8 @@ public class GameMenu : MonoBehaviour
     public IEnumerator ShowGameNotification() // creates IEnumerator coroutine to show game notification
     {
         GameManager.instance.noticeActive = true; // sets notice active true to stop player action
-        gameNotification.SetActive(true); // shows game notification panel
+        notificationButton.SetActive(false); // hides game notification button
+        gameNotification.SetActive(true); // shows game notification panel        
 
         yield return new WaitForSeconds(1f); // forces one second wait for notification to display
 
@@ -793,6 +790,12 @@ public class GameMenu : MonoBehaviour
         GameManager.instance.noticeActive = false; // sets notice active false to allow player action
     }
     
+    public void OKButton() // creates function to handle OK button press
+    {
+        gameNotification.SetActive(false); // hides game notification panel   
+        GameManager.instance.noticeActive = false; // sets notice active false to allow player action
+    }
+
     public void ToggleFrontRow(int charToToggle) // creates function to handle toggling front row status of character
     {
         //Debug.Log("The value of toggle " + charToToggle + " is " + frontRowToggle[charToToggle].isOn); // prints state of selected toggle
@@ -937,6 +940,9 @@ public class GameMenu : MonoBehaviour
 
     public CharStats FindPlayerStats(string playerName) // creates function to find player in playerstats array based on name
     {
+        //Debug.Log("Finding stats for " + playerName); // prints searching for stats notice to debug log
+        //playerStats = GameManager.instance.playerStats; // pulls reference to player stats in game manager
+
         // assigns variables to assist with search function
         int index = 0;
         bool found = false;
@@ -1001,7 +1007,23 @@ public class GameMenu : MonoBehaviour
 
         return index; // returns the index of found player
     }
-    
+
+    public string FindFirstActivePlayer() // creates function to find first active player index in party
+    {
+        string foundChar = ""; // creates local index variable to store found player index
+
+        for (int i = 0; i < activePartyList.Length; i++) // iterates through active player list
+        {
+            if (activePartyList[i] != "Empty") // checks if slot in list is not empty
+            {
+                foundChar = activePartyList[i]; // sets first active player name to foudnChar
+                Debug.Log("Found first player = " + foundChar); // prints found player notice to debug log
+                break; // breaks loop once active player is found
+            }
+        }
+        return foundChar; // returns found index
+    }
+
     public void CheckPartyForPlayer() // creates function to check if party contains at least one player
     {
         for(int i = 0; i < activePartyList.Length; i++) // iterates through all active party list
@@ -1018,22 +1040,6 @@ public class GameMenu : MonoBehaviour
                 //Debug.Log("Party doesn't contain a player."); // prints player not in party notice to debug log
             }
         }
-    }
-
-    public string FindFirstActivePlayer() // creates function to find first active player index in party
-    {
-        string foundChar = ""; // creates local index variable to store found player index
-        
-        for (int i = 0; i < activePartyList.Length; i++) // iterates through active player list
-        {
-            if (activePartyList[i] != "Empty") // checks if slot in list is not empty
-            {
-                foundChar = activePartyList[i]; // sets first active player name to foudnChar
-                Debug.Log("Found first player = " + foundChar); // prints found player notice to debug log
-                break; // breaks loop once active player is found
-            }
-        }
-        return foundChar; // returns found index
     }
 }
 

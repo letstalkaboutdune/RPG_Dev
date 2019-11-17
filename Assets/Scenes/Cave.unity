@@ -190,7 +190,7 @@ MonoBehaviour:
   - enemies:
     - Skeleton
     - Skeleton
-    enemyPlacement: 0100000002000000
+    enemyPlacement: 0000000002000000
     rewardXP: 20
     rewardAP: 4
     rewardItems:
@@ -1115,9 +1115,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   potentialBattles:
   - enemies:
-    - Skeleton
-    - Spider
-    enemyPlacement: 0100000004000000
+    - Eyeball
+    - Eyeball
+    enemyPlacement: 0300000005000000
     rewardXP: 15
     rewardAP: 3
     rewardItems:
@@ -13665,7 +13665,7 @@ MonoBehaviour:
   - enemies:
     - Skeleton
     - Skeleton
-    enemyPlacement: 0100000002000000
+    enemyPlacement: 0000000002000000
     rewardXP: 20
     rewardAP: 4
     rewardItems:
@@ -13834,7 +13834,7 @@ MonoBehaviour:
   - enemies:
     - Skeleton
     - Skeleton
-    enemyPlacement: 0100000002000000
+    enemyPlacement: 0000000002000000
     rewardXP: 20
     rewardAP: 4
     rewardItems:

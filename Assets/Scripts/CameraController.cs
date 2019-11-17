@@ -22,11 +22,23 @@ public class CameraController : MonoBehaviour
     public int musicToPlay;
     private bool musicStarted;
 
+    private bool isWorldMap; // creates bool to manage if current scene is world map
+
     //public float zoomDelta, cameraMin, cameraMax; // creates floats to handle zoom step size, and min/max camera size
         
     // Start is called before the first frame update
     void Start()
     {
+        if(GameObject.Find("World Map Detector") != null) // checks if world map detector exists
+        {
+            isWorldMap = true;
+        }
+        else
+        {
+            isWorldMap = false;
+        }
+        Debug.Log("isWorldMap = " + isWorldMap); // prints isWorldMap state to debug log
+        
         //Debug.Log("Tilemap bounds = " + theMap.localBounds.size); // prints tilemap size to debug log
 
         target = FindObjectOfType<PlayerController>().transform; // uses FindObjectOfType function to find instance of PlayerController
@@ -58,9 +70,18 @@ public class CameraController : MonoBehaviour
             Camera.main.orthographicSize -= zoomDelta; // zooms out by set zoom delta
         }
 
+        halfHeight = Camera.main.orthographicSize; // uses the Camera.main.orthographicSize function to pull the half-height of the camera
+
+        halfWidth = halfHeight * Camera.main.aspect; // calculates the half-width using the half-height and the camera aspect ratio
+
+        bottomLeftLimit = theMap.localBounds.min + new Vector3(halfWidth, halfHeight, 0f); // sets the bottom-left limit to the min of the localBounds of the linked tilemap
+                                                                                           // adds an offset for half-width, half-height to compensate for camera size
+        topRightLimit = theMap.localBounds.max + new Vector3(-halfWidth, -halfHeight, 0f); // sets the top-right limit to the max of the localBounds of the linked tilemap
+                                                                                           // subtracts an offset for half-width, half-height to compensate for camera size
+
         ClampCameraZoom(); // calls function to clamp camera zoom        
         */
-        
+
         if (GameObject.Find("Player(Clone)") != null) // checks if instance of player controller exists
         {
             transform.position = new Vector3(target.position.x, target.position.y, transform.position.z); // sets the (x, y) transform position of this camera controller to the position of the target/player

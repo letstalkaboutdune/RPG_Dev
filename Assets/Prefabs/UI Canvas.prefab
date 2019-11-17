@@ -18740,8 +18740,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 684.2, y: -180.4}
-  m_SizeDelta: {x: 1300.9, y: 306.5}
+  m_AnchoredPosition: {x: 684.2, y: -217.65001}
+  m_SizeDelta: {x: 1300.9, y: 435.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4337542513529853076
 CanvasRenderer:
@@ -18782,7 +18782,17 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: This is the notification text!
+  m_Text: 'This is the notification text!
+
+    This is the notification text!
+
+    This is the notification text!
+
+    This is the notification text!
+
+    This is the notification text!
+
+    This is the notification text!'
 --- !u!1 &1873226365024495489
 GameObject:
   m_ObjectHideFlags: 0
@@ -29357,6 +29367,7 @@ MonoBehaviour:
   quitConfirmation: {fileID: 4377904099601676938}
   gameNotification: {fileID: 4267209745884635750}
   notificationText: {fileID: 5951343296765685811}
+  notificationButton: {fileID: 5251164370586366231}
   abilityList:
   - {fileID: 2022472611424123003}
   - {fileID: 5799129811085918329}
@@ -29442,9 +29453,9 @@ MonoBehaviour:
   - Woody
   - Sleepy
   inactivePartyList:
-  - Alf
   - Bari
-  - Empty
+  - Lari
+  - Fari
   - Empty
   - Empty
   - Empty
@@ -35348,8 +35359,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -560, y: -600}
+  m_AnchoredPosition: {x: 0, y: 48.799805}
+  m_SizeDelta: {x: -560, y: -502.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4127698009211328741
 CanvasRenderer:
@@ -41635,8 +41646,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -337}
-  m_SizeDelta: {x: 359.5, y: 134.99}
+  m_AnchoredPosition: {x: 50, y: -309.6}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &308718022708373054
 CanvasRenderer:
@@ -42116,7 +42127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4385325578985090721
 RectTransform:
   m_ObjectHideFlags: 0
@@ -42134,7 +42145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.9000244, y: 116}
+  m_AnchoredPosition: {x: -4.9000244, y: 65.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5261043387141731578
@@ -71816,7 +71827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -143.48}
+  m_AnchoredPosition: {x: -250, y: -145}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4820790435136462185
