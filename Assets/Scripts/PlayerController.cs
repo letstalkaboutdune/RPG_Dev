@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     public bool isWorldMap; // creates bool to handle if scene is a world map
 
+    /*
     [DllImport("user32.dll")]
     public static extern short GetAsyncKeyState(int vkey);
 
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public const int s_key = 0x53;
     public const int a_key = 0x41;
     public const int d_key = 0x44;
+    */
 
     // Start is called before the first frame update
     //void Awake()
@@ -63,6 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         if(canMove) // checks if canMove is true
         {
+            /*
             float horizontal = 0f, vertical = 0f;
             if ((GetAsyncKeyState(left_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(a_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
             {
@@ -81,6 +84,10 @@ public class PlayerController : MonoBehaviour
                 vertical = -1f; // sets vertical to -1 (down)
             }
             theRB.velocity = new Vector2(horizontal, vertical) * moveSpeed;
+            */
+
+            theRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed; // assigns value to the velocity (built-in Rigidbody2D) of the player, using Input.GetAxisRaw function in Unity
+            // multiplies velocity vector by moveSpeed, allowing player move speed to be adjusted
 
             /*
             if (!isWorldMap) // checks if scene is not a world map
@@ -104,8 +111,7 @@ public class PlayerController : MonoBehaviour
                 }
                 theRB.velocity = new Vector2(horizontal, vertical) * moveSpeed;
 
-                //theRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed; // assigns value to the velocity (built-in Rigidbody2D) of the player, using Input.GetAxisRaw function in Unity
-                // multiplies velocity vector by moveSpeed, allowing player move speed to be adjusted
+
             }
             else // executes if player can move and scene is a world map
             {
@@ -142,7 +148,7 @@ public class PlayerController : MonoBehaviour
         myAnim.SetFloat("moveX", theRB.velocity.x);
 		myAnim.SetFloat("moveY", theRB.velocity.y);
 
-        if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1 || Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1) // checks if player is moving in any direction - edited 10/12/19 to use absolute value
+        if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f || Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f) // checks if player is moving in any direction - edited 10/12/19 to use absolute value
         {
             if (canMove) // checks if player can move to prevent unwanted idle animation changes
             {

@@ -1558,6 +1558,123 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!1001 &284610006
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7584819912190934292, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_Name
+      value: Area Exit - Countryside
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: areaToLoad
+      value: Countryside
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: areaTransitionName
+      value: Cave-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: activateOnEnter
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 111598845, guid: 700fa786fc948bb4da97fd3310792942, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 111598845, guid: 700fa786fc948bb4da97fd3310792942, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934295, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934295, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 9.24461
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934295, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934295, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.0895767
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934295, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 700fa786fc948bb4da97fd3310792942, type: 3}
 --- !u!1 &450520690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,7 +1707,7 @@ Transform:
   - {fileID: 1264947677}
   - {fileID: 103106805}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &823933825
 GameObject:
@@ -1703,7 +1820,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &823933830
 MonoBehaviour:
@@ -10851,7 +10968,7 @@ PrefabInstance:
     - target: {fileID: 4030842966812478682, guid: c5a9c7c8e9e45d940b21f3b23a87de09,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4030842966812478682, guid: c5a9c7c8e9e45d940b21f3b23a87de09,
         type: 3}
@@ -13883,7 +14000,7 @@ PrefabInstance:
     - target: {fileID: 7584819912190934292, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: m_Name
-      value: Area Exit
+      value: Area Exit - World 1
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
@@ -13943,12 +14060,12 @@ PrefabInstance:
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaToLoad
-      value: World1
+      value: World 1
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaTransitionName
-      value: World1-Cave
+      value: World 1-Cave
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}

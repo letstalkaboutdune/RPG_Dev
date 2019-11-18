@@ -9,10 +9,8 @@ Annoying
 
 MINOR
 ********  
-Map: add zoom function with mouse wheel
-Sound: add quest reward audio stinger
 Sound: add item unsuccessful sound
-Sound: replace game over music
+Map: add zoom function with mouse wheel
 
 MAJOR
 *****

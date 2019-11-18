@@ -143,6 +143,7 @@ public class BattleReward : MonoBehaviour
 
         if (leveledUp[0] || leveledUp[1] || leveledUp[2] || apLeveledUp[0] || apLeveledUp[1] || apLeveledUp[2]) // checks if any characters leveled up (EXP or AP)
         {
+            AudioManager.instance.PlaySFX(10); // plays level up SFX
 
             //StartCoroutine(QuestManager.instance.ShowGameNotification(2)); // calls game notification coroutine to show notice for 2 seconds
             QuestManager.instance.ShowReward(); // calls function to show reward game notification

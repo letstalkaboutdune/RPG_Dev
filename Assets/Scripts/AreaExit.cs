@@ -47,9 +47,11 @@ public class AreaExit : MonoBehaviour
             }
         }
 
-        if (canActivate && Input.GetButtonDown("Fire1")) // checks if collider is active and player clicks
+        if (canActivate && Input.GetButtonDown("Fire1") && !GameManager.instance.gameMenuOpen) // checks if collider is active, player clicks, and menu closed
         {
             //Debug.Log("Loading scene on player click.");
+
+            AudioManager.instance.PlaySFX(5); // plays confirmation sound effect
 
             ExitFade(); // calls exit fade function
         }

@@ -15604,7 +15604,7 @@ PrefabInstance:
     - target: {fileID: 7584819912190934292, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: m_Name
-      value: Area Exit - World1
+      value: Area Exit - World 1
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934294, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
@@ -15664,12 +15664,12 @@ PrefabInstance:
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaToLoad
-      value: World1
+      value: World 1
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaTransitionName
-      value: World1-Town
+      value: World 1-Town
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}

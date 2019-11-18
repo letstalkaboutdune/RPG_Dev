@@ -82,6 +82,7 @@ public class QuestManager : MonoBehaviour
                 GameMenu.instance.notificationText.text = "Received 100 gold!"; // sets item notification text
                 GameManager.instance.currentGold += 100; // adds 100 gold reward to inventory
                 ShowReward(); // calls function to show quest reward
+                AudioManager.instance.PlaySFX(8); // plays gold gain SFX
                 //StartCoroutine(ShowGameNotification(1)); // calls game notification coroutine to show notice and block dialog
                 // END WIP
                 break; // ends case
@@ -91,6 +92,7 @@ public class QuestManager : MonoBehaviour
                 GameMenu.instance.notificationText.text = "Found a " + GameManager.instance.GetItemTier("Ring of Freeze") + "!"; // sets item notification text
                 GameManager.instance.AddItem("Ring of Freeze"); // adds revive potion to inventory
                 ShowReward(); // calls function to show quest reward
+                AudioManager.instance.PlaySFX(9); // plays item gain SFX
                 //StartCoroutine(ShowGameNotification(2)); // calls game notification coroutine to show notice and block dialog
                 break; // ends case
 
@@ -99,6 +101,7 @@ public class QuestManager : MonoBehaviour
                 GameMenu.instance.notificationText.text = "Found a Revive Potion!"; // sets item notification text to show Revive Potion
                 GameManager.instance.AddItem("Revive Potion"); // adds revive potion to inventory
                 ShowReward(); // calls function to show quest reward
+                AudioManager.instance.PlaySFX(9); // plays item gain SFX
                 //StartCoroutine(ShowGameNotification(1)); // calls game notification coroutine to show notice and block dialog
                 break; // ends case
 
@@ -107,6 +110,7 @@ public class QuestManager : MonoBehaviour
                 GameMenu.instance.notificationText.text = "Received a " + GameManager.instance.GetItemTier("Dwarven Sword") + "!"; // sets item notification text to show Dwarven Sword
                 GameManager.instance.AddItem("Dwarven Sword"); // adds Dwarven Sword reward to inventory
                 ShowReward(); // calls function to show quest reward
+                AudioManager.instance.PlaySFX(9); // plays item gain SFX
                 //StartCoroutine(ShowGameNotification(3)); // calls game notification coroutine to show notice and block dialog
                 break; // ends case
 

@@ -16,7 +16,7 @@ public class WorldMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        worldName.text = SceneManager.GetActiveScene().name.Replace("World","World ") + ":\n" + worldNameString; // builds world name from active scene and passed world name
+        worldName.text = SceneManager.GetActiveScene().name + ":\n" + worldNameString; // builds world name from active scene and passed world name
     }
 
     // Update is called once per frame

@@ -187,7 +187,7 @@ PrefabInstance:
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaTransitionName
-      value: World1-Cave
+      value: World 1-Cave
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
@@ -6141,7 +6141,7 @@ PrefabInstance:
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaTransitionName
-      value: World1-Countryside_R
+      value: World 1-Countryside_R
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
@@ -6272,7 +6272,7 @@ PrefabInstance:
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaTransitionName
-      value: World1-Countryside_L
+      value: World 1-Countryside_L
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
@@ -6408,7 +6408,7 @@ PrefabInstance:
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaTransitionName
-      value: World1-Town
+      value: World 1-Town
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
@@ -6614,7 +6614,7 @@ PrefabInstance:
     - target: {fileID: 2093952767911068198, guid: 6003c077114cb8844890c93945adce4c,
         type: 3}
       propertyPath: worldNameString
-      value: Green Grasses
+      value: Green Woods
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6003c077114cb8844890c93945adce4c, type: 3}

@@ -1,3 +1,8 @@
+11/18/19
+********
+Polish: Added quest reward and item found SFX
+Bug: Fixed unwanted area exits occurring in certain cases
+
 11/17/19
 ********
 Feature: Added overworld map functionality
