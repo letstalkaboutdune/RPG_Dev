@@ -25,13 +25,13 @@ public class GameOver : MonoBehaviour
         {
             if (PlayerPrefs.HasKey(i + "_Current_Scene")) // checks if player prefs has key for current scene, some game data has been saved
             {
-                Debug.Log("Save slot found."); // prints save slot found notice to debug log
+                //Debug.Log("Save slot found."); // prints save slot found notice to debug log
                 loadGameButton.SetActive(true); // sets load game button to active
                 break; // breaks loop once a save slot is found
             }
             else // executes if no save slot has data
             {
-                Debug.Log("No save slot found."); // prints save slot not found notice to debug log
+                //Debug.Log("No save slot found."); // prints save slot not found notice to debug log
                 loadGameButton.SetActive(false); // sets load game button to inactive
             }
         }

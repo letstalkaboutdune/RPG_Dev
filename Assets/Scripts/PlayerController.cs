@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     public bool canMove = true;     // creates bool variable to handle restriction of player movement, sets default to true
 
+    public bool isWorldMap; // creates bool to handle if scene is a world map
+
     [DllImport("user32.dll")]
     public static extern short GetAsyncKeyState(int vkey);
 
@@ -38,7 +40,9 @@ public class PlayerController : MonoBehaviour
     //void Awake()
     void Start()
     {
-        if(instance == null) // checks if PlayerController instance is null, i.e. not yet set if the game just started running
+        CheckIfWorldMap(); // calls function to check if scene is a world map
+        
+        if (instance == null) // checks if PlayerController instance is null, i.e. not yet set if the game just started running
         {
             instance = this; // sets PlayerController instance to this instance
                              // "this" keyword refers to current instance of the class
@@ -57,7 +61,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(canMove) // checks if canMove is true
+        if(canMove) // checks if canMove is true
         {
             float horizontal = 0f, vertical = 0f;
             if ((GetAsyncKeyState(left_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(a_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
@@ -77,11 +81,58 @@ public class PlayerController : MonoBehaviour
                 vertical = -1f; // sets vertical to -1 (down)
             }
             theRB.velocity = new Vector2(horizontal, vertical) * moveSpeed;
-            
-            //theRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed; // assigns value to the velocity (built-in Rigidbody2D) of the player, using Input.GetAxisRaw function in Unity
-                                                                                                                    // multiplies velocity vector by moveSpeed, allowing player move speed to be adjusted
+
+            /*
+            if (!isWorldMap) // checks if scene is not a world map
+            {
+                float horizontal = 0f, vertical = 0f;
+                if ((GetAsyncKeyState(left_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(a_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
+                {
+                    horizontal = -1f; // sets horizontal to -1 (left)
+                }
+                else if ((GetAsyncKeyState(right_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(d_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
+                {
+                    horizontal = 1f; // sets horizontal to 1 (right)
+                }
+                if ((GetAsyncKeyState(up_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(w_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
+                {
+                    vertical = 1f; // sets vertical to 1 (up)
+                }
+                else if ((GetAsyncKeyState(down_arrow_key) & 0x8000) > 0 || (GetAsyncKeyState(s_key) & 0x8000) > 0) // gets left arrow state, ANDs with 1000 to get MSB
+                {
+                    vertical = -1f; // sets vertical to -1 (down)
+                }
+                theRB.velocity = new Vector2(horizontal, vertical) * moveSpeed;
+
+                //theRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed; // assigns value to the velocity (built-in Rigidbody2D) of the player, using Input.GetAxisRaw function in Unity
+                // multiplies velocity vector by moveSpeed, allowing player move speed to be adjusted
+            }
+            else // executes if player can move and scene is a world map
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+                {
+                    // move up 1 tile, y = +1
+                    transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z); // increments y position by 1
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                {
+                    // move down 1 tile, y = -1
+                    transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z); // decrements y position by 1
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+                {
+                    // move left 1 tile, x = -1
+                    transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z); // decrements x position by 1
+                }
+                else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                {
+                    // move right 1 tile, x = +1
+                    transform.position = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z); // increments x position by 1
+                }
+            }
+            */
         }
-        else
+        else // executes if player can't move
         {
             theRB.velocity = Vector2.zero; // forces player Rigidbody2D velocity to zero if canMove is false
         }
@@ -113,5 +164,20 @@ public class PlayerController : MonoBehaviour
     {
         bottomLeftLimit = botLeft + new Vector3(0.5f, 1f, 0); // sets bottom-left limit to the passed botLeft value, plus a small offset to compensate for player sprite size
         topRightLimit = topRight + new Vector3 (-0.5f, -1f, 0); // sets top-right limit to the passed topRight value, plus a small offset to compensate for player sprite size
+    }
+
+    public void CheckIfWorldMap() // creates function to check if current scene is a world map
+    {
+        if (GameObject.Find("World Map Detector") != null) // checks if world map detector exists
+        {
+            isWorldMap = true; // sets is world map bool true
+            //Debug.Log("Scene is a world map.");
+        }
+        else // executes if world map detector does not exist
+        {
+            isWorldMap = false; // sets is world map bool false
+            //Debug.Log("Scene is not a world map.");
+            //Debug.Log("Scene is not a world map.");
+        }
     }
 }

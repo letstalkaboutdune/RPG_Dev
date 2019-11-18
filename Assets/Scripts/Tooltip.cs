@@ -19,13 +19,15 @@ public class Tooltip : MonoBehaviour
 
     void Update()
     {
+        // *** NEED TO UPDATE TO ONLY OCCUR ONCE
+        
         // determines which corner of the screen is closest to the mouse position
         // uses a ternary conditional operator (condition ? consequent : alternative)
         Vector2 corner = new Vector2(((Input.mousePosition.x > (Screen.width / 2f)) ? 1f : 0f),
                                      ((Input.mousePosition.y > (Screen.height / 2f)) ? 1f : 0f));
         
         // sets the pivot corner of the tooltip to the opposite corner of whichever is closest
-        (this.transform as RectTransform).pivot = corner;
+        (this.transform as RectTransform).pivot = corner;        
     }
 
     public void GenerateTooltip(Item item) // creates a function to generate a tooltip based on item stats

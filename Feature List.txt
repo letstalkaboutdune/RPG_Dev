@@ -9,12 +9,6 @@ Annoying
 
 MINOR
 ********  
-Game: add SMB3-style overworld
-	 *** design simple tiles for world navigation - *DONE*
-	 *** create bool to detect if scene is a world map - *DONE*
-	 *** adjust camera to not follow the player on a world map - 
-	 *** set player position to start position on map - 
-	 *** bound player to only move on tile grid - 
 Map: add zoom function with mouse wheel
 Sound: add quest reward audio stinger
 Sound: add item unsuccessful sound

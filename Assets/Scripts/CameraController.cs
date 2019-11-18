@@ -28,17 +28,7 @@ public class CameraController : MonoBehaviour
         
     // Start is called before the first frame update
     void Start()
-    {
-        if(GameObject.Find("World Map Detector") != null) // checks if world map detector exists
-        {
-            isWorldMap = true;
-        }
-        else
-        {
-            isWorldMap = false;
-        }
-        Debug.Log("isWorldMap = " + isWorldMap); // prints isWorldMap state to debug log
-        
+    {                
         //Debug.Log("Tilemap bounds = " + theMap.localBounds.size); // prints tilemap size to debug log
 
         target = FindObjectOfType<PlayerController>().transform; // uses FindObjectOfType function to find instance of PlayerController
@@ -82,19 +72,22 @@ public class CameraController : MonoBehaviour
         ClampCameraZoom(); // calls function to clamp camera zoom        
         */
 
-        if (GameObject.Find("Player(Clone)") != null) // checks if instance of player controller exists
+        // WIP
+        if (GameObject.Find("Player(Clone)") != null && !PlayerController.instance.isWorldMap) // checks if instance of player controller exists and map is not a world map
         {
             transform.position = new Vector3(target.position.x, target.position.y, transform.position.z); // sets the (x, y) transform position of this camera controller to the position of the target/player
                                                                                                           // leaves the z transform position of the camera at its current value, since it needs to stay slightly zoomed out
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeftLimit.x, topRightLimit.x), Mathf.Clamp(transform.position.y, bottomLeftLimit.y, topRightLimit.y), transform.position.z); // uses the built-in Mathf.Clamp function to clamp the (x, y, z) transform position to the bottom-left and top-right limits
                                                                                                                                                                                                                   // forces the camera to stay within the appropriate position relative to the tilemap
         }
+        // END WIP
 
         if (!musicStarted) // checks if music is already started
         {
             musicStarted = true; // sets music started flag to true
             AudioManager.instance.PlayBGM(musicToPlay); // calls audio manager function to play music
         }
+        
     }
 
     /*

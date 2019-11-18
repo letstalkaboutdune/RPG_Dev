@@ -13943,12 +13943,17 @@ PrefabInstance:
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaToLoad
-      value: Countryside
+      value: World1
       objectReference: {fileID: 0}
     - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
         type: 3}
       propertyPath: areaTransitionName
-      value: Cave-1
+      value: World1-Cave
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584819912190934297, guid: 700fa786fc948bb4da97fd3310792942,
+        type: 3}
+      propertyPath: activateOnEnter
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 111598845, guid: 700fa786fc948bb4da97fd3310792942, type: 3}
       propertyPath: m_LocalPosition.x

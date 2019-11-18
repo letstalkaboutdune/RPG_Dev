@@ -29459,6 +29459,7 @@ MonoBehaviour:
   - Empty
   - Empty
   - Empty
+  worldMapUI: {fileID: 0}
 --- !u!114 &926317058
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -44,6 +44,7 @@ public class LoadingScene : MonoBehaviour
                 {
                     //Debug.Log("Loading game.");
                     SceneManager.LoadScene(PlayerPrefs.GetString(GameMenu.instance.slotToLoad + "_Current_Scene")); // loads saved scene from player prefs
+                    PlayerController.instance.CheckIfWorldMap(); // calls function to check if scene is a world map
 
                     // loads game data and quest data
                     GameManager.instance.LoadData(GameMenu.instance.slotToLoad);

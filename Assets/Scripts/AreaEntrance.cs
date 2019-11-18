@@ -21,6 +21,7 @@ public class AreaEntrance : MonoBehaviour
         UIFade.instance.FadeFromBlack(); // calls FadeFromBlack function in UIFade script to trigger fade
 
         GameManager.instance.fadingBetweenAreas = false; // sets fadingBetweenAreas tag to false to prevent player movement
+        PlayerController.instance.CheckIfWorldMap();
     }
 
     // Update is called once per frame
