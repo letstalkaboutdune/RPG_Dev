@@ -41,9 +41,10 @@ public class PartyPortrait : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     // executes when an object with this script is clicked
     public void OnPointerClick(PointerEventData eventData) 
-    {        
+    {
         if (playerImage.sprite != emptySprite) // checks if player slot sprite is not empty
         {
+            AudioManager.instance.PlaySFX(5); // plays UI beep
             tooltip.gameObject.SetActive(false); // hides tooltip
            
             if (selectedPlayer.sprite != emptySprite) // checks if select player sprite is not empty
@@ -61,6 +62,7 @@ public class PartyPortrait : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         }
         else if (selectedPlayer.sprite != emptySprite) // executes if no player in slot and player selected
         {
+            AudioManager.instance.PlaySFX(5); // plays UI beep
             playerImage.sprite = selectedPlayer.sprite; // sets player slot sprite to selected player sprite
             selectedPlayer.sprite = emptySprite; //  sets selected player sprite to empty
             GameMenu.instance.UpdatePartyOrder(); // calls function to update party order

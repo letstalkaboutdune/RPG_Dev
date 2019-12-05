@@ -100,7 +100,6 @@ public class Shop : MonoBehaviour
 
     public void OpenSellMenu() // creates function to handle opening sell menu
     {
-        // WIP
         SelectSellItem(null, 0); // select null item each time when you first open the sell menu
 
         // sets bools appropriately to close buy menu and open sell menu
@@ -220,12 +219,14 @@ public class Shop : MonoBehaviour
         {
             if (GameManager.instance.currentGold >= selectedItem.value) // checks if player has enough gold to buy item based on current gold and selected item value
             {
+                AudioManager.instance.PlaySFX(12); // plays item buy/sell sound
                 GameManager.instance.currentGold -= selectedItem.value; // subtracts value of item from player's current gold
 
                 GameManager.instance.AddItem(selectedItem.itemName); // adds item into our game manager inventory
             }
             else // executes if player doesn't have enough gold in their inventory
             {
+                AudioManager.instance.PlaySFX(11); // plays buzzer sound
                 StartCoroutine(ShowGoldNotice()); // displays not enough gold notification
             }
         }
@@ -237,6 +238,7 @@ public class Shop : MonoBehaviour
     {
         if (selectedItem != null) // checks that selected item slot is not empty
         {
+            AudioManager.instance.PlaySFX(13); // plays item buy/sell sound
             GameManager.instance.currentGold += Mathf.FloorToInt(selectedItem.value * 0.5f); // adds sale price of item to current gold in game manager
 
             GameManager.instance.RemoveItem(selectedItem.itemName); // removes selected item from inventory

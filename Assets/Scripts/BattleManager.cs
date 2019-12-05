@@ -831,11 +831,13 @@ public class BattleManager : MonoBehaviour
 
         if (battleNoticeActive)
         {
+            PlayButtonSound(11); // plays error buzzer SFX
             battleNotice.Activate();
             battleNoticeActive = false;
         }
         else
         {
+            PlayButtonSound(7); // plays item used SFX
             //Debug.Log(battleActiveItem.itemName + " was used."); // prints debug text to notify on item use
             battlerCounter[currentTurn] = Mathf.RoundToInt(100 * Random.Range(0.9f, 1.1f)); // resets counter on current battler to 100 ±10% RNG
 

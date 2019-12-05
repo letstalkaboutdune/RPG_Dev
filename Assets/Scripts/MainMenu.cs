@@ -8,15 +8,29 @@ using UnityEngine.SceneManagement; // includes Unity SceneManagement library
 
 public class MainMenu : MonoBehaviour
 {
-    public string loadGameScene, newGameScene; // creates string to handle name of load game and new game scenes
+    //public string loadGameScene, newGameScene; // creates string to handle name of load game and new game scenes
 
     public GameObject loadButton; // creates game object to handle load button
 
     public int soundToPlay; // creates int to handle button sound selection
 
+    public GameObject mainMenu; // creates game object to handle main menu UI
+
+    private GameObject player; // creates reference to player
+
+    public static MainMenu instance; // creates reference to this instance of the main menu script
+
     // Start is called before the first frame update
     void Start()
     {
+        instance = this; // sets instance to this instance
+
+        GameManager.instance.gameMenuOpen = true; // sets gameMenuOpen flag true to stop player movement
+
+        // grabs reference to player controller and sets inactive
+        player = GameObject.Find("Player(Clone)");
+        player.SetActive(false);
+
         for (int i = 0; i < 3; i++) // iterates through all 3 possible player prefs slots
         {
             if (PlayerPrefs.HasKey(i + "_Current_Scene")) // checks if player prefs has key for current scene, some game data has been saved
@@ -39,21 +53,32 @@ public class MainMenu : MonoBehaviour
   
     public void LoadGame()
     {
-        SceneManager.LoadScene(loadGameScene); // loads load game scene
+        GameMenu.instance.loadLoadGame = true;
+        SceneManager.LoadScene("LoadingScene"); // loads load game scene
+        //HideMainMenu(); // calls function to hide main menu
     }
 
     public void NewGame() // creates function to load new game at first scene
     {
-        SceneManager.LoadScene(newGameScene); // loads new game at new game scene
+        GameMenu.instance.loadNewGame = true;
+        SceneManager.LoadScene("LoadingScene"); // loads new game at new game scene
+        //HideMainMenu(); // calls function to hide main menu
     }
 
-    public void Exit() // creates function to exit game
+    public void ExitGame() // creates function to exit game
     {
-        Application.Quit(); // exits game
+        Application.Quit(); // exits game        
     }
 
     public void PlayButtonSound(int soundToPlay) // creates function to play UI beeps, requires int of sound to play
     {
         AudioManager.instance.PlaySFX(soundToPlay); //; plays UI beep sound from audio manager
+    }
+
+    public void HideMainMenu() // creates function to hide main menu UI
+    {
+        mainMenu.SetActive(false); // hides main menu UI
+        GameManager.instance.gameMenuOpen = false; // sets gameMenuOpen flag false to allow player movement
+        player.SetActive(true); // shows player
     }
 }

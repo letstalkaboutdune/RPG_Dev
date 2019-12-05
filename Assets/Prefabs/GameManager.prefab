@@ -739,6 +739,7 @@ MonoBehaviour:
   - 0
   abilities:
   - Freeze
+  - Virus
   isMaxLevel: 0
   isMaxAPLevel: 0
   leveledUp: 0
@@ -857,6 +858,7 @@ MonoBehaviour:
   - 0
   abilities:
   - Heat
+  - Virus
   isMaxLevel: 0
   isMaxAPLevel: 0
   leveledUp: 0
@@ -1094,6 +1096,7 @@ MonoBehaviour:
   - 0
   abilities:
   - Virus
+  - Freeze
   isMaxLevel: 0
   isMaxAPLevel: 0
   leveledUp: 0

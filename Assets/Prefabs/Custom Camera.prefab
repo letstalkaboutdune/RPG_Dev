@@ -147,4 +147,3 @@ MonoBehaviour:
   target: {fileID: 0}
   theMap: {fileID: 0}
   musicToPlay: 3
-  zoomDelta: 0.1

@@ -4,19 +4,21 @@ Minor
 ******
 Gamebreaking
 ************
+battleActive may be set by mistake in some cases
+
 Annoying
 ************
 
-MINOR
+TO-DO
 ********  
-Sound: add item unsuccessful sound
-Map: add zoom function with mouse wheel
-
-MAJOR
-*****
-UI: equip screen in menu (include elem. resist/status immunities)
-	*** include trade-in function in shops
+Code: use json/xml/txt instead of playerprefs for save slots
+UI: add equip screen in menu (include elem. resist)
+	*** start from status menu
 	*** include live comparison with current equips
+Map: add zoom function with mouse wheel
+	*** need to handle camera on scene loads
+	*** how to calculate max camera size based on tilemap?
+		*** need to adjust when moving scenes or set a global max?
 Game/Battle: implement more spells and abilities
 	*** Cure ability with player targeting
 Game: implement stat restrictions on items
@@ -25,6 +27,8 @@ Input: add controller/keyboard functionality
 HUGE (new game only)
 ****    
 Game Design: create all new spells and effects
+	*** add ability to target all
+	*** spells require some kind of hacking minigame?
 Game Design: create all new enemies and stats
 Game Design: create all new items
 Game Design: create all new items
@@ -34,12 +38,14 @@ Art: create all new pixel art for cyberpunk style
 Music: create all new background music
 SFX: create all new sound FX
 
-Polish (new game only)
+POLISH (new game only)
 ******
-???UI: abilities/techs screen in menu
+UI: correct scaling for all resolutions/aspect ratios
+UI: abilities/techs screen in menu
+UI: add trade-in function in shops
 UI: re-design menu to fit theme
 UI: re-design menu to use same item system in/out of battle
-UI: add drag-and-drop to item/equip/spell interface
+UI: add drag-and-drop to item/equip/spell interface (need to keep controller support)
 UI: add retro overlays
 UI: add appropriate mouse cursor
 UI: add gradual display of text with typing sound effects
@@ -50,7 +56,7 @@ UI: add options menu from main menu
 	*** text/battle speed, show tooltips, key binds, music/sfx volume, resolution	
 Game: show equipped armor/weapon on char sprites
 Code: rethink all databases, replace discrete variables with dictionaries
-Code: use json/xml/txt instead of playerprefs for save slots
+Levels: use additive loading
 Levels: add more detail to the tilemaps
 Levels: add animations to the background
 Battle: set sprites pivot point to bottom center

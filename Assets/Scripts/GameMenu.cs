@@ -89,11 +89,13 @@ public class GameMenu : MonoBehaviour
     // creates variables to manage save window
     public Text saveLoadText;
     public GameObject[] savePanels;
-    public GameObject saveButtons, loadButtons, saveBackButton, saveMenuButton, deleteYesNoButtons;
+    public GameObject saveButtons, loadButtons, saveBackButton, saveMenuButton, saveYesNoButtons, loadYesNoButtons, deleteYesNoButtons;
     public Text[] saveLeader, saveLV, saveAreaName, saveTime, saveGold;
     public SavePortraits[] savePortraits;
-    public int slotToLoad, slotToDelete;
+    public int slotToSave, slotToLoad, slotToDelete;
     public bool loadMainMenu = false;
+    public bool loadNewGame = false;
+    public bool loadLoadGame = false;
 
     // creates variables to manage party window
     public Image[] activeParty, inactiveParty;
@@ -115,7 +117,7 @@ public class GameMenu : MonoBehaviour
     void Update()
     {
         // checks for user to press Fire2 (RMB by default), and various game states active/inactive
-        if (Input.GetButtonDown("Fire2") && !GameManager.instance.battleActive && !GameManager.instance.shopActive && !GameManager.instance.dialogActive && !GameManager.instance.noticeActive && !GameManager.instance.fadingBetweenAreas && !playerSelected)
+        if (Input.GetButtonDown("Fire2") && !GameManager.instance.battleActive && !GameManager.instance.shopActive && !GameManager.instance.dialogActive && !GameManager.instance.noticeActive && !GameManager.instance.fadingBetweenAreas && !playerSelected && SceneManager.GetActiveScene().name != "LoadGame")
         {
             if (partyContainsPlayer) // checks if party contains a player
             {
@@ -141,6 +143,7 @@ public class GameMenu : MonoBehaviour
             }
             else // executes if party doesn't contain a player
             {
+                AudioManager.instance.PlaySFX(11); // plays error buzzer
                 notificationText.text = "Party does not contain a player!"; // sets error text that party does not contain a player
                 StartCoroutine(ShowGameNotification()); // shows game notification
             }           
@@ -219,6 +222,7 @@ public class GameMenu : MonoBehaviour
         {
             if (partyContainsPlayer) // checks if party contains a player
             {
+                AudioManager.instance.PlaySFX(4); // plays UI beep
                 for (int i = 0; i < windows.Length; i++) // iterates through all elements in the windows array
                 {
                     if (i == windowNumber) // checks if i is equal to the passed window number
@@ -237,6 +241,7 @@ public class GameMenu : MonoBehaviour
             }
             else // executes if party doesn't contain a player
             {
+                AudioManager.instance.PlaySFX(11); // plays error buzzer
                 notificationText.text = "Party does not contain a player!"; // sets error text that party does not contain a player
                 StartCoroutine(ShowGameNotification()); // shows game notification
             }
@@ -516,13 +521,13 @@ public class GameMenu : MonoBehaviour
                 {
                     if(activePartyList[i] != "Empty") // checks if slot is not empty
                     {
-                        Debug.Log("Player slot = " + activePartyList[i]);
+                        //Debug.Log("Player slot = " + activePartyList[i]);
                         itemCharChoiceNames[i].text = activePartyList[i]; // sets character button based on active party list
                         itemCharChoiceNames[i].transform.parent.transform.localScale = new Vector3(1, 1, 1); // shows char choice button
                     }
                     else // executes if slot is empty
                     {
-                        Debug.Log("Empty slot.");
+                        //Debug.Log("Empty slot.");
                         itemCharChoiceNames[i].text = "Empty"; // sets character button to Empty
                         itemCharChoiceNames[i].transform.parent.transform.localScale = new Vector3(0, 0, 0); // adjusts scale of char choice button to 0 to hide without affecting layout group
                     }
@@ -545,11 +550,13 @@ public class GameMenu : MonoBehaviour
 
             if (itemNoticeActive) // checks if item notice is sent back true from Item.cs script
             {
+                AudioManager.instance.PlaySFX(11); // plays error buzzer
                 StartCoroutine(ShowItemNotice());
                 itemNoticeActive = false; // resets itemNoticeActive flag
             }
             else
             {
+                AudioManager.instance.PlaySFX(7); // plays confirmation sound
                 Debug.Log(activeItem.itemName + " was used."); // prints debug text to notify on item use
 
                 activeItemQuantity--; // decrements active item quantity
@@ -645,46 +652,68 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-    public void SaveGame(int saveSlot) // creates function to handle button on menu to save all game data
+    public void SaveButton(int saveSlot) // creates function to show delete yes/no buttons in game menu
+    {
+        AudioManager.instance.PlaySFX(5); // plays beep sound
+        slotToSave = saveSlot; // assigns passed save slot variable as slot to save
+        //Debug.Log("slotToDelete = " + slotToDelete); // prints delete slot selection to debug log
+
+        notificationText.text = "Save to this save slot?"; // sets save notice text
+        gameNotification.SetActive(true); // shows game notificatio
+        saveYesNoButtons.SetActive(true); // shows delete yes/no buttons
+    }
+
+    public void SaveGame() // creates function to handle button on menu to save all game data
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
         {
             // calls functions to save player data and quest data
-            GameManager.instance.SaveData(saveSlot);
-            QuestManager.instance.SaveQuestData(saveSlot);
+            GameManager.instance.SaveData(slotToSave);
+            QuestManager.instance.SaveQuestData(slotToSave);
 
             UpdateSaveWindow(); // calls function to update save window data
 
             // sets game notification next and shows panel
             notificationText.text = "Game saved.";
             StartCoroutine(ShowGameNotification());
+            saveYesNoButtons.SetActive(false); // hides save yes/no buttons
         }
     }
 
-    public void LoadGame(int saveSlot) // creates function to handle loading game from a selected save slot
+    public void LoadButton(int saveSlot) // creates function to show delete yes/no buttons in game menu
     {
         if (!GameManager.instance.noticeActive) // checks to see if game notice is active
         {
             if (PlayerPrefs.HasKey(saveSlot + "_Current_Scene")) // checks if current save slot is not empty
             {
-                Debug.Log("Loading slot " + saveSlot); // prints load slot notice to debug log
-                slotToLoad = saveSlot; // assigns selected save slot as slot to load
-                loadMainMenu = false; //  assigns bool to not load main menu
-                SceneManager.LoadScene("LoadingScene"); // loads loading scene
+                AudioManager.instance.PlaySFX(5); // plays beep sound
+                slotToLoad = saveSlot; // assigns passed save slot variable as slot to load
+                notificationText.text = "Load from this save slot?"; // sets load notice text
+                gameNotification.SetActive(true); // shows game notification
+                notificationButton.SetActive(false); // hides game notification button
+                loadYesNoButtons.SetActive(true); // shows delete yes/no buttons
             }
             else
             {
+                AudioManager.instance.PlaySFX(11); // plays buzzer sound
                 Debug.Log("Save slot is empty!"); // prints empty save slot notice to debug log
-                notificationText.text = "Save slot is empty!";
-                StartCoroutine(ShowGameNotification());
+                notificationText.text = "Save slot is empty!"; // sets notification text
+                StartCoroutine(ShowGameNotification()); // shows game notification
             }
-        }
+        }           
+    }
+
+    public void LoadGame() // creates function to handle loading game
+    {
+        Debug.Log("Loading slot " + slotToLoad); // prints load slot notice to debug log
+        SceneManager.LoadScene("LoadingScene"); // loads loading scene
     }
 
     public void DeleteButton(int saveSlot) // creates function to show delete yes/no buttons in game menu
     {
         if (PlayerPrefs.HasKey(saveSlot + "_Current_Scene")) // checks if current save slot is not empty
         {
+            AudioManager.instance.PlaySFX(5); // plays beep sound
             slotToDelete = saveSlot; // assigns passed save slot variable as slot to delete
                                      //Debug.Log("slotToDelete = " + slotToDelete); // prints delete slot selection to debug log
 
@@ -694,24 +723,33 @@ public class GameMenu : MonoBehaviour
         }
         else
         {
+            AudioManager.instance.PlaySFX(11); // plays buzzer sound
             Debug.Log("Save slot is empty!"); // prints empty save slot notice to debug log
             notificationText.text = "Save slot is empty!";
             StartCoroutine(ShowGameNotification());
         }
     }
     
-    public void HideDeleteNotification() // creates function to hide delete notification
-    {
-        gameNotification.SetActive(false); // hides game notification
-        deleteYesNoButtons.SetActive(false); // hides delete yes/no buttons
-    }
-
     public void DeleteGame() // creates function to handle deleting game from a selected save slot
     {
         Debug.Log("Deleting slot " + slotToDelete); // prints slot delete notice to debug log
-        PlayerPrefs.DeleteKey(slotToDelete + "_Current_Scene"); // deletes current scene value from save slot
+        PlayerPrefs.DeleteKey(slotToDelete + "_Current_Scene"); // deletes current scene value from save 
+
         UpdateSaveWindow(); // calls function to update save window data
-        HideDeleteNotification(); // calls function to hide delete notification
+
+        // sets game notification next and shows panelslot
+        notificationText.text = "Game deleted.";
+        StartCoroutine(ShowGameNotification());
+        deleteYesNoButtons.SetActive(false); // hides save yes/no buttons
+    }
+
+    public void SaveLoadDeleteNoButton() // creates function to handle No button press
+    {
+        // hides game notification and all yes/no buttons on save/load screen
+        gameNotification.SetActive(false);
+        saveYesNoButtons.SetActive(false);
+        loadYesNoButtons.SetActive(false);
+        deleteYesNoButtons.SetActive(false);
     }
 
     public void PlayButtonSound(int soundToPlay) // creates function to play UI beeps, requires int of sound to play
@@ -728,7 +766,6 @@ public class GameMenu : MonoBehaviour
         {
             loadMainMenu = true; // assigns bool to load main menu
             //Debug.Log("loadMainMenu = " + loadMainMenu); // prints state of load main menu to debug log
-
             Destroy(AudioManager.instance.gameObject); // destroys audio manager to prevent lingering BGM
             SceneManager.LoadScene("LoadingScene"); // loads loading scene
         }
@@ -798,8 +835,16 @@ public class GameMenu : MonoBehaviour
 
     public void ToggleFrontRow(int charToToggle) // creates function to handle toggling front row status of character
     {
-        //Debug.Log("The value of toggle " + charToToggle + " is " + frontRowToggle[charToToggle].isOn); // prints state of selected toggle
-        GameManager.instance.playerStats[charToToggle].inFrontRow = frontRowToggle[charToToggle].isOn; // sets front row state of selected character based on toggle value
+        if (GameManager.instance != null) // checks to ensure game manager has been instantiated
+        {
+            //Debug.Log("Toggling front row for " + nameText[charToToggle].text); // prints toggle notice to debug log
+            CharStats playerToToggle = FindPlayerStats(nameText[charToToggle].text); // pulls reference to selected player stats
+            
+            if (playerToToggle != null) // checks that player exists
+            {
+                FindPlayerStats(nameText[charToToggle].text).inFrontRow = frontRowToggle[charToToggle].isOn; // sets state of selected character toggle
+            }
+        }
     }
 
     public void UpdateTimerUI() // creates function to track game time and update timer UI
@@ -941,7 +986,7 @@ public class GameMenu : MonoBehaviour
     public CharStats FindPlayerStats(string playerName) // creates function to find player in playerstats array based on name
     {
         //Debug.Log("Finding stats for " + playerName); // prints searching for stats notice to debug log
-        //playerStats = GameManager.instance.playerStats; // pulls reference to player stats in game manager
+        playerStats = GameManager.instance.playerStats; // pulls reference to player stats in game manager
 
         // assigns variables to assist with search function
         int index = 0;

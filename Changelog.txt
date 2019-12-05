@@ -1,7 +1,25 @@
+12/05/19
+********
+Polish: Continued updates to main menu and load/new game UI
+
+12/04/19
+********
+Polish: Updated the way the main menu and load game UI functions
+
+11/20/19
+********
+Polish: Added more battle and menu SFX
+Polish: Added save/load confirmation windows
+
+11/19/19
+********
+Polish: Added item buy/sell and error buzzer SFX
+
 11/18/19
 ********
 Polish: Added quest reward and item found SFX
 Bug: Fixed unwanted area exits occurring in certain cases
+Bug: Fixed front row toggle not saving for all characters
 
 11/17/19
 ********
