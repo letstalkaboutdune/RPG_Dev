@@ -92,7 +92,7 @@ public class LoadingScene : MonoBehaviour
         // destroys any open objects from currently open scene                    
         Destroy(PlayerController.instance.gameObject);
         Destroy(GameManager.instance.gameObject);
-        Destroy(AudioManager.instance.gameObject);
+        //Destroy(AudioManager.instance.gameObject);
         Destroy(GameMenu.instance.gameObject);
     }
 }

@@ -4,7 +4,6 @@ Minor
 ******
 Gamebreaking
 ************
-battleActive may be set by mistake in some cases
 
 Annoying
 ************
@@ -25,7 +24,7 @@ Game: implement stat restrictions on items
 Input: add controller/keyboard functionality
 
 HUGE (new game only)
-****    
+********************    
 Game Design: create all new spells and effects
 	*** add ability to target all
 	*** spells require some kind of hacking minigame?
@@ -39,8 +38,7 @@ Music: create all new background music
 SFX: create all new sound FX
 
 POLISH (new game only)
-******
-UI: correct scaling for all resolutions/aspect ratios
+**********************
 UI: abilities/techs screen in menu
 UI: add trade-in function in shops
 UI: re-design menu to fit theme

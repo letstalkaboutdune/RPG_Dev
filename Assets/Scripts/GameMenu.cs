@@ -766,7 +766,11 @@ public class GameMenu : MonoBehaviour
         {
             loadMainMenu = true; // assigns bool to load main menu
             //Debug.Log("loadMainMenu = " + loadMainMenu); // prints state of load main menu to debug log
-            Destroy(AudioManager.instance.gameObject); // destroys audio manager to prevent lingering BGM
+
+            // WIP
+            //Destroy(AudioManager.instance.gameObject); // destroys audio manager to prevent lingering BGM
+            // END WIP
+
             SceneManager.LoadScene("LoadingScene"); // loads loading scene
         }
     }

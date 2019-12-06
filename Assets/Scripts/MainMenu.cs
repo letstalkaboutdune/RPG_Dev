@@ -31,6 +31,11 @@ public class MainMenu : MonoBehaviour
         player = GameObject.Find("Player(Clone)");
         player.SetActive(false);
 
+        if (SceneManager.GetActiveScene().name != "MainMenu") // checks if current scene is not the main menu
+        {
+            HideMainMenu(); // calls function to hide main menu
+        }
+
         for (int i = 0; i < 3; i++) // iterates through all 3 possible player prefs slots
         {
             if (PlayerPrefs.HasKey(i + "_Current_Scene")) // checks if player prefs has key for current scene, some game data has been saved
@@ -55,14 +60,12 @@ public class MainMenu : MonoBehaviour
     {
         GameMenu.instance.loadLoadGame = true;
         SceneManager.LoadScene("LoadingScene"); // loads load game scene
-        //HideMainMenu(); // calls function to hide main menu
     }
 
     public void NewGame() // creates function to load new game at first scene
     {
         GameMenu.instance.loadNewGame = true;
         SceneManager.LoadScene("LoadingScene"); // loads new game at new game scene
-        //HideMainMenu(); // calls function to hide main menu
     }
 
     public void ExitGame() // creates function to exit game
@@ -77,8 +80,19 @@ public class MainMenu : MonoBehaviour
 
     public void HideMainMenu() // creates function to hide main menu UI
     {
-        mainMenu.SetActive(false); // hides main menu UI
-        GameManager.instance.gameMenuOpen = false; // sets gameMenuOpen flag false to allow player movement
-        player.SetActive(true); // shows player
+        if(GameMenu.instance != null)
+        {
+            mainMenu.SetActive(false); // hides main menu UI
+        }
+
+        if(GameManager.instance != null)
+        {
+            GameManager.instance.gameMenuOpen = false; // sets gameMenuOpen flag false to allow player movement        
+        }
+
+        if(player != null)
+        {
+            player.SetActive(true); // shows player
+        }
     }
 }

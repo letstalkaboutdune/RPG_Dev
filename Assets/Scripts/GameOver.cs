@@ -52,17 +52,28 @@ public class GameOver : MonoBehaviour
         Destroy(AudioManager.instance.gameObject);
         Destroy(BattleManager.instance.gameObject);
 
-        SceneManager.LoadScene(mainMenuScene); // calls scene manager to load main menu
+        // WIP
+        GameMenu.instance.loadMainMenu = true; // sets load main menu flag true
+        SceneManager.LoadScene("LoadingScene"); // calls scene manager to load main menu
+        //SceneManager.LoadScene(mainMenuScene); // calls scene manager to load main menu
+        // END WIP
+
+
     }
 
     public void LoadGame() // creates function to handle loading load game screen
     {
+        // WIP
         // destroys all loaded essential objects
-        Destroy(GameManager.instance.gameObject);
+        //Destroy(GameManager.instance.gameObject);
         Destroy(PlayerController.instance.gameObject);
-        Destroy(GameMenu.instance.gameObject);
+        //Destroy(GameMenu.instance.gameObject);
         //Destroy(AudioManager.instance.gameObject); // preserves audio manager
         Destroy(BattleManager.instance.gameObject);
+
+        //GameMenu.instance.loadLoadGame = true; // sets load load game flag true
+        //SceneManager.LoadScene("LoadingScene"); // calls scene manager to load load game scene
+        // END WIP
 
         SceneManager.LoadScene(loadGameScene); // calls scene manager to load load game scene
     }

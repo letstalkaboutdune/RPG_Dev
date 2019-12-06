@@ -913,6 +913,7 @@ public class BattleManager : MonoBehaviour
     public IEnumerator GameOverCo() // creates IEnumerator coroutine to end battle in game over
     {
         battleActive = false; // sets battle active to false to prevent more turns
+        GameManager.instance.battleActive = false; // sets game manager battle active false to prevent stuck condition
         turnWaiting = false; // sets turn waiting to false to prevent issues loading battle
         shouldTick = false; // stops battle counter
 
